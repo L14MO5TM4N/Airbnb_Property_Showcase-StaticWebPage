@@ -8,7 +8,6 @@ in Sweden — Södra Rörum (Hörby municipality) and Bälinge (Uppsala municipa
 The purpose of the site is to complement the existing Airbnb/booking.com listings with a 
 more flexible and visually attractive presentation of both properties.
 
-# ----------------------------------------
 
 # Links to these rental properties:
 
@@ -18,12 +17,11 @@ more flexible and visually attractive presentation of both properties.
 
 [Bälinge, Sweden](https://www.airbnb.co.uk/rooms/1323315106283045184?unique_share_id=3440d493-cb5e-46c0-b76e-e0e779ed71af&viralityEntryPoint=1&s=76&source_impression_id=p3_1781513472_P3BwY-eYSOdcHxfe)
 
- # ----------------------------------------
 
 # Built with:
- plain HTML 
- CSS
- JavaScript 
+ plain HTML, 
+ CSS,
+ JavaScript, Chat GPT(free Tier), Claude(free Tier).
 
 Hosted on GitHub Pages.
 No frameworks, no dependencies, no backend.
