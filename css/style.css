@@ -1,0 +1,948 @@
+/* =============================================================
+   style.css — Global styles for Airbnb Showcase Website
+   Properties: Södra Rörum (Hörby, Skåne) and Bälinge (Skåne)
+
+   Structure of this file:
+     1. CSS Custom Properties (design tokens)
+     2. Reset & base
+     3. Typography scale
+     4. Layout utilities
+     5. Header & navigation
+     6. Footer
+     7. Buttons & links
+     8. Property cards (homepage)
+     9. Hero slideshow
+    10. Amenities list
+    11. Photo grid (property pages)
+    12. Responsive overrides (desktop)
+
+   All visual decisions (colors, fonts, spacing) are controlled
+   via the custom properties in section 1. To retheme the site,
+   you only need to edit that section.
+   ============================================================= */
+
+
+/* =============================================================
+   1. CSS CUSTOM PROPERTIES (design tokens)
+
+   "Custom properties" are CSS variables. They start with --.
+   You set them once here and reference them anywhere in the file
+   with var(--name). This means changing a color in one place
+   updates it everywhere on the site.
+   ============================================================= */
+
+:root {
+  /* --- Colors --- */
+
+  /* Backgrounds: warm parchment tones — not stark white, not beige-grey */
+  --color-bg:           #F5F0E8;  /* Page background: warm parchment */
+  --color-surface:      #EDE8DC;  /* Cards, nav, footer: slightly deeper cream */
+  --color-surface-alt:  #F9F6F0;  /* Near-white cream: alternating sections */
+
+  /* Text: warm browns instead of cold greys */
+  --color-text:         #2A2118;  /* Deep warm brown: primary text */
+  --color-text-muted:   #7A6A55;  /* Mid warm brown: captions, subtitles */
+
+  /* Accent palette */
+  --color-accent:       #4A7C59;  /* Earthy forest green: primary interactive */
+  --color-accent-hover: #395E44;  /* Darker green for hover states */
+  --color-wood:         #8B5E3C;  /* Wood tone: card accents, borders, eyebrows */
+  --color-wood-light:   #C4956A;  /* Lighter wood: decorative dividers */
+
+  /* Borders and dividers */
+  --color-border:       #D4C9B5;  /* Warm sand: standard dividers */
+  --color-border-strong:#B8A898;  /* Slightly stronger: card outlines */
+
+  /* Card background: pale sage — a gentle green tint */
+  --color-card-bg:      #E8EDE3;
+
+  /* --- Typography --- */
+  /* Playfair Display: a quality serif for headings — unhurried and warm */
+  /* Inter: clean, highly readable sans-serif for body text */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Type scale — each step is ~1.25x the previous (Major Third scale) */
+  --text-sm:   0.85rem;   /* ~13.6px — captions, labels */
+  --text-base: 1rem;      /* 16px    — body text */
+  --text-lg:   1.25rem;   /* ~20px   — lead paragraphs */
+  --text-xl:   1.563rem;  /* ~25px   — section headings */
+  --text-2xl:  1.953rem;  /* ~31px   — page titles */
+  --text-3xl:  2.441rem;  /* ~39px   — hero headline */
+
+  /* Line heights */
+  --leading-tight:  1.2;  /* Headings */
+  --leading-normal: 1.6;  /* Body text: generous for readability */
+
+  /* Font weights */
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-bold:   700;
+
+  /* --- Spacing scale ---
+     All spacing uses multiples of a 4px base unit.
+     This keeps rhythm consistent throughout the layout. */
+  --space-1:  0.25rem;   /* 4px  */
+  --space-2:  0.5rem;    /* 8px  */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-5:  1.25rem;   /* 20px */
+  --space-6:  1.5rem;    /* 24px */
+  --space-8:  2rem;      /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+
+  /* --- Layout --- */
+  --max-width:        1100px;        /* Maximum content width, centered on wide screens */
+  --page-padding:     var(--space-5);/* Horizontal padding on mobile (20px) */
+  --border-radius:    6px;
+  --border-radius-lg: 12px;
+
+  /* --- Shadows ---
+     Warm-tinted shadows to match the earthy palette.
+     A cold grey shadow would feel out of place here. */
+  --shadow-sm: 0 1px 4px rgba(90, 60, 30, 0.10), 0 1px 2px rgba(90, 60, 30, 0.07);
+  --shadow-md: 0 4px 16px rgba(90, 60, 30, 0.13), 0 2px 4px rgba(90, 60, 30, 0.07);
+
+  /* --- Transitions ---
+     Used for hover effects. "ease" accelerates then decelerates naturally. */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+}
+
+
+/* =============================================================
+   2. RESET & BASE
+
+   Browsers have their own default styles that differ from each
+   other. A reset neutralizes them so we start from a clean slate.
+   ============================================================= */
+
+/* "Box sizing" controls how width/height are calculated.
+   border-box means padding and borders are included in the
+   element's total width — much more intuitive to work with. */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Smooth scrolling when clicking anchor links (e.g. #about) */
+  scroll-behavior: smooth;
+
+  /* Prevent text from scaling oddly when orientation changes on mobile */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-normal);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+
+  /* Improves text rendering on most screens */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Images should never overflow their containers */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Remove default list bullets — we add our own styling when needed */
+ul, ol {
+  list-style: none;
+}
+
+/* Links inherit text color by default (we style them specifically below) */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* =============================================================
+   3. TYPOGRAPHY SCALE
+
+   These classes let you apply the type scale to any element.
+   Example: <p class="text-muted">Some secondary note...</p>
+   ============================================================= */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--color-text);
+}
+
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+h4 { font-size: var(--text-lg); }
+
+p {
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+}
+
+/* A larger lead paragraph, used for property summaries and intros */
+.text-lead {
+  font-size: var(--text-lg);
+  line-height: var(--leading-normal);
+  color: var(--color-text-muted);
+}
+
+/* Muted/secondary text — captions, helper text, fine print */
+.text-muted {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Small uppercase label above a heading — e.g. "Property · Skåne"
+   Uses wood tone rather than green: warmer, less like a UI tag */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-wood);
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+
+/* =============================================================
+   4. LAYOUT UTILITIES
+
+   Reusable layout building blocks used throughout all pages.
+   ============================================================= */
+
+/* .container centers content and adds horizontal padding.
+   Every section's content should wrap in this. */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--page-padding);
+  padding-right: var(--page-padding);
+}
+
+/* .section adds vertical breathing room between page sections */
+.section {
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-12);
+}
+
+/* Near-white cream — used for alternating section backgrounds */
+.section--light {
+  background-color: var(--color-surface-alt);
+}
+
+/* Warm mid-tone — used for the about section and similar */
+.section--warm {
+  background-color: var(--color-surface);
+}
+
+/* Standard full-width horizontal divider */
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: var(--space-8) 0;
+}
+
+/* Short wood-tone decorative rule — placed under major headings.
+   60px wide so it reads as an accent, not a structural line. */
+.divider--wood {
+  border: none;
+  border-top: 2px solid var(--color-wood-light);
+  width: 60px;
+  margin: var(--space-4) 0 var(--space-6);
+}
+
+/* Screen-reader only — visually hidden but accessible to assistive tech.
+   Used for context that is visually obvious but needs to be explicit
+   for screen readers (e.g. "opens in new tab"). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+
+/* =============================================================
+   5. HEADER & NAVIGATION
+   ============================================================= */
+
+.site-header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+
+  /* sticky: the header stays at the top of the screen while scrolling */
+  position: sticky;
+  top: 0;
+  z-index: 100;  /* Sits above all page content */
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;  /* Fixed header height */
+}
+
+/* The site name / logo text */
+.site-logo {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: color var(--transition-fast);
+}
+
+.site-logo:hover {
+  color: var(--color-wood);
+}
+
+/* Navigation link list — horizontal row of links */
+.nav-links {
+  display: flex;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-bottom: var(--space-1);
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+/* Hover state and active page indicator */
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
+  color: var(--color-wood);
+  border-bottom-color: var(--color-wood-light);
+}
+
+
+/* =============================================================
+   6. FOOTER
+   ============================================================= */
+
+.site-footer {
+  background-color: var(--color-surface);
+  border-top: 2px solid var(--color-border);
+  padding: var(--space-10) 0;
+  margin-top: var(--space-16);
+}
+
+.site-footer .container {
+  display: flex;
+  flex-direction: column;  /* Stack vertically on mobile */
+  gap: var(--space-4);
+  align-items: center;
+  text-align: center;
+}
+
+.footer-note {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+
+/* =============================================================
+   7. BUTTONS & LINKS
+
+   Two button styles:
+   - .btn-primary:   Filled forest green — main CTA (View property)
+   - .btn-secondary: Wood-tone outline   — external links (Airbnb, Booking.com)
+   ============================================================= */
+
+/* Shared base styles for both button variants */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--border-radius);
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+/* Focus ring: important for keyboard and accessibility navigation */
+.btn:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Primary button: filled green */
+.btn-primary {
+  background-color: var(--color-accent);
+  color: #FFFFFF;
+  border-color: var(--color-accent);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+/* Secondary button: wood-tone outline, fills on hover */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-wood);
+  border-color: var(--color-wood);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-wood);
+  color: #FFFFFF;
+}
+
+/* Small button variant — used in compact contexts */
+.btn--sm {
+  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-4);
+}
+
+/* Inline text link */
+.link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--transition-fast);
+}
+
+.link:hover {
+  text-decoration-color: var(--color-accent);
+}
+
+
+/* =============================================================
+   8. PROPERTY CARDS (homepage)
+
+   Two cards on the homepage — one per property.
+   Stack vertically on mobile, side by side on desktop.
+
+   Card style: pale sage green background with a wood-tone left
+   border. The left border reads like a timber door frame —
+   earthy and structural rather than decorative.
+   ============================================================= */
+
+/* Wrapper grid — 1 column mobile, 2 columns desktop */
+.property-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+}
+
+/* Individual property card */
+.property-card {
+  background-color: var(--color-card-bg);  /* Pale sage green */
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;    /* Keeps the cover photo inside the rounded corners */
+  box-shadow: var(--shadow-sm);
+
+  /* Wood-tone left border: the card's signature detail */
+  border-left: 4px solid var(--color-wood);
+
+  /* Warm outline separates the card from the parchment background */
+  outline: 1px solid var(--color-border-strong);
+
+  transition: box-shadow var(--transition-normal),
+              transform var(--transition-normal);
+}
+
+.property-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);  /* Subtle lift on hover */
+}
+
+/* Cover photo at the top of each card */
+.property-card__image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;  /* Crop to fill without distortion */
+}
+
+/* Text content inside the card */
+.property-card__body {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.property-card__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+}
+
+.property-card__location {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-weight: var(--weight-medium);
+}
+
+.property-card__description {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+}
+
+/* Action buttons at the bottom of the card.
+   flex-wrap allows the three buttons to wrap to a second row
+   on narrow screens rather than overflowing. */
+.property-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+/* Slightly tighter horizontal padding on buttons inside cards,
+   so all three (View / Airbnb / Booking.com) fit comfortably. */
+.property-card__actions .btn {
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+
+/* =============================================================
+   9. HERO SLIDESHOW
+
+   A full-width image banner at the top of the homepage.
+   JavaScript (gallery.js) cycles through multiple photos
+   automatically every few seconds.
+
+   Structure used in index.html:
+
+     <section class="hero-slideshow">
+       <div class="hero-slideshow__track">
+         <div class="hero-slideshow__slide is-active">
+           <img src="..." alt="...">
+         </div>
+         <div class="hero-slideshow__slide">
+           <img src="..." alt="...">
+         </div>
+         ...
+       </div>
+       <div class="hero-slideshow__overlay">
+         <p class="hero__eyebrow">...</p>
+         <h1 class="hero__title">...</h1>
+         <p class="hero__subtitle">...</p>
+       </div>
+       <div class="hero-slideshow__dots" aria-label="Slideshow navigation">
+         <button class="hero-slideshow__dot is-active" ...></button>
+         ...
+       </div>
+     </section>
+
+   How the fade transition works:
+     All slides are stacked on top of each other (position: absolute).
+     The active slide has opacity: 1. All others have opacity: 0.
+     JavaScript adds/removes the "is-active" class to switch slides.
+     CSS handles the fade via transition: opacity.
+   ============================================================= */
+
+.hero-slideshow {
+  position: relative;       /* Needed so children can be positioned inside it */
+  width: 100%;
+  height: 420px;            /* Height of the hero on mobile */
+  overflow: hidden;
+  background-color: var(--color-surface);  /* Placeholder color while images load */
+}
+
+/* The track holds all slides stacked on top of each other */
+.hero-slideshow__track {
+  position: absolute;
+  inset: 0;  /* Shorthand for top/right/bottom/left: 0 — fills the parent */
+}
+
+/* Each individual slide */
+.hero-slideshow__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;               /* Hidden by default */
+  transition: opacity 1s ease-in-out;  /* Fade in/out over 1 second */
+}
+
+/* The currently visible slide */
+.hero-slideshow__slide.is-active {
+  opacity: 1;
+}
+
+/* The slide image fills the entire slide container */
+.hero-slideshow__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Dark gradient overlay — fades from transparent at the top to semi-dark
+   at the bottom. This ensures the text above it is always readable,
+   regardless of how bright or busy the photo is. */
+.hero-slideshow__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.08) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;  /* Text sits at the bottom of the hero */
+  padding: var(--space-10) var(--space-6);
+  text-align: center;
+}
+
+/* Hero text — white so it reads against the dark overlay */
+.hero__eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-3);
+}
+
+.hero__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  max-width: 22ch;
+  margin: 0 auto var(--space-4);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);  /* Subtle shadow for legibility */
+}
+
+.hero__subtitle {
+  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 52ch;
+  margin: 0 auto;
+  line-height: var(--leading-normal);
+}
+
+/* Dot navigation — small circles at the bottom of the slideshow.
+   Clicking a dot jumps to that slide. JavaScript manages the logic. */
+.hero-slideshow__dots {
+  position: absolute;
+  bottom: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);  /* Center the dot row horizontally */
+  display: flex;
+  gap: var(--space-2);
+  z-index: 10;  /* Sits above the overlay and slides */
+}
+
+.hero-slideshow__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;       /* Circle shape */
+  border: none;
+  background-color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+/* Active dot: filled white and slightly larger */
+.hero-slideshow__dot.is-active {
+  background-color: #FFFFFF;
+  transform: scale(1.3);
+}
+
+.hero-slideshow__dot:hover {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+/* Simple hero variant for property pages — no slideshow, no overlay text.
+   Just a full-width photo with a text block below it. */
+.hero {
+  padding: var(--space-16) 0;
+  text-align: center;
+}
+
+
+/* =============================================================
+   10. AMENITIES LIST
+
+   Used on property pages to display features like "WiFi",
+   "Parking", "Pet-friendly" in a compact grid.
+   ============================================================= */
+
+.amenities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* 2 columns on mobile */
+  gap: var(--space-3) var(--space-6);
+  margin-top: var(--space-6);
+}
+
+.amenity-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-base);
+  color: var(--color-text);
+}
+
+/* Wood-tone checkmark before each amenity item */
+.amenity-item::before {
+  content: "✓";
+  color: var(--color-wood);
+  font-weight: var(--weight-bold);
+  flex-shrink: 0;  /* Prevent the checkmark from being squeezed */
+}
+
+
+/* =============================================================
+   11. PHOTO GRID (property pages)
+
+   Property pages are photo-rich. This grid displays multiple
+   photos in a structured layout. The first photo spans the full
+   width as a featured/hero image; the rest are thumbnails.
+
+   2 columns on mobile, 3 on desktop.
+   ============================================================= */
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.photo-grid__item {
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  background-color: var(--color-surface);
+
+  /* Consistent aspect ratio for all thumbnails */
+  aspect-ratio: 4 / 3;
+}
+
+.photo-grid__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+/* Subtle zoom on hover — signals the image is clickable (for lightbox) */
+.photo-grid__item:hover img {
+  transform: scale(1.04);
+}
+
+/* Featured first photo: spans full width, wider aspect ratio */
+.photo-grid__item--featured {
+  grid-column: span 2;
+  aspect-ratio: 16 / 9;
+}
+
+
+/* =============================================================
+   12. RESPONSIVE OVERRIDES — DESKTOP
+
+   Everything above is written mobile-first (single column,
+   compact spacing). These rules kick in at 768px and wider,
+   expanding the layout to take advantage of the available space.
+
+   Why 768px? That is roughly the width of a tablet in landscape
+   mode — a standard breakpoint where two-column layouts start
+   to feel natural rather than cramped.
+   ============================================================= */
+
+@media (min-width: 768px) {
+  /* More horizontal breathing room on wider screens */
+  :root {
+    --page-padding: var(--space-8);
+  }
+
+  /* Two-column property card grid on desktop */
+  .property-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Taller card cover photos on desktop */
+  .property-card__image {
+    height: 280px;
+  }
+
+  /* Taller hero slideshow on desktop */
+  .hero-slideshow {
+    height: 560px;
+  }
+
+  /* Larger hero headline on desktop */
+  .hero__title {
+    font-size: clamp(var(--text-2xl), 4vw, var(--text-3xl));
+  }
+
+  /* Three amenity columns on desktop */
+  .amenities-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Three-column photo grid on property pages */
+  .photo-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Featured photo spans all three columns */
+  .photo-grid__item--featured {
+    grid-column: span 3;
+  }
+
+  /* Footer becomes a horizontal row on desktop */
+  .site-footer .container {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-padding: var(--space-10);
+  }
+
+  .section {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+  }
+}
+
+
+/* =============================================================
+   END OF style.css
+
+   Next files to build:
+   - index.html      — Homepage (hero slideshow + property cards)
+   - gallery.css     — Lightbox styles for photo grids
+   - gallery.js      — Slideshow timer + lightbox interaction logic
+   - sodra-rorum/index.html
+   - balinge/index.html
+   ============================================================= */
+
+
+/* =============================================================
+   PROPERTY HERO IMAGE (property pages only)
+
+   A full-width photo at the very top of each property page.
+   The image is wrapped in a link — clicking it opens the gallery
+   lightbox (handled by gallery.js).
+
+   A small "View all photos" hint appears in the bottom-left corner
+   so visitors understand the image is interactive.
+   ============================================================= */
+
+.property-hero {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--color-surface);  /* Placeholder while image loads */
+}
+
+/* The link wraps the entire hero image — the whole area is clickable */
+.property-hero a.hero-image-link {
+  display: block;
+  position: relative;
+}
+
+.property-hero__image {
+  width: 100%;
+  height: 320px;           /* Hero height on mobile */
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.property-hero a.hero-image-link:hover .property-hero__image {
+  transform: scale(1.02);  /* Subtle zoom hints that the image is interactive */
+}
+
+/* "View all photos" text hint — overlaid bottom-left on the hero image */
+.property-hero__hint {
+  display: none;            /* Hidden by default; JS enables it */
+  position: absolute;
+  bottom: var(--space-4);
+  left: var(--space-4);
+  background-color: rgba(42, 33, 24, 0.65);
+  color: #FFFFFF;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--border-radius);
+  pointer-events: none;     /* The hint doesn't block clicks to the link */
+  letter-spacing: 0.03em;
+}
+
+/* Map wrapper: ensures the iframe is fully responsive */
+.map-wrapper {
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.map-wrapper iframe {
+  display: block;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .property-hero__image {
+    height: 480px;          /* Taller hero on desktop */
+  }
+}
+
+/* =============================================================
+   END OF PROPERTY HERO ADDITIONS
+   ============================================================= */

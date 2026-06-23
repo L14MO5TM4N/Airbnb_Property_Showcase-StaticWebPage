@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<!--
+  sodra-rorum/index.html — Property page: Södra Rörum
+  Airbnb Showcase Website
+
+  TO CREATE THE BÄLINGE PAGE:
+    1. Copy this file to balinge/index.html
+    2. Find and replace every instance of:
+         "Södra Rörum"  →  "Bälinge"
+         "sodra-rorum"  →  "balinge"
+         "Hörby"        →  [Bälinge's nearest town/village]
+    3. Update all TODO items with Bälinge-specific content
+    4. Update the Airbnb and Booking.com URLs
+    5. Update the Google Maps embed src and directions link
+    6. Update image paths to point at images/balinge/
+
+  Page structure:
+    1. <head>   — metadata, fonts, stylesheets
+    2. <header> — site logo + navigation (same on all pages)
+    3. <main>
+         a. Hero image      — full-width, clicking opens the gallery lightbox
+         b. Intro           — property title, description, quick facts
+         c. Reviews         — two side-by-side image slideshows (Airbnb + Booking.com)
+                              each with a static overall-rating image on top
+         d. Map             — embedded Google Maps + Get Directions button
+         e. Gallery         — photo grid (thumbnails open lightbox when clicked)
+         f. Lightbox        — hidden overlay, activated by JS when photos are clicked
+    4. <footer>
+-->
+<html lang="en">
+
+<head>
+  <!-- ============================================================
+       META & SEO
+       ============================================================ -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Södra Rörum — a farmhouse holiday rental in Hörby, Skåne, Sweden. Book on Airbnb or Booking.com.">
+  <!-- TODO: Write a compelling one-sentence description for search results -->
+
+  <title>Södra Rörum — Holiday Rental in Skåne, Sweden</title>
+  <!-- TODO: Adjust title if the client has a preferred phrasing -->
+
+  <!-- ============================================================
+       GOOGLE FONTS — same as homepage
+       ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- ============================================================
+       STYLESHEETS
+       Note the path: this page is inside sodra-rorum/ so we need
+       to go up one level (../) to reach the css/ folder
+       ============================================================ -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/gallery.css">
+
+  <!-- TODO: Add favicon once available
+  <link rel="icon" href="../favicon.ico"> -->
+</head>
+
+<body>
+
+  <!-- ============================================================
+       HEADER — identical on all pages
+       Only change: aria-current="page" moves to the correct nav link
+       ============================================================ -->
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="site-logo">Swedish Stays</a>
+      <!-- TODO: Replace "Swedish Stays" with the client's site name -->
+
+      <nav aria-label="Main navigation">
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="../sodra-rorum/" aria-current="page">Södra Rörum</a></li>
+          <li><a href="../balinge/">Bälinge</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- =========================================================
+         HERO IMAGE
+
+         A full-width photo at the very top of the property page.
+         Wrapping it in <a class="hero-image-link"> makes the whole
+         image clickable — gallery.js intercepts this click and
+         opens the lightbox at index 0 instead of following the link.
+
+         Use the same strong cover photo here as the card image on
+         the homepage — visitors arriving from the card will see a
+         consistent image.
+         ========================================================= -->
+    <section class="property-hero" aria-label="Property cover photo">
+
+      <!-- The href="#gallery" is a fallback in case JS hasn't loaded.
+           gallery.js overrides the click and opens the lightbox instead. -->
+      <a href="#gallery" class="hero-image-link" aria-label="Open photo gallery">
+        <img
+          src="../images/sodra-rorum/cover.jpg"
+          alt="Exterior view of Södra Rörum farmhouse in Hörby, Skåne"
+          class="property-hero__image"
+          loading="eager"
+          width="1600"
+          height="900"
+        >
+        <!-- TODO: Replace with the main hero image for this property.
+                   Should be landscape, at least 1600px wide.
+                   Good choice: the best exterior shot, or a striking interior. -->
+
+        <!-- Small overlay hint so visitors know the image is clickable -->
+        <span class="property-hero__hint" aria-hidden="true">
+          View all photos
+        </span>
+      </a>
+
+    </section>
+
+
+    <!-- =========================================================
+         INTRO — title, description, quick facts, booking buttons
+         ========================================================= -->
+    <section class="section" aria-labelledby="property-title">
+      <div class="container">
+
+        <span class="eyebrow">Hörby · Skåne</span>
+        <!-- TODO: Update location label for Bälinge page -->
+
+        <h1 id="property-title">Södra Rörum</h1>
+        <!-- TODO: Update property name for Bälinge page -->
+
+        <hr class="divider--wood">
+
+        <p class="text-lead">
+          A quiet farmhouse in the rolling countryside of Skåne.
+          Surrounded by fields and birdsong — the kind of place
+          you arrive at and immediately feel your shoulders drop.
+        </p>
+        <!-- TODO: Replace with the real property description from the client.
+                   Aim for 2–4 sentences. Focus on feeling, not features —
+                   the amenities list below handles the specifics. -->
+
+        <p style="margin-top: var(--space-4); color: var(--color-text-muted);">
+          <!-- TODO: Fill in accurate numbers for this property -->
+          Up to 4 guests &middot; 2 bedrooms &middot; 1 bathroom &middot; Entire home
+        </p>
+
+        <!-- Booking buttons — same pattern as the homepage cards -->
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6);">
+          <a
+            href="https://www.airbnb.com/rooms/TODO_SODRA_RORUM_ID"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Book on Airbnb
+          </a>
+          <!-- TODO: Replace TODO_SODRA_RORUM_ID with the real Airbnb listing ID -->
+
+          <a
+            href="https://www.booking.com/hotel/se/TODO_SODRA_RORUM_SLUG.html"
+            class="btn btn-secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Book on Booking.com
+          </a>
+          <!-- TODO: Replace TODO_SODRA_RORUM_SLUG with the real Booking.com URL slug -->
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         AMENITIES
+         A grid of features: WiFi, parking, pets, etc.
+         Add or remove .amenity-item elements as needed.
+         ========================================================= -->
+    <section class="section section--light" aria-labelledby="amenities-heading">
+      <div class="container">
+
+        <h2 id="amenities-heading">What's included</h2>
+        <hr class="divider--wood">
+
+        <ul class="amenities-grid">
+          <!-- TODO: Replace these with the actual amenities for this property -->
+          <li class="amenity-item">Free WiFi</li>
+          <li class="amenity-item">Free parking</li>
+          <li class="amenity-item">Full kitchen</li>
+          <li class="amenity-item">Washing machine</li>
+          <li class="amenity-item">Outdoor seating</li>
+          <li class="amenity-item">BBQ grill</li>
+          <li class="amenity-item">Pets allowed</li>
+          <li class="amenity-item">Self check-in</li>
+        </ul>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         REVIEWS
+
+         Two columns side by side — Airbnb on the left,
+         Booking.com on the right (stacks on mobile).
+
+         Each column has:
+           1. A static image showing the overall platform rating
+              (screenshot the rating badge from each platform)
+           2. An auto-advancing slideshow of individual review
+              screenshots (up to 5 recommended)
+
+         The [data-review-slideshow] attribute is what gallery.js
+         uses to find and initialise each slideshow independently.
+         ========================================================= -->
+    <section class="section section--warm" aria-labelledby="reviews-heading">
+      <div class="container">
+
+        <h2 id="reviews-heading">What guests say</h2>
+        <hr class="divider--wood">
+
+        <div class="reviews-grid">
+
+          <!-- -----------------------------------------------
+               LEFT COLUMN: Airbnb reviews
+               ----------------------------------------------- -->
+          <div class="review-column">
+
+            <p class="review-column__label">Airbnb</p>
+
+            <!-- Overall rating image — static, not part of the slideshow.
+                 Screenshot the aggregate rating display from the Airbnb
+                 listing page (e.g. "4.97 · 62 reviews") and place it here. -->
+            <div class="review-column__platform">
+              <img
+                src="../images/sodra-rorum/reviews/airbnb-overall.png"
+                alt="Södra Rörum overall rating on Airbnb"
+              >
+              <!-- OVERALL AIRBNB RATING IMAGE GOES HERE -->
+              <!-- TODO: Screenshot the rating summary from the Airbnb listing
+                         and save it as images/sodra-rorum/reviews/airbnb-overall.png
+                         Recommended: crop tightly around the score and review count -->
+            </div>
+
+            <!-- Individual review screenshots — auto-advance every 6 seconds.
+                 Add one .review-slide per screenshot (up to 5 recommended).
+                 Each slide should contain one screenshot of one review. -->
+            <div class="review-slideshow" data-review-slideshow>
+
+              <!-- Slide 1 (visible on load) -->
+              <div class="review-slide is-active">
+                <img
+                  src="../images/sodra-rorum/reviews/airbnb-review-1.png"
+                  alt="Airbnb guest review screenshot 1"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+                <!-- TODO: Screenshot an individual Airbnb review and save as
+                           images/sodra-rorum/reviews/airbnb-review-1.png
+                           Crop to show the review text and star rating clearly -->
+              </div>
+
+              <!-- Slide 2 -->
+              <div class="review-slide">
+                <img
+                  src="../images/sodra-rorum/reviews/airbnb-review-2.png"
+                  alt="Airbnb guest review screenshot 2"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <!-- Slide 3 -->
+              <div class="review-slide">
+                <img
+                  src="../images/sodra-rorum/reviews/airbnb-review-3.png"
+                  alt="Airbnb guest review screenshot 3"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <!-- Slide 4 -->
+              <div class="review-slide">
+                <img
+                  src="../images/sodra-rorum/reviews/airbnb-review-4.png"
+                  alt="Airbnb guest review screenshot 4"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <!-- Slide 5 -->
+              <div class="review-slide">
+                <img
+                  src="../images/sodra-rorum/reviews/airbnb-review-5.png"
+                  alt="Airbnb guest review screenshot 5"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <!-- TODO: Add or remove slides to match the number of review
+                         screenshots you have. Also add/remove matching dot
+                         buttons below. -->
+
+              <!-- Dot navigation — one dot per slide -->
+              <div class="review-slideshow__dots" aria-label="Airbnb review navigation">
+                <button class="review-dot is-active" data-index="0" aria-label="Review 1"></button>
+                <button class="review-dot" data-index="1" aria-label="Review 2"></button>
+                <button class="review-dot" data-index="2" aria-label="Review 3"></button>
+                <button class="review-dot" data-index="3" aria-label="Review 4"></button>
+                <button class="review-dot" data-index="4" aria-label="Review 5"></button>
+              </div>
+
+            </div><!-- end .review-slideshow (Airbnb) -->
+          </div><!-- end .review-column (Airbnb) -->
+
+
+          <!-- -----------------------------------------------
+               RIGHT COLUMN: Booking.com reviews
+               ----------------------------------------------- -->
+          <div class="review-column">
+
+            <p class="review-column__label">Booking.com</p>
+
+            <!-- Overall rating image for Booking.com -->
+            <div class="review-column__platform">
+              <img
+                src="../images/sodra-rorum/reviews/booking-overall.png"
+                alt="Södra Rörum overall rating on Booking.com"
+              >
+              <!-- OVERALL BOOKING.COM RATING IMAGE GOES HERE -->
+              <!-- TODO: Screenshot the aggregate score from the Booking.com
+                         listing and save as:
+                         images/sodra-rorum/reviews/booking-overall.png -->
+            </div>
+
+            <!-- Booking.com individual review screenshots -->
+            <div class="review-slideshow" data-review-slideshow>
+
+              <div class="review-slide is-active">
+                <img
+                  src="../images/sodra-rorum/reviews/booking-review-1.png"
+                  alt="Booking.com guest review screenshot 1"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <div class="review-slide">
+                <img
+                  src="../images/sodra-rorum/reviews/booking-review-2.png"
+                  alt="Booking.com guest review screenshot 2"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <div class="review-slide">
+                <img
+                  src="../images/sodra-rorum/reviews/booking-review-3.png"
+                  alt="Booking.com guest review screenshot 3"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <div class="review-slide">
+                <img
+                  src="../images/sodra-rorum/reviews/booking-review-4.png"
+                  alt="Booking.com guest review screenshot 4"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <div class="review-slide">
+                <img
+                  src="../images/sodra-rorum/reviews/booking-review-5.png"
+                  alt="Booking.com guest review screenshot 5"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <div class="review-slideshow__dots" aria-label="Booking.com review navigation">
+                <button class="review-dot is-active" data-index="0" aria-label="Review 1"></button>
+                <button class="review-dot" data-index="1" aria-label="Review 2"></button>
+                <button class="review-dot" data-index="2" aria-label="Review 3"></button>
+                <button class="review-dot" data-index="3" aria-label="Review 4"></button>
+                <button class="review-dot" data-index="4" aria-label="Review 5"></button>
+              </div>
+
+            </div><!-- end .review-slideshow (Booking.com) -->
+          </div><!-- end .review-column (Booking.com) -->
+
+        </div><!-- end .reviews-grid -->
+      </div><!-- end .container -->
+    </section><!-- end reviews section -->
+
+
+    <!-- =========================================================
+         MAP SECTION
+
+         An embedded Google Maps iframe shows the property location.
+         A "Get Directions" button links to Google Maps in a new tab
+         so visitors can open it on their phone for navigation.
+
+         HOW TO GET THE EMBED CODE:
+           1. Go to maps.google.com
+           2. Search for the property address
+           3. Click Share → Embed a map
+           4. Copy the <iframe> src URL
+           5. Paste it into the iframe src below
+
+         HOW TO GET THE DIRECTIONS LINK:
+           1. In Google Maps, find the property
+           2. Copy the URL from your browser address bar
+           3. Paste it into the Get Directions <a> href below
+         ========================================================= -->
+    <section class="section" aria-labelledby="map-heading">
+      <div class="container">
+
+        <h2 id="map-heading">Location</h2>
+        <hr class="divider--wood">
+
+        <p style="color: var(--color-text-muted); margin-bottom: var(--space-6);">
+          Södra Rörum, Hörby municipality, Skåne, Sweden.
+          <!-- TODO: Update with the full address once confirmed with the client -->
+        </p>
+
+        <!-- Embedded Google Maps iframe
+             The title attribute is required for accessibility (screen readers). -->
+        <div class="map-wrapper">
+          <iframe
+            title="Map showing the location of Södra Rörum"
+            src="TODO_GOOGLE_MAPS_EMBED_SRC"
+            width="100%"
+            height="400"
+            style="border: 0; border-radius: var(--border-radius-lg);"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <!--
+            TODO: Replace TODO_GOOGLE_MAPS_EMBED_SRC with the real embed src URL.
+            It looks like:
+            https://www.google.com/maps/embed?pb=!1m18!1m12!...
+            Get it from: maps.google.com → Share → Embed a map → copy the src
+          -->
+        </div>
+
+        <!-- Get Directions button — opens Google Maps in a new tab -->
+        <div style="margin-top: var(--space-5);">
+          <a
+            href="TODO_GOOGLE_MAPS_DIRECTIONS_URL"
+            class="btn btn-secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ↗ Get Directions
+          </a>
+          <!--
+            TODO: Replace TODO_GOOGLE_MAPS_DIRECTIONS_URL with the property's
+            Google Maps URL (just copy it from the browser address bar when
+            viewing the property on maps.google.com)
+          -->
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         PHOTO GALLERY
+
+         A grid of thumbnail images. Clicking any thumbnail opens
+         the lightbox (handled by gallery.js).
+
+         The first item (.photo-grid__item--featured) is the largest
+         — it spans full width and uses a 16:9 ratio. The hero image
+         at the top of the page also opens the lightbox at this first
+         image when clicked.
+
+         HOW TO ADD PHOTOS:
+           - Add images to images/sodra-rorum/
+           - Copy a .photo-grid__item block below and update src + alt
+           - The lightbox will automatically include them — no JS changes needed
+
+         NAMING CONVENTION (suggested):
+           images/sodra-rorum/gallery-01.jpg
+           images/sodra-rorum/gallery-02.jpg
+           etc.
+
+         RECOMMENDED: at least 8 photos. More is better here —
+         guests decide to book based on photos.
+         ========================================================= -->
+    <section class="section section--light" id="gallery" aria-labelledby="gallery-heading">
+      <div class="container">
+
+        <h2 id="gallery-heading">Photos</h2>
+        <hr class="divider--wood">
+
+        <div class="photo-grid">
+
+          <!-- Featured image: spans full width, opens lightbox at index 0.
+               Use the best exterior or interior shot here. -->
+          <div class="photo-grid__item photo-grid__item--featured">
+            <img
+              src="../images/sodra-rorum/gallery-01.jpg"
+              alt="Main view of Södra Rörum — exterior from the garden"
+              loading="lazy"
+              width="1200"
+              height="675"
+            >
+            <!-- TODO: Add images/sodra-rorum/gallery-01.jpg -->
+          </div>
+
+          <!-- Thumbnail 2 -->
+          <div class="photo-grid__item">
+            <img
+              src="../images/sodra-rorum/gallery-02.jpg"
+              alt="Living room at Södra Rörum"
+              loading="lazy"
+              width="800"
+              height="600"
+            >
+            <!-- TODO: Add images/sodra-rorum/gallery-02.jpg -->
+          </div>
+
+          <!-- Thumbnail 3 -->
+          <div class="photo-grid__item">
+            <img
+              src="../images/sodra-rorum/gallery-03.jpg"
+              alt="Kitchen at Södra Rörum"
+              loading="lazy"
+              width="800"
+              height="600"
+            >
+            <!-- TODO: Add images/sodra-rorum/gallery-03.jpg -->
+          </div>
+
+          <!-- Thumbnail 4 -->
+          <div class="photo-grid__item">
+            <img
+              src="../images/sodra-rorum/gallery-04.jpg"
+              alt="Bedroom at Södra Rörum"
+              loading="lazy"
+              width="800"
+              height="600"
+            >
+            <!-- TODO: Add images/sodra-rorum/gallery-04.jpg -->
+          </div>
+
+          <!-- Thumbnail 5 -->
+          <div class="photo-grid__item">
+            <img
+              src="../images/sodra-rorum/gallery-05.jpg"
+              alt="Outdoor seating area at Södra Rörum"
+              loading="lazy"
+              width="800"
+              height="600"
+            >
+            <!-- TODO: Add images/sodra-rorum/gallery-05.jpg -->
+          </div>
+
+          <!-- Thumbnail 6 -->
+          <div class="photo-grid__item">
+            <img
+              src="../images/sodra-rorum/gallery-06.jpg"
+              alt="Garden and surroundings at Södra Rörum"
+              loading="lazy"
+              width="800"
+              height="600"
+            >
+            <!-- TODO: Add images/sodra-rorum/gallery-06.jpg -->
+          </div>
+
+          <!-- Thumbnail 7 -->
+          <div class="photo-grid__item">
+            <img
+              src="../images/sodra-rorum/gallery-07.jpg"
+              alt="Countryside view from Södra Rörum"
+              loading="lazy"
+              width="800"
+              height="600"
+            >
+            <!-- TODO: Add images/sodra-rorum/gallery-07.jpg -->
+          </div>
+
+          <!-- Thumbnail 8 -->
+          <div class="photo-grid__item">
+            <img
+              src="../images/sodra-rorum/gallery-08.jpg"
+              alt="Another view of Södra Rörum"
+              loading="lazy"
+              width="800"
+              height="600"
+            >
+            <!-- TODO: Add images/sodra-rorum/gallery-08.jpg -->
+          </div>
+
+          <!--
+            TO ADD MORE PHOTOS: copy one of the blocks above,
+            increment the filename number, and update the alt text.
+            No changes needed in gallery.js — it finds all images automatically.
+          -->
+
+        </div><!-- end .photo-grid -->
+      </div><!-- end .container -->
+    </section><!-- end gallery section -->
+
+
+    <!-- =========================================================
+         LIGHTBOX
+
+         This HTML is always present on the page but invisible
+         (display: none in CSS). gallery.js adds "is-open" to show it
+         when a photo is clicked, and removes it to hide it again.
+
+         This block is identical on both property pages — do not change it.
+         ========================================================= -->
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox">
+
+      <!-- The photo displayed in full size -->
+      <img class="lightbox__image" src="" alt="">
+      <!-- src and alt are set dynamically by gallery.js -->
+
+      <!-- Close button — top right corner -->
+      <button class="lightbox__btn lightbox__close" aria-label="Close photo viewer">
+        &times;
+        <!-- &times; is the × character — a clean close icon without needing an icon font -->
+      </button>
+
+      <!-- Previous photo button -->
+      <button class="lightbox__btn lightbox__prev" aria-label="Previous photo">
+        &#8249;
+        <!-- &#8249; is the ‹ character — a single left angle quotation mark,
+             used here as a minimal left arrow -->
+      </button>
+
+      <!-- Next photo button -->
+      <button class="lightbox__btn lightbox__next" aria-label="Next photo">
+        &#8250;
+        <!-- &#8250; is the › character — right equivalent of the above -->
+      </button>
+
+      <!-- Position counter e.g. "3 / 8" — updated by gallery.js -->
+      <div class="lightbox__counter" aria-live="polite"></div>
+      <!-- aria-live="polite" means screen readers will announce the counter
+           update after the current speech finishes, not interrupting it -->
+
+    </div><!-- end .lightbox -->
+
+  </main><!-- end <main> -->
+
+
+  <!-- ============================================================
+       FOOTER — identical on all pages
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-note">
+        &copy; <span id="footer-year"></span> Swedish Stays. All rights reserved.
+        <!-- TODO: Replace "Swedish Stays" with the client's site/brand name -->
+      </p>
+      <p class="footer-note">
+        Bookings via
+        <a href="https://www.airbnb.com" class="link" target="_blank" rel="noopener noreferrer">Airbnb</a>
+        &amp;
+        <a href="https://www.booking.com" class="link" target="_blank" rel="noopener noreferrer">Booking.com</a>
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       SCRIPTS
+       Placed at the bottom of <body> so HTML renders first.
+       ============================================================ -->
+
+  <!-- Auto-update copyright year -->
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- gallery.js handles:
+       - Lightbox (open/close/navigate/keyboard)
+       - Review slideshow auto-advance
+       Note the path: ../ because this page is inside sodra-rorum/ -->
+  <script src="../js/gallery.js"></script>
+
+  <!-- Also add a CSS class to the hero section so gallery.js can find it.
+       This small inline script adds a click hint to the property hero image. -->
+  <script>
+    /* Add a visible "View all photos" prompt on the hero image.
+       We do this in JS rather than CSS so it degrades gracefully
+       if JS is disabled — the image still shows, just without the hint. */
+    var heroHint = document.querySelector('.property-hero__hint');
+    if (heroHint) {
+      heroHint.style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>

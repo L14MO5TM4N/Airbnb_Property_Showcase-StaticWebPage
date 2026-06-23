@@ -1,0 +1,415 @@
+/* =============================================================
+   gallery.css — Styles for photo galleries and lightbox
+   Used on: sodra-rorum/index.html and balinge/index.html
+
+   This file handles two things:
+     1. The photo grid thumbnails on property pages
+     2. The lightbox — the full-screen overlay that opens
+        when a thumbnail (or the hero image) is clicked
+
+   Structure of this file:
+     1. Photo grid (thumbnail layout)
+     2. Lightbox overlay
+     3. Lightbox navigation (prev/next arrows, close button)
+     4. Lightbox counter (e.g. "3 / 12")
+     5. Review slideshows
+     6. Responsive overrides
+   ============================================================= */
+
+
+/* =============================================================
+   1. PHOTO GRID
+
+   Displays property photos as a grid of thumbnails.
+   The first item (.photo-grid__item--featured) spans full width
+   and acts as the hero/featured image — it also links to the
+   lightbox so clicking it opens the gallery at photo 1.
+
+   Grid is 2 columns on mobile, 3 on desktop (see section 6).
+   ============================================================= */
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.photo-grid__item {
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  background-color: var(--color-surface);
+  cursor: pointer;      /* Pointer cursor signals "this is clickable" */
+  aspect-ratio: 4 / 3; /* Consistent thumbnail shape */
+  position: relative;
+}
+
+.photo-grid__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-normal);
+}
+
+/* Subtle zoom on hover — signals the image opens a lightbox */
+.photo-grid__item:hover img {
+  transform: scale(1.04);
+}
+
+/* A small icon overlay hint on hover — lets visitors know the image is openable */
+.photo-grid__item::after {
+  content: "⤢";           /* Unicode expand/zoom icon */
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  background-color: rgba(42, 33, 24, 0.55);
+  color: #FFFFFF;
+  font-size: var(--text-sm);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;             /* Hidden by default */
+  transition: opacity var(--transition-fast);
+  pointer-events: none;   /* The icon itself shouldn't block clicks */
+}
+
+.photo-grid__item:hover::after {
+  opacity: 1;
+}
+
+/* Featured/hero thumbnail — spans full grid width, wider aspect ratio.
+   This is the first image in the grid and also the hero image at the
+   top of the page. Clicking it opens the lightbox at index 0. */
+.photo-grid__item--featured {
+  grid-column: span 2;
+  aspect-ratio: 16 / 9;
+}
+
+
+/* =============================================================
+   2. LIGHTBOX OVERLAY
+
+   The lightbox is a full-screen dark overlay that appears on top
+   of the page when a gallery image is clicked. It shows one photo
+   at a time at maximum size.
+
+   It is hidden (display: none) by default. JavaScript adds the
+   class "is-open" to make it visible.
+
+   Why position: fixed?
+     fixed means the element is positioned relative to the browser
+     window, not the page. It stays in place even while scrolling.
+   ============================================================= */
+
+.lightbox {
+  display: none;            /* Hidden until JS opens it */
+  position: fixed;
+  inset: 0;                 /* Covers the entire viewport */
+  background-color: rgba(20, 14, 8, 0.92);  /* Very dark warm overlay */
+  z-index: 1000;            /* Above everything else on the page */
+  align-items: center;
+  justify-content: center;
+}
+
+/* "is-open" is added by JavaScript when a photo is clicked */
+.lightbox.is-open {
+  display: flex;
+}
+
+/* The image shown in the lightbox */
+.lightbox__image {
+  max-width: 90vw;          /* Never wider than 90% of the viewport width */
+  max-height: 85vh;         /* Never taller than 85% of the viewport height */
+  object-fit: contain;      /* Show the full image, no cropping */
+  border-radius: var(--border-radius);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+  display: block;
+
+  /* Fade in when a new image loads */
+  transition: opacity var(--transition-normal);
+}
+
+/* Used briefly while a new image is loading — JS toggles this */
+.lightbox__image.is-loading {
+  opacity: 0.3;
+}
+
+
+/* =============================================================
+   3. LIGHTBOX NAVIGATION
+
+   Close button (top right) and prev/next arrow buttons.
+   All three are positioned absolutely inside the lightbox.
+   ============================================================= */
+
+/* Shared base for all three lightbox control buttons */
+.lightbox__btn {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  line-height: 1;
+  transition: background-color var(--transition-fast);
+  padding: 0;
+}
+
+.lightbox__btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Close button: top-right corner */
+.lightbox__close {
+  top: var(--space-4);
+  right: var(--space-4);
+  font-size: 1.5rem;
+}
+
+/* Previous arrow: vertically centered on the left edge */
+.lightbox__prev {
+  left: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Next arrow: vertically centered on the right edge */
+.lightbox__next {
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+/* =============================================================
+   4. LIGHTBOX COUNTER
+
+   Shows the current position in the gallery e.g. "3 / 12".
+   Positioned at the bottom center of the lightbox.
+   ============================================================= */
+
+.lightbox__counter {
+  position: absolute;
+  bottom: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  letter-spacing: 0.05em;
+  pointer-events: none;   /* Counter is display-only, not interactive */
+}
+
+
+/* =============================================================
+   5. REVIEW SLIDESHOWS
+
+   Two side-by-side columns on the property page — one for
+   Airbnb reviews, one for Booking.com reviews.
+
+   Each column contains:
+     a) A static overall-rating image (e.g. a screenshot of the
+        platform's aggregate score badge)
+     b) An auto-advancing slideshow of individual review screenshots
+
+   Structure used in the HTML:
+
+     <div class="reviews-grid">
+       <div class="review-column">
+         <div class="review-column__platform">
+           <!-- OVERALL RATING IMAGE HERE -->
+           <img src="..." alt="Airbnb overall rating">
+         </div>
+         <div class="review-slideshow" data-review-slideshow>
+           <div class="review-slide is-active">
+             <!-- REVIEW SLIDE IMAGE HERE -->
+             <img src="..." alt="Airbnb review screenshot 1">
+           </div>
+           <div class="review-slide">
+             <!-- REVIEW SLIDE IMAGE HERE -->
+             <img src="..." alt="Airbnb review screenshot 2">
+           </div>
+           ...
+           <div class="review-slideshow__dots">
+             <button class="review-dot is-active" data-index="0"></button>
+             ...
+           </div>
+         </div>
+       </div>
+       <div class="review-column"> ... Booking.com column ... </div>
+     </div>
+   ============================================================= */
+
+/* Outer wrapper: two columns side by side (stacks on mobile) */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: 1fr;   /* Stacked on mobile */
+  gap: var(--space-8);
+  margin-top: var(--space-6);
+}
+
+/* Individual platform column */
+.review-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Platform label above the rating image */
+.review-column__label {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-wood);
+}
+
+/* Static overall-rating image container —
+   place a screenshot of the platform's aggregate score here */
+.review-column__platform {
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  padding: var(--space-3);
+  text-align: center;
+
+  /* OVERALL RATING IMAGE GOES HERE —
+     see HTML TODO comments for what image to place here */
+}
+
+.review-column__platform img {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Slideshow container for individual review screenshots */
+.review-slideshow {
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+
+  /* Fixed height so the column doesn't jump as slides change */
+  min-height: 200px;
+}
+
+/* Individual review slide — all stacked, only active one visible */
+.review-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+}
+
+.review-slide.is-active {
+  opacity: 1;
+  /* position: relative on the active slide lets the container size itself
+     to the content height */
+  position: relative;
+}
+
+/* REVIEW SLIDE IMAGE GOES HERE —
+   each slide contains one screenshot of an individual review */
+.review-slide img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--border-radius);
+}
+
+/* Dot navigation for the review slideshow */
+.review-slideshow__dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+}
+
+.review-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-border-strong);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+.review-dot.is-active {
+  background-color: var(--color-wood);
+  transform: scale(1.3);
+}
+
+.review-dot:hover {
+  background-color: var(--color-wood-light);
+}
+
+
+/* =============================================================
+   6. RESPONSIVE OVERRIDES
+
+   Most layout changes happen here — the base styles above
+   are mobile-first (single column, compact spacing).
+   ============================================================= */
+
+@media (min-width: 768px) {
+  /* Three-column photo grid on desktop */
+  .photo-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Featured image spans all three columns */
+  .photo-grid__item--featured {
+    grid-column: span 3;
+  }
+
+  /* Review columns side by side on desktop */
+  .reviews-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Taller review slideshow on desktop */
+  .review-slideshow {
+    min-height: 260px;
+  }
+
+  /* Larger lightbox prev/next buttons on desktop — easier to click */
+  .lightbox__btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  /* Push prev/next buttons further from the edge on wide screens */
+  .lightbox__prev { left: var(--space-8); }
+  .lightbox__next { right: var(--space-8); }
+}
+
+
+/* =============================================================
+   END OF gallery.css
+
+   JavaScript counterpart: js/gallery.js
+   Handles:
+     - Lightbox open/close/navigate
+     - Keyboard navigation (arrow keys, Escape)
+     - Hero image click → open lightbox at index 0
+     - Review slideshow auto-advance timers
+   ============================================================= */

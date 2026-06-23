@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<!--
+  index.html — Homepage
+  Airbnb Showcase Website
+  Properties: Södra Rörum (Hörby, Skåne) and Bälinge (Skåne)
+
+  Page structure:
+    1. <head>   — metadata, font loading, stylesheet links
+    2. <header> — site logo + navigation
+    3. <main>
+         a. Hero slideshow   — auto-advancing full-width photo banner
+         b. Properties       — two property cards side by side
+         c. About            — brief trust/context paragraph
+    4. <footer> — copyright and platform links
+
+  TODO items are marked throughout — fill these in before going live.
+-->
+<html lang="en">
+
+<head>
+  <!-- ============================================================
+       META & SEO
+       charset: tells the browser this file uses UTF-8 text encoding
+                (required for Swedish characters like ä, ö, å)
+       viewport: makes the layout mobile-responsive
+       description: shown in Google search results under the page title
+       ============================================================ -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Two unique holiday rentals in Sweden — Södra Rörum and Bälinge, both in Skåne. Book on Airbnb or Booking.com.">
+
+  <title>Swedish Holiday Rentals — Södra Rörum &amp; Bälinge</title>
+
+  <!-- ============================================================
+       GOOGLE FONTS
+       We load two typefaces:
+         - Playfair Display (headings): weight 700 (bold)
+         - Inter (body text): weights 400 (normal) and 500 (medium)
+
+       "display=swap" means the browser shows system fonts immediately
+       while the custom fonts load in the background — no blank text.
+
+       These must be loaded before style.css so the fonts are available
+       when the stylesheet runs.
+       ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- ============================================================
+       STYLESHEETS
+       style.css  — global visual rules (colors, fonts, layout)
+       gallery.css — lightbox and gallery-specific styles (added later)
+       ============================================================ -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- <link rel="stylesheet" href="css/gallery.css"> -->
+  <!-- Uncomment the line above once gallery.css has been created -->
+
+  <!-- ============================================================
+       FAVICON
+       TODO: Add a favicon.ico or favicon.png to the project root
+       and uncomment the line below. A favicon is the small icon
+       that appears in the browser tab.
+       ============================================================ -->
+  <!-- <link rel="icon" href="favicon.ico"> -->
+</head>
+
+<body>
+
+  <!-- ============================================================
+       HEADER
+       The <header> element is a semantic landmark — screen readers
+       and search engines understand it as the site's top navigation.
+
+       "sticky" positioning (set in CSS) keeps it visible while scrolling.
+       ============================================================ -->
+  <header class="site-header">
+    <div class="container">
+
+      <!-- Site logo: clicking it always returns to the homepage -->
+      <a href="/" class="site-logo">Swedish Stays</a>
+      <!-- TODO: Replace "Swedish Stays" with the client's preferred site name -->
+
+      <!-- aria-label names this nav region for screen readers,
+           since a page can have more than one <nav> element -->
+      <nav aria-label="Main navigation">
+        <ul class="nav-links">
+          <!-- aria-current="page" marks the active link visually (CSS handles
+               the underline style) and communicates it to screen readers -->
+          <li><a href="/" aria-current="page">Home</a></li>
+          <li><a href="sodra-rorum/">Södra Rörum</a></li>
+          <li><a href="balinge/">Bälinge</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <!-- ============================================================
+       MAIN CONTENT
+       <main> is a semantic landmark — there should be only one per page.
+       It wraps all the unique content of this page (not the header/footer).
+       ============================================================ -->
+  <main>
+
+    <!-- =========================================================
+         HERO SLIDESHOW
+
+         A full-width image banner that automatically cycles through
+         multiple photos. JavaScript (gallery.js) handles the timing
+         and transitions; CSS handles the fade effect.
+
+         How it works:
+           - All slides are stacked on top of each other
+           - Only the slide with class "is-active" is visible (opacity: 1)
+           - JS removes "is-active" from the current slide and adds it
+             to the next one every X seconds — CSS fades between them
+           - The dot buttons at the bottom let users jump to any slide
+
+         Add as many .hero-slideshow__slide divs as you have photos.
+         The first one has "is-active" so something is visible immediately
+         before JavaScript runs.
+
+         TODO: Replace the src attributes with real hero images.
+               Recommended: landscape, at least 1600px wide, well-lit.
+               Good candidates: exterior shots, landscape views, garden.
+         ========================================================= -->
+    <section class="hero-slideshow" aria-label="Property photo slideshow">
+
+      <!-- Slide track: all slides live here, stacked via CSS -->
+      <div class="hero-slideshow__track">
+
+        <!-- Slide 1: visible on load (is-active) -->
+        <div class="hero-slideshow__slide is-active">
+          <img
+            src="images/shared/hero-1.jpg"
+            alt="Scenic view of the Swedish countryside"
+            loading="eager"
+            width="1600"
+            height="900"
+          >
+          <!-- loading="eager" on the first slide: load immediately, don't wait -->
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="hero-slideshow__slide">
+          <img
+            src="images/shared/hero-2.jpg"
+            alt="Exterior of Södra Rörum farmhouse"
+            loading="lazy"
+            width="1600"
+            height="900"
+          >
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="hero-slideshow__slide">
+          <img
+            src="images/shared/hero-3.jpg"
+            alt="Countryside landscape in Skåne"
+            loading="lazy"
+            width="1600"
+            height="900"
+          >
+        </div>
+
+        <!-- TODO: Add more slides by copying a <div class="hero-slideshow__slide">
+                   block above. Also add a matching dot button below.
+                   Store hero images in images/shared/ since they represent
+                   both properties, not one specific property. -->
+
+      </div><!-- end .hero-slideshow__track -->
+
+      <!-- Overlay: text sits on top of the photos with a gradient behind it -->
+      <div class="hero-slideshow__overlay">
+        <p class="hero__eyebrow">Holiday Rentals · Skåne, Sweden</p>
+        <h1 class="hero__title">Two places to slow down in Sweden</h1>
+        <p class="hero__subtitle">
+          A farmhouse and a countryside retreat, both in Skåne.
+          Available to book on Airbnb and Booking.com.
+        </p>
+        <!-- TODO: Adjust this text to match the client's preferred tone -->
+      </div>
+
+      <!-- Dot navigation — one dot per slide.
+           aria-label gives screen readers a description of each button.
+           The JS file reads data-index to know which slide to jump to. -->
+      <div class="hero-slideshow__dots" aria-label="Slideshow navigation">
+        <button class="hero-slideshow__dot is-active" data-index="0" aria-label="Go to slide 1"></button>
+        <button class="hero-slideshow__dot" data-index="1" aria-label="Go to slide 2"></button>
+        <button class="hero-slideshow__dot" data-index="2" aria-label="Go to slide 3"></button>
+        <!-- TODO: Add a dot button for each additional slide you add above -->
+      </div>
+
+    </section><!-- end .hero-slideshow -->
+
+
+    <!-- =========================================================
+         PROPERTIES SECTION
+
+         Two property cards — one per property.
+         Stack vertically on mobile, side by side on desktop (CSS grid).
+         ========================================================= -->
+    <section class="section section--light" aria-labelledby="properties-heading">
+      <div class="container">
+
+        <h2 id="properties-heading">Our properties</h2>
+
+        <!-- Short wood-tone decorative rule under the heading -->
+        <hr class="divider--wood">
+
+        <p class="text-lead">Each property is unique — choose the one that fits your trip.</p>
+
+        <!-- Property card grid -->
+        <div class="property-grid">
+
+
+          <!-- -------------------------------------------------------
+               CARD 1: Södra Rörum
+               ------------------------------------------------------- -->
+          <article class="property-card" aria-label="Södra Rörum property">
+            <!--
+              <article> is the correct element here: each card is a
+              self-contained piece of content about a specific property.
+
+              The image uses:
+                src     — path to the cover photo (relative to index.html)
+                alt     — text description for screen readers and if the image fails
+                loading — "lazy" means the browser loads this only when scrolled near
+                width/height — help the browser reserve space before the image loads
+            -->
+            <img
+              class="property-card__image"
+              src="images/sodra-rorum/cover.jpg"
+              alt="Exterior view of Södra Rörum, a farmhouse rental in Hörby, Skåne"
+              loading="lazy"
+              width="600"
+              height="400"
+            >
+            <!-- TODO: Add a real cover photo at images/sodra-rorum/cover.jpg
+                       Recommended: landscape, at least 1200px wide -->
+
+            <div class="property-card__body">
+
+              <!-- Eyebrow label: location context above the property name -->
+              <span class="eyebrow">Hörby · Skåne</span>
+
+              <!-- h3 because the page h1 is the hero title, h2 is "Our properties" -->
+              <h3 class="property-card__title">Södra Rörum</h3>
+
+              <p class="property-card__description">
+                A quiet farmhouse in the rolling countryside of Skåne.
+                Surrounded by fields and birdsong — the kind of place
+                you arrive at and immediately feel your shoulders drop.
+              </p>
+              <!-- TODO: Replace with actual property description from client -->
+
+              <!-- Quick facts line -->
+              <p class="property-card__location">
+                <!-- TODO: Update with accurate details -->
+                Up to 4 guests &middot; 2 bedrooms &middot; Entire home
+              </p>
+
+              <div class="property-card__actions">
+
+                <!-- Primary action: go to this property's detail page -->
+                <a href="sodra-rorum/" class="btn btn-primary">
+                  View property
+                </a>
+
+                <!-- External booking links open in a new tab.
+                     rel="noopener noreferrer" is a security best practice
+                     for all target="_blank" links. -->
+                <a
+                  href="https://www.airbnb.com/rooms/TODO_SODRA_RORUM_ID"
+                  class="btn btn-secondary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Airbnb
+                </a>
+                <!-- TODO: Replace TODO_SODRA_RORUM_ID with the real Airbnb listing ID
+                           e.g. https://www.airbnb.com/rooms/12345678 -->
+
+                <a
+                  href="https://www.booking.com/hotel/se/TODO_SODRA_RORUM_SLUG.html"
+                  class="btn btn-secondary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Booking.com
+                </a>
+                <!-- TODO: Replace TODO_SODRA_RORUM_SLUG with the real Booking.com
+                           property URL slug — found in the property's Booking.com address -->
+
+              </div>
+
+            </div>
+          </article><!-- end card: Södra Rörum -->
+
+
+          <!-- -------------------------------------------------------
+               CARD 2: Bälinge
+               Note: Bälinge is in Skåne, not Uppsala.
+               ------------------------------------------------------- -->
+          <article class="property-card" aria-label="Bälinge property">
+
+            <img
+              class="property-card__image"
+              src="images/balinge/cover.jpg"
+              alt="Exterior view of Bälinge, a countryside rental in Skåne"
+              loading="lazy"
+              width="600"
+              height="400"
+            >
+            <!-- TODO: Add a real cover photo at images/balinge/cover.jpg -->
+
+            <div class="property-card__body">
+
+              <span class="eyebrow">Bälinge · Skåne</span>
+              <!-- Bälinge is in Skåne — corrected from earlier Uppsala reference -->
+
+              <h3 class="property-card__title">Bälinge</h3>
+
+              <p class="property-card__description">
+                A peaceful countryside retreat in the heart of Skåne.
+                Open skies, space to breathe, and the calm that only
+                rural Sweden delivers.
+              </p>
+              <!-- TODO: Replace with actual property description from client -->
+
+              <p class="property-card__location">
+                <!-- TODO: Update with accurate details -->
+                Up to 6 guests &middot; 3 bedrooms &middot; Entire home
+              </p>
+
+              <div class="property-card__actions">
+
+                <a href="balinge/" class="btn btn-primary">
+                  View property
+                </a>
+
+                <a
+                  href="https://www.airbnb.com/rooms/TODO_BALINGE_ID"
+                  class="btn btn-secondary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Airbnb
+                </a>
+                <!-- TODO: Replace TODO_BALINGE_ID with the real Airbnb listing ID -->
+
+                <a
+                  href="https://www.booking.com/hotel/se/TODO_BALINGE_SLUG.html"
+                  class="btn btn-secondary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Booking.com
+                </a>
+                <!-- TODO: Replace TODO_BALINGE_SLUG with the real Booking.com URL slug -->
+
+              </div>
+
+            </div>
+          </article><!-- end card: Bälinge -->
+
+
+        </div><!-- end .property-grid -->
+      </div><!-- end .container -->
+    </section><!-- end properties section -->
+
+
+    <!-- =========================================================
+         ABOUT SECTION
+         A short trust paragraph. Deliberately kept brief — the
+         properties speak for themselves.
+         ========================================================= -->
+    <section class="section section--warm" aria-labelledby="about-heading">
+      <div class="container">
+
+        <h2 id="about-heading">About these rentals</h2>
+        <hr class="divider--wood">
+
+        <p class="text-lead">
+          Both properties are privately owned and listed on Airbnb
+          and Booking.com. All bookings, availability, and payments
+          are handled through those platforms — use the buttons on
+          each property to see live availability and reserve.
+        </p>
+
+        <p style="margin-top: 1rem; color: var(--color-text-muted);">
+          Questions? Reach the host directly through your booking platform.
+        </p>
+        <!-- TODO: If the client wants a direct contact method listed here
+                   (e.g. an email or phone), add it here. Keep it simple. -->
+
+      </div>
+    </section>
+
+  </main><!-- end <main> -->
+
+
+  <!-- ============================================================
+       FOOTER
+       Minimal by design — the site's job is to send visitors to
+       the booking platforms, not to keep them on this page.
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+
+      <p class="footer-note">
+        <!-- &copy; is the © copyright symbol in HTML -->
+        &copy; <span id="footer-year"></span> Swedish Stays. All rights reserved.
+        <!-- TODO: Replace "Swedish Stays" with the client's site/brand name -->
+      </p>
+
+      <p class="footer-note">
+        Bookings via
+        <a
+          href="https://www.airbnb.com"
+          class="link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Airbnb</a>
+        &amp;
+        <a
+          href="https://www.booking.com"
+          class="link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Booking.com</a>
+      </p>
+
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       SCRIPTS
+       Placed at the bottom of <body> so the HTML renders before
+       JavaScript runs. This makes the page feel faster.
+       ============================================================ -->
+
+  <!-- Auto-update copyright year so the footer never shows a stale year -->
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- ============================================================
+       HERO SLIDESHOW SCRIPT
+
+       This script makes the hero image rotate automatically.
+       It also wires up the dot buttons for manual navigation.
+
+       How it works:
+         1. Collect all slides and all dot buttons into arrays
+         2. Keep track of which slide is currently shown (currentIndex)
+         3. Every INTERVAL milliseconds, call nextSlide()
+         4. nextSlide() removes "is-active" from the current slide/dot
+            and adds it to the next one — CSS fades between them
+         5. Each dot button, when clicked, jumps directly to that slide
+
+       To change the speed: adjust INTERVAL (value is in milliseconds;
+       5000 = 5 seconds).
+       ============================================================ -->
+  <script>
+    (function () {
+      // How long each slide is shown before advancing (in milliseconds)
+      var INTERVAL = 5000;  // 5 seconds — adjust to taste
+
+      // Grab all slides and dots from the DOM
+      var slides = document.querySelectorAll('.hero-slideshow__slide');
+      var dots   = document.querySelectorAll('.hero-slideshow__dot');
+
+      // If there are no slides (e.g. slideshow not on this page), stop here
+      if (!slides.length) return;
+
+      var currentIndex = 0;  // Index of the currently visible slide
+      var timer;             // Reference to the auto-advance timer
+
+      // Show the slide at the given index and update the active dot
+      function goToSlide(index) {
+        // Remove "is-active" from whichever slide and dot are currently active
+        slides[currentIndex].classList.remove('is-active');
+        dots[currentIndex].classList.remove('is-active');
+
+        // Update the index, wrapping back to 0 after the last slide
+        currentIndex = (index + slides.length) % slides.length;
+
+        // Add "is-active" to the new current slide and dot
+        slides[currentIndex].classList.add('is-active');
+        dots[currentIndex].classList.add('is-active');
+      }
+
+      // Advance to the next slide
+      function nextSlide() {
+        goToSlide(currentIndex + 1);
+      }
+
+      // Start the automatic timer
+      function startTimer() {
+        timer = setInterval(nextSlide, INTERVAL);
+      }
+
+      // Stop the timer (used when a user clicks a dot manually —
+      // we reset the timer so their chosen slide gets a full interval)
+      function resetTimer() {
+        clearInterval(timer);
+        startTimer();
+      }
+
+      // Wire up each dot button to jump to its slide
+      dots.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+          var index = parseInt(dot.getAttribute('data-index'), 10);
+          goToSlide(index);
+          resetTimer();  // Reset auto-advance so this slide gets full time
+        });
+      });
+
+      // Kick off the auto-advance
+      startTimer();
+    })();
+    // The function is wrapped in (function(){ ... })() — an "immediately invoked
+    // function expression" (IIFE). This keeps all the variables (slides, dots,
+    // currentIndex, timer) private and out of the global scope, preventing
+    // conflicts with other scripts on the page.
+  </script>
+
+  <!-- gallery.js will be added here once built -->
+  <!-- <script src="js/gallery.js"></script> -->
+
+</body>
+</html>
