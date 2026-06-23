@@ -123,57 +123,108 @@
 
 
     <!-- =========================================================
-         INTRO — title, description, quick facts, booking buttons
+         INTRO — two-column layout on desktop:
+           Left column:  eyebrow, title, description, quick facts, booking buttons
+           Right column: YouTube live camera placeholder
+
+         On mobile both columns stack vertically (left on top, right below).
+         The placeholder width matches the booking buttons naturally because
+         both columns share equal space in the grid.
          ========================================================= -->
-    <section class="section" aria-labelledby="property-title">
+    <section class="section property-intro" aria-labelledby="property-title">
       <div class="container">
+        <div class="intro-grid">
 
-        <span class="eyebrow">Hörby · Skåne</span>
-        <!-- TODO: Update location label for Bälinge page -->
+          <!-- -----------------------------------------------
+               LEFT COLUMN — text and booking buttons
+               ----------------------------------------------- -->
+          <div class="intro-grid__text">
 
-        <h1 id="property-title">Södra Rörum</h1>
-        <!-- TODO: Update property name for Bälinge page -->
+            <span class="eyebrow">Hörby · Skåne</span>
+            <!-- TODO: Update location label for Bälinge page -->
 
-        <hr class="divider--wood">
+            <h1 id="property-title">Södra Rörum</h1>
+            <!-- TODO: Update property name for Bälinge page -->
 
-        <p class="text-lead">
-          A quiet farmhouse in the rolling countryside of Skåne.
-          Surrounded by fields and birdsong — the kind of place
-          you arrive at and immediately feel your shoulders drop.
-        </p>
-        <!-- TODO: Replace with the real property description from the client.
-                   Aim for 2–4 sentences. Focus on feeling, not features —
-                   the amenities list below handles the specifics. -->
+            <hr class="divider--wood">
 
-        <p style="margin-top: var(--space-4); color: var(--color-text-muted);">
-          <!-- TODO: Fill in accurate numbers for this property -->
-          Up to 4 guests &middot; 2 bedrooms &middot; 1 bathroom &middot; Entire home
-        </p>
+            <p class="text-lead">
+              A quiet farmhouse in the rolling countryside of Skåne.
+              Surrounded by fields and birdsong — the kind of place
+              you arrive at and immediately feel your shoulders drop.
+            </p>
+            <!-- TODO: Replace with the real property description from the client.
+                       Aim for 2-4 sentences. Focus on feeling, not features —
+                       the amenities list below handles the specifics. -->
 
-        <!-- Booking buttons — same pattern as the homepage cards -->
-        <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6);">
-          <a
-            href="https://www.airbnb.com/rooms/TODO_SODRA_RORUM_ID"
-            class="btn btn-primary"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Book on Airbnb
-          </a>
-          <!-- TODO: Replace TODO_SODRA_RORUM_ID with the real Airbnb listing ID -->
+            <p class="intro-grid__facts">
+              <!-- TODO: Fill in accurate numbers for this property -->
+              Up to 4 guests &middot; 2 bedrooms &middot; 1 bathroom &middot; Entire home
+            </p>
 
-          <a
-            href="https://www.booking.com/hotel/se/TODO_SODRA_RORUM_SLUG.html"
-            class="btn btn-secondary"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Book on Booking.com
-          </a>
-          <!-- TODO: Replace TODO_SODRA_RORUM_SLUG with the real Booking.com URL slug -->
-        </div>
+            <!-- Booking buttons -->
+            <div class="intro-grid__buttons">
+              <a
+                href="https://www.airbnb.com/rooms/TODO_SODRA_RORUM_ID"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book on Airbnb
+              </a>
+              <!-- TODO: Replace TODO_SODRA_RORUM_ID with the real Airbnb listing ID -->
 
-      </div>
+              <a
+                href="https://www.booking.com/hotel/se/TODO_SODRA_RORUM_SLUG.html"
+                class="btn btn-secondary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book on Booking.com
+              </a>
+              <!-- TODO: Replace TODO_SODRA_RORUM_SLUG with the real Booking.com URL slug -->
+            </div>
+
+          </div><!-- end .intro-grid__text -->
+
+
+          <!-- -----------------------------------------------
+               RIGHT COLUMN — YouTube live camera placeholder
+
+               When the live duck pond camera is ready:
+                 1. Remove the entire .youtube-placeholder div
+                 2. Replace it with a standard YouTube embed iframe:
+
+               <iframe
+                 class="youtube-embed"
+                 src="https://www.youtube.com/embed/LIVE_STREAM_ID?autoplay=1&mute=1"
+                 title="Live duck pond camera at Sodra Rorum"
+                 allow="autoplay; encrypted-media; picture-in-picture"
+                 allowfullscreen
+                 loading="lazy"
+               ></iframe>
+
+               The .intro-grid__media wrapper and its CSS will handle
+               sizing automatically — no other changes needed.
+               ----------------------------------------------- -->
+          <div class="intro-grid__media">
+
+            <!-- Placeholder box — remove and replace with iframe when live -->
+            <div class="youtube-placeholder" aria-label="Live camera coming soon">
+
+              <!-- Camera icon using a unicode emoji — no icon library needed -->
+              <div class="youtube-placeholder__icon" aria-hidden="true">&#x1F4F9;</div>
+              <!-- &#x1F4F9; renders as the video camera emoji in all modern browsers -->
+
+              <p class="youtube-placeholder__text">Live duck pond camera</p>
+              <p class="youtube-placeholder__sub">Coming soon</p>
+
+            </div><!-- end .youtube-placeholder -->
+
+          </div><!-- end .intro-grid__media -->
+
+        </div><!-- end .intro-grid -->
+      </div><!-- end .container -->
     </section>
 
 

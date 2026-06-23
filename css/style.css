@@ -238,7 +238,9 @@ p {
   padding-right: var(--page-padding);
 }
 
-/* .section adds vertical breathing room between page sections */
+/* .section adds vertical breathing room between page sections.
+   Slightly tighter than a typical blog/marketing site — these pages
+   are content-dense (photos, reviews, map) so compact spacing feels better. */
 .section {
   padding-top: var(--space-12);
   padding-bottom: var(--space-12);
@@ -852,8 +854,8 @@ p {
   }
 
   .section {
-    padding-top: var(--space-16);
-    padding-bottom: var(--space-16);
+    padding-top: var(--space-14);
+    padding-bottom: var(--space-14);
   }
 }
 
@@ -945,4 +947,128 @@ p {
 
 /* =============================================================
    END OF PROPERTY HERO ADDITIONS
+   ============================================================= */
+
+
+/* =============================================================
+   PROPERTY INTRO — two-column grid (property pages)
+
+   Left column:  title, description, quick facts, booking buttons
+   Right column: YouTube live camera (placeholder until live)
+
+   On mobile: single column, text on top, media below.
+   On desktop: side by side, roughly 55% / 45% split.
+   ============================================================= */
+
+/* Outer grid wrapper — single column on mobile */
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: start;  /* Both columns align to the top, not stretched */
+}
+
+/* Left column: no special sizing needed, fills available space */
+.intro-grid__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Quick facts line (guests, bedrooms, etc.) */
+.intro-grid__facts {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  margin-top: var(--space-1);
+}
+
+/* Booking buttons row */
+.intro-grid__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+/* Right column: holds the placeholder or the live iframe.
+   Sized to roughly match the combined width of the two booking
+   buttons — the CSS handles this automatically on desktop via the grid. */
+.intro-grid__media {
+  width: 100%;
+}
+
+/* The YouTube iframe itself — applied when the placeholder is replaced.
+   Maintains a 16:9 aspect ratio at any width. */
+.youtube-embed {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+  border-radius: var(--border-radius-lg);
+  display: block;
+}
+
+
+/* =============================================================
+   YOUTUBE PLACEHOLDER
+
+   A styled box shown in the right column until the live camera
+   is ready. Replaced by an <iframe> when the stream goes live.
+   The .intro-grid__media wrapper handles sizing — this box just
+   needs to fill it and look intentional.
+   ============================================================= */
+
+.youtube-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;     /* Same ratio as a real YouTube embed */
+  background-color: var(--color-surface);
+  border: 2px dashed var(--color-border-strong);
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+/* The camera emoji icon */
+.youtube-placeholder__icon {
+  font-size: 2rem;           /* Large enough to read clearly */
+  line-height: 1;
+  opacity: 0.6;
+}
+
+/* "Live duck pond camera" text */
+.youtube-placeholder__text {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* "Coming soon" sub-label */
+.youtube-placeholder__sub {
+  font-size: var(--text-sm);
+  color: var(--color-wood-light);
+  font-style: italic;
+  margin: 0;
+}
+
+
+/* Responsive: two-column intro grid on desktop */
+@media (min-width: 768px) {
+  .intro-grid {
+    /* Left column takes ~58%, right column ~42%.
+       This gives the text room to breathe while keeping the
+       placeholder proportional to the booking buttons below it. */
+    grid-template-columns: 58fr 42fr;
+    gap: var(--space-10);
+  }
+}
+
+/* =============================================================
+   END OF INTRO GRID AND YOUTUBE PLACEHOLDER
    ============================================================= */
