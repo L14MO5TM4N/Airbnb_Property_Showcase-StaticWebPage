@@ -91,6 +91,7 @@
   --space-8:  2rem;      /* 32px */
   --space-10: 2.5rem;    /* 40px */
   --space-12: 3rem;      /* 48px */
+  --space-14: 2.5rem;    /* 40px */
   --space-16: 4rem;      /* 64px */
   --space-20: 5rem;      /* 80px */
 
@@ -393,6 +394,7 @@ p {
   font-size: var(--text-base);
   font-weight: var(--weight-medium);
   line-height: 1;
+  min-height: 44px; /* or whatever height looks right */
   padding: var(--space-3) var(--space-5);
   border-radius: var(--border-radius);
   border: 2px solid transparent;
@@ -440,6 +442,22 @@ p {
   padding: var(--space-2) var(--space-4);
 }
 
+/* icon inside button */
+.btn__icon {
+  object-fit: contain;
+  height: 1em;
+  width: auto;
+  flex-shrink: 0;
+
+}
+
+/* Airbnb's logo has more internal padding baked into its SVG viewBox
+   than the Booking.com one, so it renders visually smaller at the
+   same font-relative height. Bump it up slightly to match. */
+.btn__icon--airbnb {
+  height: 1.26em; /* tweak this number until it visually matches Booking.com */
+}
+
 /* Inline text link */
 .link {
   color: var(--color-accent);
@@ -479,7 +497,8 @@ p {
   border-radius: var(--border-radius-lg);
   overflow: hidden;    /* Keeps the cover photo inside the rounded corners */
   box-shadow: var(--shadow-sm);
-
+  display: flex;            /*   v                    v                */
+  flex-direction: column;  /* changing property to fix buttons to card */
   /* Wood-tone left border: the card's signature detail */
   border-left: 4px solid var(--color-wood);
 
@@ -507,6 +526,7 @@ p {
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
+  flex: 1; /* property to fix buttons to card */
   gap: var(--space-3);
 }
 
@@ -536,7 +556,7 @@ p {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-top: var(--space-2);
+  margin-top: auto; /* var(--space-2); */
 }
 
 /* Slightly tighter horizontal padding on buttons inside cards,
