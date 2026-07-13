@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<!--
+  balinge/index.html — Property page: Bälinge
+  Airbnb Showcase Website
+
+  TO CREATE THE BÄLINGE PAGE:
+    1. Copy this file to balinge/index.html
+    2. Find and replace every instance of:
+         "Södra Rörum"  →  "Bälinge"
+         "sodra-rorum"  →  "balinge"
+         "Hörby"        →  [Bälinge's nearest town/village]
+    3. Update all TODO items with Bälinge-specific content
+    4. Update the Airbnb and Booking.com URLs
+    5. Update the Google Maps embed src and directions link
+    6. Update image paths to point at images/balinge/
+
+  Page structure:
+    1. <head>   — metadata, fonts, stylesheets
+    2. <header> — site logo + navigation (same on all pages)
+    3. <main>
+         a. Hero image      — full-width, clicking opens the gallery lightbox
+         b. Intro           — property title, description, quick facts
+         c. Reviews         — two side-by-side image slideshows (Airbnb + Booking.com)
+                              each with a static overall-rating image on top
+         d. Map             — embedded Google Maps + Get Directions button
+         e. Gallery         — photo grid (thumbnails open lightbox when clicked)
+         f. Lightbox        — hidden overlay, activated by JS when photos are clicked
+    4. <footer>
+-->
+<html lang="en">
+
+<head>
+  <!-- ============================================================
+       META & SEO
+       ============================================================ -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bälinge — Lake cottage with private pier by the lake in Bälinge, Skåne, Sweden. Book on Airbnb or Booking.com.">
+
+  <title>Bälinge — Holiday Rental in Skåne, Sweden</title>
+
+  <!-- ============================================================
+       GOOGLE FONTS — same as homepage
+       ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- ============================================================
+       STYLESHEETS
+       Note the path: this page is inside sodra-rorum/ so we need
+       to go up one level (../) to reach the css/ folder
+       ============================================================ -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/gallery.css">
+
+  <!-- TODO: Add favicon once available
+  <link rel="icon" href="../favicon.ico"> -->
+</head>
+
+<body>
+
+  <!-- ============================================================
+       HEADER — identical on all pages
+       Only change: aria-current="page" moves to the correct nav link
+       ============================================================ -->
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="site-logo">Swedish Stays</a>
+      <!-- TODO: Replace "Swedish Stays" with the client's site name -->
+
+      <nav aria-label="Main navigation">
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="../sodra-rorum/">Södra Rörum</a></li>
+          <li><a href="../balinge/" aria-current="page">Bälinge</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- =========================================================
+         HERO IMAGE
+
+         A full-width photo at the very top of the property page.
+         Wrapping it in <a class="hero-image-link"> makes the whole
+         image clickable — gallery.js intercepts this click and
+         opens the lightbox at index 0 instead of following the link.
+
+         Use the same strong cover photo here as the card image on
+         the homepage — visitors arriving from the card will see a
+         consistent image.
+         ========================================================= -->
+    <section class="property-hero" aria-label="Property cover photo">
+
+      <!-- The href="#gallery" is a fallback in case JS hasn't loaded.
+           gallery.js overrides the click and opens the lightbox instead. -->
+      <a href="#gallery" class="hero-image-link" aria-label="Open photo gallery">
+        <img
+          src="../media/balinge-media/cover.avif"
+          alt="Exterior view of Bälinge lake cottage in Bälinge, Skåne"
+          class="property-hero__image"
+          loading="eager"
+          width="1600"
+          height="900"
+        >
+
+        <!-- Small overlay hint so visitors know the image is clickable -->
+        <span class="property-hero__hint" aria-hidden="true">
+          View all photos
+        </span>
+      </a>
+
+    </section>
+
+
+    <!-- =========================================================
+         INTRO — two-column layout on desktop:
+           Left column:  eyebrow, title, description, quick facts, booking buttons
+           Right column: YouTube live camera placeholder
+
+         On mobile both columns stack vertically (left on top, right below).
+         The placeholder width matches the booking buttons naturally because
+         both columns share equal space in the grid.
+         ========================================================= -->
+    <section class="section property-intro" aria-labelledby="property-title">
+      <div class="container">
+        <div class="intro-grid">
+
+          <!-- -----------------------------------------------
+               LEFT COLUMN — text and booking buttons
+               ----------------------------------------------- -->
+          <div class="intro-grid__text">
+
+            <span class="eyebrow">Hörby · Skåne</span>
+            <!-- TODO: Update location label for Bälinge page -->
+
+            <h1 id="property-title">Bälinge</h1>
+            <!-- TODO: Update property name for Bälinge page -->
+
+            <hr class="divider--wood">
+
+            <p class="text-lead">
+              Welcome to Bälinge Lakehouse.
+              Escape to our lake house nestled on the serene of Bälinge lake. 
+              Enjoy direct access to the lake with a private pier/dock belongs
+              to the house and a rowing boat, perfect for morning swims 
+              or fishing. Fully equipped kitchen, fast Wi-Fi, and a fireplace 
+              for cozy evenings. 1400 square meter garden, BBQ area. 
+              This historical home, over 100 years old, offers a perfect blend 
+              of rustic charm and modern comforts.
+              
+              
+              
+            </p>
+
+
+            <p class="intro-grid__facts">
+              <!-- TODO: Fill in accurate numbers for this property -->
+              Up to 4 guests &middot; 2 bedrooms &middot; 1 bathroom &middot; Entire home
+            </p>
+
+            <!-- Booking buttons -->
+            <div class="intro-grid__buttons">
+              <a
+                href="https://www.airbnb.com/rooms/TODO_SODRA_RORUM_ID"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book on Airbnb
+              </a>
+              <!-- TODO: Replace TODO_SODRA_RORUM_ID with the real Airbnb listing ID -->
+
+              <a
+                href="https://www.booking.com/hotel/se/TODO_SODRA_RORUM_SLUG.html"
+                class="btn btn-secondary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book on Booking.com
+              </a>
+              <!-- TODO: Replace TODO_SODRA_RORUM_SLUG with the real Booking.com URL slug -->
+            </div>
+
+          </div><!-- end .intro-grid__text -->
+
+
+          <!-- -----------------------------------------------
+               RIGHT COLUMN — YouTube live camera placeholder
+
+               When the live duck pond camera is ready:
+                 1. Remove the entire .youtube-placeholder div
+                 2. Replace it with a standard YouTube embed iframe:
+
+               <iframe
+                 class="youtube-embed"
+                 src="https://www.youtube.com/embed/LIVE_STREAM_ID?autoplay=1&mute=1"
+                 title="Live duck pond camera at Sodra Rorum"
+                 allow="autoplay; encrypted-media; picture-in-picture"
+                 allowfullscreen
+                 loading="lazy"
+               ></iframe>
+
+               The .intro-grid__media wrapper and its CSS will handle
+               sizing automatically — no other changes needed.
+               ----------------------------------------------- -->
+          <div class="intro-grid__media">
+
+            <!-- Placeholder box — remove and replace with iframe when live -->
+            <div class="youtube-placeholder" aria-label="Live camera coming soon">
+
+              <!-- Camera icon using a unicode emoji — no icon library needed -->
+              <div class="youtube-placeholder__icon" aria-hidden="true">&#x1F4F9;</div>
+              <!-- &#x1F4F9; renders as the video camera emoji in all modern browsers -->
+
+              <p class="youtube-placeholder__text">Live duck pond camera</p>
+              <p class="youtube-placeholder__sub">Coming soon</p>
+
+            </div><!-- end .youtube-placeholder -->
+
+          </div><!-- end .intro-grid__media -->
+
+        </div><!-- end .intro-grid -->
+      </div><!-- end .container -->
+    </section>
+
+
+    <!-- =========================================================
+         AMENITIES
+         A grid of features: WiFi, parking, pets, etc.
+         Add or remove .amenity-item elements as needed.
+         ========================================================= -->
+    <section class="section section--light" aria-labelledby="amenities-heading">
+      <div class="container">
+
+        <h2 id="amenities-heading">What's included</h2>
+        <hr class="divider--wood">
+
+        <ul class="amenities-grid">
+          <!-- TODO: Replace these with the actual amenities for this property -->
+          <li class="amenity-item">Free WiFi</li>
+          <li class="amenity-item">Free parking</li>
+          <li class="amenity-item">Full kitchen</li>
+          <li class="amenity-item">Washing machine</li>
+          <li class="amenity-item">Outdoor seating</li>
+          <li class="amenity-item">BBQ grill</li>
+          <li class="amenity-item">Pets allowed</li>
+          <li class="amenity-item">Self check-in</li>
+        </ul>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         REVIEWS
+
+         Two columns side by side — Airbnb on the left,
+         Booking.com on the right (stacks on mobile).
+
+         Each column has:
+           1. A static image showing the overall platform rating
+              (screenshot the rating badge from each platform)
+           2. An auto-advancing slideshow of individual review
+              screenshots (up to 5 recommended)
+
+         The [data-review-slideshow] attribute is what gallery.js
+         uses to find and initialise each slideshow independently.
+         ========================================================= -->
+    <section class="section section--warm" aria-labelledby="reviews-heading">
+      <div class="container">
+
+        <h2 id="reviews-heading">What guests say</h2>
+        <hr class="divider--wood">
+
+        <div class="reviews-grid">
+
+          <div class="review-column">
+
+            <p class="review-column__label">Airbnb</p>
+
+            <!-- Overall rating image — static, not part of the slideshow.
+                 Screenshot the aggregate rating display from the Airbnb
+                 listing page (e.g. "4.97 · 62 reviews") and place it here. -->
+            <div class="review-column__platform">
+              <img
+                src="../media/balinge-media/reviews/airbnb-overall-review-07-26.jpg"
+                alt="Bälinge overall rating on Airbnb"
+              >
+              <!-- OVERALL AIRBNB RATING IMAGE GOES HERE -->
+
+            </div>
+
+            <!-- Individual review screenshots — auto-advance every 6 seconds.
+                 Add one .review-slide per screenshot (up to 5 recommended).
+                 Each slide should contain one screenshot of one review. -->
+            <div class="review-slideshow" data-review-slideshow>
+
+              <!-- Slide 1 (visible on load) -->
+              <div class="review-slide is-active">
+                <img
+                  src="../media/balinge-media/reviews/airbnb-r1.jpg"
+                  alt="Airbnb guest review screenshot 1"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <!-- Slide 2 -->
+              <div class="review-slide">
+                <img
+                  src="../media/balinge-media/reviews/airbnb-r2.jpg"
+                  alt="Airbnb guest review screenshot 2"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <!-- Slide 3 -->
+              <div class="review-slide">
+                <img
+                  src="../media/balinge-media/reviews/airbnb-r3.jpg"
+                  alt="Airbnb guest review screenshot 3"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <!-- Slide 4 -->
+              <div class="review-slide">
+                <img
+                  src="../media/balinge-media/reviews/airbnb-r4.jpg"
+                  alt="Airbnb guest review screenshot 4"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <!-- Slide 5 -->
+              <div class="review-slide">
+                <img
+                  src="../media/balinge-media/reviews/airbnb-r5.jpg"
+                  alt="Airbnb guest review screenshot 5"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+
+              <!-- Dot navigation — one dot per slide 
+              <div class="review-slideshow__dots" aria-label="Airbnb review navigation">
+                <button class="review-dot is-active" data-index="0" aria-label="Review 1"></button>
+                <button class="review-dot" data-index="1" aria-label="Review 2"></button>
+                <button class="review-dot" data-index="2" aria-label="Review 3"></button>
+                <button class="review-dot" data-index="3" aria-label="Review 4"></button>
+                <button class="review-dot" data-index="4" aria-label="Review 5"></button>
+              </div>
+              -->
+
+            </div><!-- end .review-slideshow (Airbnb) -->
+          </div><!-- end .review-column (Airbnb) -->
+
+          <div class="review-column">
+
+            <p class="review-column__label">Booking.com</p>
+
+            <!-- Overall rating image for Booking.com -->
+            <div class="review-column__platform">
+              <img
+                src="../media/balinge-media/reviews/2booking-overall-review-07-26.jpg"
+                alt="Bälinge overall rating on Booking.com"
+              >
+              <!-- OVERALL BOOKING.COM RATING IMAGE GOES HERE -->
+
+            </div>
+
+            <!-- Booking.com individual review screenshots -->
+            <div class="review-slideshow" data-review-slideshow>
+
+              <div class="review-slide is-active">
+                <img
+                  src="../media/balinge-media/reviews/booking-r1.jpg"
+                  alt="Booking.com guest review screenshot 1"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <div class="review-slide">
+                <img
+                  src="../media/balinge-media/reviews/booking-r2.jpg"
+                  alt="Booking.com guest review screenshot 2"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <div class="review-slide">
+                <img
+                  src="../media/balinge-media/reviews/booking-r3.jpg"
+                  alt="Booking.com guest review screenshot 3"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <div class="review-slide">
+                <img
+                  src="../media/balinge-media/reviews/booking-r4.jpg"
+                  alt="Booking.com guest review screenshot 4"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+
+              <div class="review-slide">
+                <img
+                  src="../media/balinge-media/reviews/booking-r5.jpg"
+                  alt="Booking.com guest review screenshot 5"
+                  loading="lazy"
+                >
+                <!-- REVIEW SLIDE IMAGE HERE -->
+              </div>
+              <!--
+              <div class="review-slideshow__dots" aria-label="Booking.com review navigation">
+                <button class="review-dot is-active" data-index="0" aria-label="Review 1"></button>
+                <button class="review-dot" data-index="1" aria-label="Review 2"></button>
+                <button class="review-dot" data-index="2" aria-label="Review 3"></button>
+                <button class="review-dot" data-index="3" aria-label="Review 4"></button>
+                <button class="review-dot" data-index="4" aria-label="Review 5"></button>
+              </div>
+              -->
+            </div><!-- end .review-slideshow (Booking.com) -->
+          </div><!-- end .review-column (Booking.com) -->
+
+        </div><!-- end .reviews-grid -->
+      </div><!-- end .container -->
+    </section><!-- end reviews section -->
+
+
+<!-- =========================================================
+         MAP SECTION
+
+         An embedded Google Maps iframe shows the property location.
+         A "Get Directions" button links to Google Maps in a new tab
+         so visitors can open it on their phone for navigation.
+
+         HOW TO GET THE EMBED CODE:
+           1. Go to maps.google.com
+           2. Search for the property address
+           3. Click Share → Embed a map
+           4. Copy the <iframe> src URL
+           5. Paste it into the iframe src below
+
+         HOW TO GET THE DIRECTIONS LINK:
+           1. In Google Maps, find the property
+           2. Copy the URL from your browser address bar
+           3. Paste it into the Get Directions <a> href below
+         ========================================================= -->
+    <section class="section" aria-labelledby="map-heading">
+      <div class="container">
+
+        <h2 id="map-heading">Location</h2>
+        <hr class="divider--wood">
+
+        <p style="color: var(--color-text-muted); margin-bottom: var(--space-6);">
+          Bälinge, Hörby municipality, Skåne, Sweden.
+          <!-- TODO: Update with the full address once confirmed with the client -->
+        </p>
+
+        <!-- Embedded Google Maps iframe
+             The title attribute is required for accessibility (screen readers). -->
+        <div class="map-wrapper">
+          <iframe
+            title="Map showing the location of Bälinge"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2216.489346655429!2d13.365500812424905!3d56.25233067316166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46516105625f5273%3A0x8450819961f90cd2!2sB%C3%A4linge%20326%2C%20284%2092%20Perstorp!5e0!3m2!1sen!2sse!4v1783931512807!5m2!1sen!2sse"
+            width="100%" 
+            height="400" 
+            style="border: 0; border-radius: var(--border-radius-lg);"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          <!--
+            TODO: Replace TODO_GOOGLE_MAPS_EMBED_SRC with the real embed src URL.
+            It looks like:
+            https://www.google.com/maps/embed?pb=!1m18!1m12!...
+            Get it from: maps.google.com → Share → Embed a map → copy the src
+          -->
+        </div>
+
+        <!-- Get Directions button — opens Google Maps in a new tab -->
+        <div style="margin-top: var(--space-5);">
+          <a
+            href="https://www.google.com/maps/place/B%C3%A4linge+326,+284+92+Perstorp/@56.2523307,13.3655008,17z/data=!4m6!3m5!1s0x46516105625f5273:0x8450819961f90cd2!8m2!3d56.2523307!4d13.3680811!16s%2Fg%2F11c4slxkd1?entry=ttu&g_ep=EgoyMDI2MDcwOC4wIKXMDSoASAFQAw%3D%3D"
+            class="btn btn-secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="../media/shared/icons/googlepin-svgrepo.0.svg"
+             alt="" 
+             class="btn__icon"
+             >
+          
+            ↗ Directions
+          </a>
+
+          <a
+             href="https://maps.apple.com/place?address=B%C3%A4linge+326%2C+284+92+Perstorp%2C+Sweden&coordinate=56.252282%2C13.368065&name=B%C3%A4linge+326"          
+             class="btn btn-secondary"
+             target="_blank"
+             rel="noopener noreferrer"
+          > 
+            <img src="../media/shared/icons/apple-svgrepo.0.svg"
+             alt="" 
+             class="btn__icon"
+             >
+          
+            ↗ Directions
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         PHOTO GALLERY
+
+         A grid of thumbnail images. Clicking any thumbnail opens
+         the lightbox (handled by gallery.js).
+
+         The first item (.photo-grid__item--featured) is the largest
+         — it spans full width and uses a 16:9 ratio. The hero image
+         at the top of the page also opens the lightbox at this first
+         image when clicked.
+
+         HOW TO ADD PHOTOS:
+           - Add images to images/sodra-rorum/
+           - Copy a .photo-grid__item block below and update src + alt
+           - The lightbox will automatically include them — no JS changes needed
+
+         NAMING CONVENTION (suggested):
+           images/sodra-rorum/gallery-01.jpg
+           images/sodra-rorum/gallery-02.jpg
+           etc.
+
+         RECOMMENDED: at least 8 photos. More is better here —
+         guests decide to book based on photos.
+         ========================================================= -->
+    <section class="section section--light" id="gallery" aria-labelledby="gallery-heading">
+      <div class="container">
+
+        <h2 id="gallery-heading">Photos</h2>
+        <hr class="divider--wood">
+
+        <div class="photo-grid">
+
+          <!-- Featured image: spans full width, opens lightbox at index 0.
+               Use the best exterior or interior shot here. -->
+          <div class="photo-grid__item photo-grid__item--featured">
+            <img
+              src="../media/balinge-media/gallery/gallery-01.avif"
+              alt="Lake view from the pier at Bälinge"
+              loading="lazy"
+            >
+          </div>
+
+          <!-- Thumbnail 2 -->
+          <div class="photo-grid__item">
+            <img
+              src="../media/balinge-media/gallery/gallery-02.avif"
+              alt="Pier at Bälinge"
+              loading="lazy"
+            >
+          </div>
+
+                    <!-- Thumbnail 3 -->
+          <div class="photo-grid__item">
+            <img
+              src="../media/balinge-media/gallery/gallery-03.avif"
+              alt="Living room at Bälinge"
+              loading="lazy"
+            >
+          </div>
+
+                    <!-- Thumbnail 4 -->
+          <div class="photo-grid__item">
+            <img
+              src="../media/balinge-media/gallery/gallery-04.avif"
+              alt="Open green by the lake"
+              loading="lazy"
+            >
+          </div>
+
+                    <!-- Thumbnail 5 -->
+          <div class="photo-grid__item">
+            <img
+              src="../media/balinge-media/gallery/gallery-05.avif"
+              alt="Outdoor seating area"
+              loading="lazy"
+            >
+          </div>
+
+                    <!-- Thumbnail 6 -->
+          <div class="photo-grid__item">
+            <img
+              src="../media/balinge-media/gallery/gallery-06.avif"
+              alt="Wintery exterior view"
+              loading="lazy"
+            >
+          </div>
+
+                    <!-- Thumbnail 7 -->
+          <div class="photo-grid__item">
+            <img
+              src="../media/balinge-media/gallery/gallery-07.avif"
+              alt="Cozy fireplace"
+              loading="lazy"
+            >
+          </div>
+
+        </div><!-- end .photo-grid -->
+      </div><!-- end .container -->
+    </section><!-- end gallery section -->
+
+
+    <!-- =========================================================
+         LIGHTBOX
+
+         This HTML is always present on the page but invisible
+         (display: none in CSS). gallery.js adds "is-open" to show it
+         when a photo is clicked, and removes it to hide it again.
+
+         This block is identical on both property pages — do not change it.
+         ========================================================= -->
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox">
+
+      <!-- The photo displayed in full size -->
+      <img class="lightbox__image" src="" alt="">
+      <!-- src and alt are set dynamically by gallery.js -->
+
+      <!-- Close button — top right corner -->
+      <button class="lightbox__btn lightbox__close" aria-label="Close photo viewer">
+        &times;
+        <!-- &times; is the × character — a clean close icon without needing an icon font -->
+      </button>
+
+      <!-- Previous photo button -->
+      <button class="lightbox__btn lightbox__prev" aria-label="Previous photo">
+        &#8249;
+        <!-- &#8249; is the ‹ character — a single left angle quotation mark,
+             used here as a minimal left arrow -->
+      </button>
+
+      <!-- Next photo button -->
+      <button class="lightbox__btn lightbox__next" aria-label="Next photo">
+        &#8250;
+        <!-- &#8250; is the › character — right equivalent of the above -->
+      </button>
+
+      <!-- Position counter e.g. "3 / 8" — updated by gallery.js -->
+      <div class="lightbox__counter" aria-live="polite"></div>
+      <!-- aria-live="polite" means screen readers will announce the counter
+           update after the current speech finishes, not interrupting it -->
+
+    </div><!-- end .lightbox -->
+
+  </main><!-- end <main> -->
+
+
+  <!-- ============================================================
+       FOOTER — identical on all pages
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-note">
+        &copy; <span id="footer-year"></span> Swedish Stays. All rights reserved.
+        <!-- TODO: Replace "Swedish Stays" with the client's site/brand name -->
+      </p>
+      <p class="footer-note">
+        Bookings via
+        <a href="https://www.airbnb.com" class="link" target="_blank" rel="noopener noreferrer">Airbnb</a>
+        &amp;
+        <a href="https://www.booking.com" class="link" target="_blank" rel="noopener noreferrer">Booking.com</a>
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       SCRIPTS
+       Placed at the bottom of <body> so HTML renders first.
+       ============================================================ -->
+
+  <!-- Auto-update copyright year -->
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- gallery.js handles:
+       - Lightbox (open/close/navigate/keyboard)
+       - Review slideshow auto-advance
+       Note the path: ../ because this page is inside sodra-rorum/ -->
+  <script src="../js/gallery.js"></script>
+
+  <!-- Also add a CSS class to the hero section so gallery.js can find it.
+       This small inline script adds a click hint to the property hero image. -->
+  <script>
+    /* Add a visible "View all photos" prompt on the hero image.
+       We do this in JS rather than CSS so it degrades gracefully
+       if JS is disabled — the image still shows, just without the hint. */
+    var heroHint = document.querySelector('.property-hero__hint');
+    if (heroHint) {
+      heroHint.style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>

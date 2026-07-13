@@ -243,8 +243,8 @@ p {
    Slightly tighter than a typical blog/marketing site — these pages
    are content-dense (photos, reviews, map) so compact spacing feels better. */
 .section {
-  padding-top: var(--space-12);
-  padding-bottom: var(--space-12);
+  padding-top: var(--space-10);
+  padding-bottom: var(--space-10);
 }
 
 /* Near-white cream — used for alternating section backgrounds */

@@ -215,17 +215,33 @@
     if (slides.length < 2) return;
 
     function goToSlide(index) {
-      /* Remove active state from current slide and dot */
-      slides[current].classList.remove('is-active');
-      if (dots[current]) dots[current].classList.remove('is-active');
+  var previous = current;
+  current = (index + slides.length) % slides.length;
 
-      /* Wrap around if we go past the last or before the first */
-      current = (index + slides.length) % slides.length;
+  if (previous === current) return;
 
-      /* Apply active state to new slide and dot */
-      slides[current].classList.add('is-active');
-      if (dots[current]) dots[current].classList.add('is-active');
-    }
+  var outgoing = slides[previous];
+  var incoming = slides[current];
+
+  outgoing.classList.remove('is-active');
+  incoming.classList.add('is-active');
+
+  /* Incoming slide slides in from the right to center */
+  incoming.style.transform = 'translateX(0)';
+  /* Outgoing slide slides out to the left */
+  outgoing.style.transform = 'translateX(-100%)';
+
+  /* Once the outgoing slide has finished sliding off-screen to the left,
+     silently snap it back to "waiting on the right" with no animation —
+     so it's ready to slide in correctly the next time it's its turn. */
+  outgoing.addEventListener('transitionend', function resetPosition() {
+    outgoing.style.transition = 'none';
+    outgoing.style.transform = 'translateX(100%)';
+    void outgoing.offsetWidth; /* forces the browser to apply the change immediately */
+    outgoing.style.transition = '';
+    outgoing.removeEventListener('transitionend', resetPosition);
+  });
+}
 
     function startTimer() {
       timer = setInterval(function () {

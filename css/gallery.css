@@ -278,12 +278,12 @@
 /* Static overall-rating image container —
    place a screenshot of the platform's aggregate score here */
 .review-column__platform {
-  background-color: var(--color-surface);
+  background-color: #FFFFFF;
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border);
   padding: var(--space-3);
   text-align: center;
-
+  min-height: 10px;
   /* OVERALL RATING IMAGE GOES HERE —
      see HTML TODO comments for what image to place here */
 }
@@ -297,39 +297,44 @@
 /* Slideshow container for individual review screenshots */
 .review-slideshow {
   position: relative;
-  border-radius: var(--border-radius);
+  background-color: #FFFFFF;
   overflow: hidden;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-
-  /* Fixed height so the column doesn't jump as slides change */
-  min-height: 200px;
-}
-
-/* Individual review slide — all stacked, only active one visible */
-.review-slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.8s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-3);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  padding: 0;
+
+  /* Fixed height so the column doesn't jump as slides change */
+  min-height: 50px;
+}
+
+/* Individual review slide — all stacked, positioned by transform.
+   Slides wait off-screen (left or right) until they become active,
+   then slide into view — creating the left-swipe motion. */
+.review-slide {
+  position: absolute;
+  inset: 0;
+  transform: translateX(100%);   /* parked off-screen to the right by default */
+  transition: transform 1.2s ease-in-out;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 .review-slide.is-active {
-  opacity: 1;
-  /* position: relative on the active slide lets the container size itself
-     to the content height */
-  position: relative;
+  transform: translateX(0);   /* slid fully into view */
 }
 
 /* REVIEW SLIDE IMAGE GOES HERE —
    each slide contains one screenshot of an individual review */
 .review-slide img {
   max-width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
   border-radius: var(--border-radius);
 }
 
@@ -379,11 +384,6 @@
   /* Featured image spans all three columns */
   .photo-grid__item--featured {
     grid-column: span 3;
-  }
-
-  /* Review columns side by side on desktop */
-  .reviews-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   /* Taller review slideshow on desktop */
