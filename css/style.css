@@ -49,6 +49,15 @@
   --color-wood:         #8B5E3C;  /* Wood tone: card accents, borders, eyebrows */
   --color-wood-light:   #C4956A;  /* Lighter wood: decorative dividers */
 
+   /* Brand palette */
+  --color-airbnb:  #FF385C;  /* Airbnb brand pink — used only for Airbnb button */
+  --color-booking: #003479;  /* Booking.com brand blue — used only for Booking.com button */
+  --color-airbnb-tint:  rgba(255, 56, 92, 0.15);  /* Airbnb pink at 30% — hover background */
+  --color-booking-tint: rgba(0, 52, 121, 0.25);   /* Booking.com blue at 30% — hover background */
+  --color-google-maps:       #1A73E8;  /* Google Maps directions-button blue */
+  --color-apple-maps:        #1A73E8;  /* Apple system blue (using google blue for both, but here is appl hex #007AFF*/
+  --color-hover-tint-black: rgba(0, 0, 0, 0.15);  /* black at 10% — used to darken solid buttons on hover */
+
   /* Borders and dividers */
   --color-border:       #D4C9B5;  /* Warm sand: standard dividers */
   --color-border-strong:#B8A898;  /* Slightly stronger: card outlines */
@@ -378,10 +387,6 @@ p {
 
 /* =============================================================
    7. BUTTONS & LINKS
-
-   Two button styles:
-   - .btn-primary:   Filled forest green — main CTA (View property)
-   - .btn-secondary: Wood-tone outline   — external links (Airbnb, Booking.com)
    ============================================================= */
 
 /* Shared base styles for both button variants */
@@ -436,6 +441,40 @@ p {
   color: #FFFFFF;
 }
 
+.btn-secondary--airbnb {
+  color: var(--color-airbnb);
+  border-color: var(--color-airbnb);
+}
+.btn-secondary--airbnb:hover {
+  background-color: var(--color-airbnb-tint);
+}
+
+.btn-secondary--booking {
+  color: var(--color-booking);
+  border-color: var(--color-booking);
+}
+.btn-secondary--booking:hover {
+  background-color: var(--color-booking-tint);
+}
+
+.btn-directions--google {
+  background-color: var(--color-google-maps);
+  border-color: var(--color-google-maps);
+  color: #FFFFFF;
+}
+.btn-directions--google:hover {
+  background-image: linear-gradient(var(--color-hover-tint-black), var(--color-hover-tint-black));
+}
+
+.btn-directions--apple {
+  background-color: var(--color-apple-maps);
+  border-color: var(--color-apple-maps);
+  color: #FFFFFF;
+}
+.btn-directions--apple:hover {
+  background-image: linear-gradient(var(--color-hover-tint-black), var(--color-hover-tint-black));
+}
+
 /* Small button variant — used in compact contexts */
 .btn--sm {
   font-size: var(--text-sm);
@@ -456,6 +495,17 @@ p {
    same font-relative height. Bump it up slightly to match. */
 .btn__icon--airbnb {
   height: 1.26em; /* tweak this number until it visually matches Booking.com */
+}
+
+/* This Google Maps pin SVG has more empty space baked into its
+   viewBox than the other icons, so it renders visually smaller
+   at the same font-relative height. Bump it up to match. */
+.btn__icon--googlemaps {
+  transform: scale(3.0) translateY(-1px);
+}
+
+.btn__icon--applmaps {
+  transform: scale(1.550);
 }
 
 /* Inline text link */
@@ -1091,4 +1141,69 @@ p {
 
 /* =============================================================
    END OF INTRO GRID AND YOUTUBE PLACEHOLDER
+   ============================================================= */
+
+   /* =============================================================
+   READ MORE — collapsible text block
+
+   Wrap any block of text like this:
+
+     <div class="read-more" data-read-more>
+       <p class="text-lead">...</p>
+     </div>
+     <button class="read-more__toggle" data-read-more-toggle>Read more</button>
+
+   gallery.js handles the expand/collapse behavior automatically.
+   If the text is already short enough to fit, the button hides itself.
+   ============================================================= */
+
+.read-more {
+  position: relative;
+  overflow: hidden;
+  max-height: 8em; /* roughly 4-5 lines at this font size — adjust to taste */
+  transition: max-height 0.4s ease;
+}
+
+.read-more.is-expanded {
+  max-height: 2000px; /* effectively "no limit" once expanded */
+}
+
+/* Soft fade at the bottom while collapsed, hinting there's more text */
+.read-more::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2.5em;
+  background: linear-gradient(to bottom, rgba(245, 240, 232, 0), var(--color-bg));
+  transition: opacity 0.3s ease;
+}
+
+.read-more.is-expanded::after {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.read-more__toggle {
+  display: inline-block;
+  margin-top: var(--space-3);
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.read-more__toggle:hover {
+  color: var(--color-accent-hover);
+}
+
+/* =============================================================
+   END OF READ MORE TOGGLE BUTTON
    ============================================================= */

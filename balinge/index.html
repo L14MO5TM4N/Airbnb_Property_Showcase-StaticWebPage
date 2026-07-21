@@ -66,12 +66,12 @@
        ============================================================ -->
   <header class="site-header">
     <div class="container">
-      <a href="/" class="site-logo">Swedish Stays</a>
+      <a href="../" class="site-logo">Swedish Stays</a>
       <!-- TODO: Replace "Swedish Stays" with the client's site name -->
 
       <nav aria-label="Main navigation">
         <ul class="nav-links">
-          <li><a href="/">Home</a></li>
+          <li><a href="../">Home</a></li>
           <li><a href="../sodra-rorum/">Södra Rörum</a></li>
           <li><a href="../balinge/" aria-current="page">Bälinge</a></li>
         </ul>
@@ -138,24 +138,37 @@
             <span class="eyebrow">Hörby · Skåne</span>
             <!-- TODO: Update location label for Bälinge page -->
 
-            <h1 id="property-title">Bälinge</h1>
+            <h1 id="property-title">Bälinge, Private Pier - Lake Cottage </h1>
             <!-- TODO: Update property name for Bälinge page -->
 
             <hr class="divider--wood">
+            <div class="read-more" data-read-more>
 
             <p class="text-lead">
               Welcome to Bälinge Lakehouse.
               Escape to our lake house nestled on the serene of Bälinge lake. 
-              Enjoy direct access to the lake with a private pier/dock belongs
+              Enjoy direct access to the lake with a private pier/dock that belongs
               to the house and a rowing boat, perfect for morning swims 
-              or fishing. Fully equipped kitchen, fast Wi-Fi, and a fireplace 
-              for cozy evenings. 1400 square meter garden, BBQ area. 
+              or fishing.
+            </p>
+            <p class="text-lead">
+              Fully equipped kitchen with a stove, oven, fridge & freezer 
+              microwave, dishwasher, coffee maker and kettle. Fast Wi-Fi, a fireplace 
+              for cozy evenings and a 1400 square meter garden, BBQ area. 
               This historical home, over 100 years old, offers a perfect blend 
               of rustic charm and modern comforts.
+            </p>
+            <p class="text-lead">
+              Söderåsens National Park is 29 km away, 
+              and Ängelholm-Helsingborg Airport is 45 km from the property. 
+              Water sports facilities are available, along with fishing,
+              walking tours, bike tours, hiking, and diving.
               
               
               
             </p>
+            </div>
+            <button class="read-more__toggle" data-read-more-toggle>Read more</button>
 
 
             <p class="intro-grid__facts">
@@ -166,24 +179,29 @@
             <!-- Booking buttons -->
             <div class="intro-grid__buttons">
               <a
-                href="https://www.airbnb.com/rooms/TODO_SODRA_RORUM_ID"
-                class="btn btn-primary"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Book on Airbnb
-              </a>
-              <!-- TODO: Replace TODO_SODRA_RORUM_ID with the real Airbnb listing ID -->
+                  href="https://www.airbnb.co.uk/rooms/1323315106283045184"
+                  class="btn btn-secondary btn-secondary--airbnb"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >                
+                  <img
+                  src="../media/shared/icons/airbnb.0.svg"
+                  alt="View on Airbnb.co.uk"
+                  class="btn__icon btn__icon--airbnb"
+                  >
+                </a>
 
-              <a
-                href="https://www.booking.com/hotel/se/TODO_SODRA_RORUM_SLUG.html"
-                class="btn btn-secondary"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Book on Booking.com
-              </a>
-              <!-- TODO: Replace TODO_SODRA_RORUM_SLUG with the real Booking.com URL slug -->
+                <a
+                  href="https://www.booking.com/hotel/se/lake-cottage-with-private-pier-by-the-water.en-gb.html"
+                  class="btn btn-secondary btn-secondary--booking"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="../media/shared/icons/booking.com.0.svg"
+                  alt="View on Booking.com"
+                  class="btn__icon"
+                  >
+                </a>
             </div>
 
           </div><!-- end .intro-grid__text -->
@@ -242,14 +260,23 @@
 
         <ul class="amenities-grid">
           <!-- TODO: Replace these with the actual amenities for this property -->
-          <li class="amenity-item">Free WiFi</li>
-          <li class="amenity-item">Free parking</li>
-          <li class="amenity-item">Full kitchen</li>
-          <li class="amenity-item">Washing machine</li>
-          <li class="amenity-item">Outdoor seating</li>
-          <li class="amenity-item">BBQ grill</li>
+          <li class="amenity-item">WiFi</li>
+          <li class="amenity-item">Free parking on premises</li>
+          <li class="amenity-item">Fully equipped kitchen</li>
+          <li class="amenity-item">Washing machine and Tumbledryer</li>
+          <li class="amenity-item">1400 Sqm Garden</li>
+          <li class="amenity-item">Hammock & Outdoor furniture</li>
+          <li class="amenity-item">BBQ grill & Outdoor dining area</li>
           <li class="amenity-item">Pets allowed</li>
           <li class="amenity-item">Self check-in</li>
+          <li class="amenity-item">Tv & Board games</li>
+          <li class="amenity-item">Air-conditioning</li>
+          <li class="amenity-item">Indoor Fireplace</li>
+          <li class="amenity-item">Smoke & Carbon monoxide alarms</li>
+          <li class="amenity-item">Private Pier</li>
+          <li class="amenity-item">Lake & Beach access</li>
+          <li class="amenity-item">Long-term stays allowed</li>
+          
         </ul>
 
       </div>
@@ -497,13 +524,13 @@
         <div style="margin-top: var(--space-5);">
           <a
             href="https://www.google.com/maps/place/B%C3%A4linge+326,+284+92+Perstorp/@56.2523307,13.3655008,17z/data=!4m6!3m5!1s0x46516105625f5273:0x8450819961f90cd2!8m2!3d56.2523307!4d13.3680811!16s%2Fg%2F11c4slxkd1?entry=ttu&g_ep=EgoyMDI2MDcwOC4wIKXMDSoASAFQAw%3D%3D"
-            class="btn btn-secondary"
+            class="btn btn-directions--google"
             target="_blank"
             rel="noopener noreferrer"
           >
             <img src="../media/shared/icons/googlepin-svgrepo.0.svg"
              alt="" 
-             class="btn__icon"
+             class="btn__icon btn__icon--googlemaps"
              >
           
             ↗ Directions
@@ -511,13 +538,13 @@
 
           <a
              href="https://maps.apple.com/place?address=B%C3%A4linge+326%2C+284+92+Perstorp%2C+Sweden&coordinate=56.252282%2C13.368065&name=B%C3%A4linge+326"          
-             class="btn btn-secondary"
+             class="btn btn-directions--apple
              target="_blank"
              rel="noopener noreferrer"
           > 
             <img src="../media/shared/icons/apple-svgrepo.0.svg"
              alt="" 
-             class="btn__icon"
+             class="btn__icon  btn__icon--applmaps "
              >
           
             ↗ Directions

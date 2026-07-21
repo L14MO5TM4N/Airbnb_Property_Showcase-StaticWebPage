@@ -270,6 +270,45 @@
 })();
 /* End of review slideshow IIFE */
 
+/* =============================================================
+   SECTION 3 — READ MORE TOGGLE
+
+   Collapses long text blocks and reveals a "Read more" / "Read less"
+   button to expand them.
+
+   Structure expected in HTML:
+     <div class="read-more" data-read-more>
+       <p class="text-lead">...</p>
+     </div>
+     <button class="read-more__toggle" data-read-more-toggle>Read more</button>
+   ============================================================= */
+
+(function () {
+
+  document.querySelectorAll('[data-read-more]').forEach(function (block) {
+
+    var toggle = block.nextElementSibling;
+    if (!toggle || !toggle.hasAttribute('data-read-more-toggle')) return;
+
+    /* If the text already fits within the collapsed height, there's
+       nothing to expand — hide the button entirely. */
+    if (block.scrollHeight <= block.clientHeight + 4) {
+      toggle.style.display = 'none';
+      return;
+    }
+
+    toggle.setAttribute('aria-expanded', 'false');
+
+    toggle.addEventListener('click', function () {
+      var expanded = block.classList.toggle('is-expanded');
+      toggle.textContent = expanded ? 'Read less' : 'Read more';
+      toggle.setAttribute('aria-expanded', expanded);
+    });
+
+  });
+
+})();
+/* End of read-more IIFE */
 
 /* =============================================================
    END OF gallery.js
@@ -279,7 +318,5 @@
      [ ] gallery.js is linked at the bottom of <body>
      [ ] .lightbox HTML is present (see property page template)
      [ ] .photo-grid items are present with images
-     [ ] Hero image is wrapped in <a class="hero-image-link">
-     [ ] Review slideshows use [data-review-slideshow] attribute
-     [ ] Review dots use data-index="0", "1", etc.
+
    ============================================================= */
