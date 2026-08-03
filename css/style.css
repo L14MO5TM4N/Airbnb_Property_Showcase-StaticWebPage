@@ -62,9 +62,6 @@
   --color-border:       #D4C9B5;  /* Warm sand: standard dividers */
   --color-border-strong:#B8A898;  /* Slightly stronger: card outlines */
 
-  /* Card background: pale sage — a gentle green tint */
-  --color-card-bg:      #E8EDE3;
-
   /* --- Typography --- */
   /* Playfair Display: a quality serif for headings — unhurried and warm */
   /* Inter: clean, highly readable sans-serif for body text */
@@ -523,101 +520,6 @@ p {
 
 
 /* =============================================================
-   8. PROPERTY CARDS (homepage)
-
-   Two cards on the homepage — one per property.
-   Stack vertically on mobile, side by side on desktop.
-
-   Card style: pale sage green background with a wood-tone left
-   border. The left border reads like a timber door frame —
-   earthy and structural rather than decorative.
-   ============================================================= */
-
-/* Wrapper grid — 1 column mobile, 2 columns desktop */
-.property-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-8);
-  margin-top: var(--space-8);
-}
-
-/* Individual property card */
-.property-card {
-  background-color: var(--color-card-bg);  /* Pale sage green */
-  border-radius: var(--border-radius-lg);
-  overflow: hidden;    /* Keeps the cover photo inside the rounded corners */
-  box-shadow: var(--shadow-sm);
-  display: flex;            /*   v                    v                */
-  flex-direction: column;  /* changing property to fix buttons to card */
-  /* Wood-tone left border: the card's signature detail */
-  border-left: 4px solid var(--color-wood);
-
-  /* Warm outline separates the card from the parchment background */
-  outline: 1px solid var(--color-border-strong);
-
-  transition: box-shadow var(--transition-normal),
-              transform var(--transition-normal);
-}
-
-.property-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);  /* Subtle lift on hover */
-}
-
-/* Cover photo at the top of each card */
-.property-card__image {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;  /* Crop to fill without distortion */
-}
-
-/* Text content inside the card */
-.property-card__body {
-  padding: var(--space-6);
-  display: flex;
-  flex-direction: column;
-  flex: 1; /* property to fix buttons to card */
-  gap: var(--space-3);
-}
-
-.property-card__title {
-  font-family: var(--font-heading);
-  font-size: var(--text-xl);
-  font-weight: var(--weight-bold);
-  color: var(--color-text);
-}
-
-.property-card__location {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  font-weight: var(--weight-medium);
-}
-
-.property-card__description {
-  font-size: var(--text-base);
-  color: var(--color-text-muted);
-  line-height: var(--leading-normal);
-}
-
-/* Action buttons at the bottom of the card.
-   flex-wrap allows the three buttons to wrap to a second row
-   on narrow screens rather than overflowing. */
-.property-card__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-top: auto; /* var(--space-2); */
-}
-
-/* Slightly tighter horizontal padding on buttons inside cards,
-   so all three (View / Airbnb / Booking.com) fit comfortably. */
-.property-card__actions .btn {
-  padding-left: var(--space-4);
-  padding-right: var(--space-4);
-}
-
-
-/* =============================================================
    9. HERO SLIDESHOW
 
    A full-width image banner at the top of the homepage.
@@ -662,32 +564,54 @@ p {
   background-color: var(--color-surface);  /* Placeholder color while images load */
 }
 
-/* The track holds all slides stacked on top of each other */
+/* The track holds all slides side by side in a row — not stacked.
+   Moving between slides is just sliding this whole row left/right
+   with one CSS transform; the browser handles the rest. Much
+   simpler than animating each slide individually (compare to the
+   review slideshow's older approach in gallery.css). */
 .hero-slideshow__track {
-  position: absolute;
-  inset: 0;  /* Shorthand for top/right/bottom/left: 0 — fills the parent */
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s ease;
+  cursor: pointer;      /* Signals the slideshow itself is clickable (opens gallery) */
+  touch-action: pan-y;  /* Allows vertical page scroll but lets our JS handle
+                           horizontal swipes for slide navigation */
 }
 
-/* Each individual slide */
+/* Each slide takes up exactly one "frame" width and sits side by side
+   with the others — the track's total width is (number of slides × 100%) */
 .hero-slideshow__slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;               /* Hidden by default */
-  transition: opacity 1s ease-in-out;  /* Fade in/out over 1 second */
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
 }
 
-/* The currently visible slide */
-.hero-slideshow__slide.is-active {
-  opacity: 1;
-}
-
-/* The slide image fills the entire slide container */
+/* The slide image fills its frame */
 .hero-slideshow__slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
+}
+
+/* Small "view all photos" hint, top-right corner of the slideshow.
+   Positioned top-right (rather than bottom, like the single-image hero's
+   hint) since the overlay text below already occupies the bottom area. */
+.hero-slideshow__hint {
+  position: absolute;
+  bottom: var(--space-3);
+  left: var(--space-3);
+  background-color: rgba(42, 33, 24, 0.65);
+  color: #FFFFFF;
+  font-family: var(--font-body);
+  font-size: 0.75rem;      /* smaller than --text-sm, which read too large here */
+  font-weight: var(--weight-medium);
+  padding: 4px 10px;        /* tighter than the standard space scale allows */
+  border-radius: var(--border-radius);
+  pointer-events: none;   /* The hint itself shouldn't block clicks/swipes */
+  letter-spacing: 0.03em;
+  z-index: 5;             /* Sit above the slides */
 }
 
 /* Dark gradient overlay — fades from transparent at the top to semi-dark
@@ -707,6 +631,7 @@ p {
   justify-content: flex-end;  /* Text sits at the bottom of the hero */
   padding: var(--space-10) var(--space-6);
   text-align: center;
+  pointer-events: none; /* Let clicks/swipes pass through to the track underneath */
 }
 
 /* Hero text — white so it reads against the dark overlay */
@@ -873,16 +798,6 @@ p {
   /* More horizontal breathing room on wider screens */
   :root {
     --page-padding: var(--space-8);
-  }
-
-  /* Two-column property card grid on desktop */
-  .property-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* Taller card cover photos on desktop */
-  .property-card__image {
-    height: 280px;
   }
 
   /* Taller hero slideshow on desktop */

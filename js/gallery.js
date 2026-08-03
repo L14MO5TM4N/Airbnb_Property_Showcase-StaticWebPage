@@ -1,14 +1,16 @@
 /* =============================================================
    gallery.js — Photo gallery lightbox + review slideshow logic
-   Used on: sodra-rorum/index.html and balinge/index.html
+   Used on: index.html (Bälinge) and sodra-rorum/index.html
 
-   This file handles three things:
-     1. Lightbox — opens when any gallery thumbnail or the hero
-        image is clicked; supports prev/next and keyboard nav
+   This file handles four things:
+     1. Lightbox — opens when any gallery thumbnail, the single-image
+        hero, or the hero slideshow is clicked; supports prev/next,
+        keyboard nav, and touch swipe
      2. Review slideshows — two independent auto-advancing
         slideshows (one for Airbnb reviews, one for Booking.com)
-     3. Keyboard accessibility — arrow keys and Escape work
-        while the lightbox is open
+     3. Read More toggle — expands/collapses long intro text
+     4. Hero slideshow — auto-advance, dots, touch swipe, and
+        clicking through to the matching lightbox photo
 
    Dependencies:
      - gallery.css must be loaded on the same page
@@ -28,7 +30,8 @@
        into an array called "galleryImages"
      - When any thumbnail (or the hero image) is clicked,
        we open the lightbox and show that image
-     - Prev/next buttons and arrow keys move through the array
+     - Prev/next buttons, arrow keys, and touch swipe move through
+       the array
      - Clicking the overlay background or pressing Escape closes it
    ============================================================= */
 
@@ -131,9 +134,11 @@
     });
   });
 
-  /* --- Wire up the hero image ---
-     The hero image at the top of the property page also opens
-     the lightbox at index 0 (the first/featured gallery photo) */
+  /* --- Wire up the single-image hero (used on sodra-rorum/index.html) ---
+     The hero image at the top of that property page opens the
+     lightbox at index 0 (the first/featured gallery photo). Pages
+     using the multi-image hero-slideshow instead are handled by
+     Section 4 further down, which links back into this section. */
   var heroTrigger = document.querySelector('.hero-image-link');
   if (heroTrigger) {
     heroTrigger.addEventListener('click', function (e) {
@@ -174,6 +179,41 @@
     if (e.key === 'ArrowRight') showImage(currentIndex + 1);
     if (e.key === 'Escape')     closeLightbox();
   });
+
+  /* --- Touch swipe inside the lightbox (phones/tablets only) ---
+     Swipe left advances to the next photo, swipe right goes back.
+     Only the horizontal distance matters — a mostly-vertical touch
+     (e.g. an accidental scroll attempt) is ignored. */
+  var lbTouchStartX = 0;
+  var lbTouchStartY = 0;
+  var SWIPE_THRESHOLD = 40; /* minimum pixels to count as a deliberate swipe */
+
+  lightbox.addEventListener('touchstart', function (e) {
+    lbTouchStartX = e.changedTouches[0].clientX;
+    lbTouchStartY = e.changedTouches[0].clientY;
+  }, { passive: true });
+
+  lightbox.addEventListener('touchend', function (e) {
+    var deltaX = e.changedTouches[0].clientX - lbTouchStartX;
+    var deltaY = e.changedTouches[0].clientY - lbTouchStartY;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+      if (deltaX < 0) {
+        showImage(currentIndex + 1); /* swiped left -> next */
+      } else {
+        showImage(currentIndex - 1); /* swiped right -> previous */
+      }
+    }
+  });
+
+  /* --- Expose to Section 4 (hero slideshow) ---
+     Section 4 lives in its own IIFE below and needs to open the
+     lightbox at a specific photo, and needs to know which photos
+     exist, so we hand out references via window. This is the
+     simplest way for two independent, self-contained script blocks
+     to talk to each other without merging them into one. */
+  window.openGalleryLightbox = openLightbox;
+  window.galleryImages       = galleryImages;
 
 })();
 /* End of lightbox IIFE — all variables above are private to this block */
@@ -310,6 +350,137 @@
 })();
 /* End of read-more IIFE */
 
+
+/* =============================================================
+   SECTION 4 — HERO SLIDESHOW
+
+   Handles the auto-advancing multi-image hero banner used on
+   index.html (Bälinge). This logic used to live in an inline
+   <script> in index.html — it's been moved here so it can share
+   code with the lightbox (Section 1) for the gallery click-through
+   and touch swipe below.
+
+   If a page doesn't have a .hero-slideshow (e.g. sodra-rorum/index.html,
+   which still uses the single-image .property-hero), this entire
+   section quietly does nothing.
+   ============================================================= */
+
+(function () {
+
+  var INTERVAL = 5000;  /* 5 seconds between auto-advances */
+
+  var slideshow = document.querySelector('.hero-slideshow');
+  var track     = document.querySelector('.hero-slideshow__track');
+  var slides    = document.querySelectorAll('.hero-slideshow__slide');
+  var dots      = document.querySelectorAll('.hero-slideshow__dot');
+
+  /* Not on this page — stop here */
+  if (!slideshow || !slides.length) return;
+
+  var currentIndex = 0;
+  var timer;
+
+  /* Show the slide at the given index — slides the whole track so
+     that slide lines up in view, and updates the active dot.
+     The "is-active" class no longer controls visibility (the CSS
+     no longer uses it for that) — it's kept purely as a marker so
+     the click-to-gallery handler below can find "whichever slide
+     is currently showing" without tracking a separate variable. */
+  function goToSlide(index) {
+    slides[currentIndex].classList.remove('is-active');
+    if (dots.length) dots[currentIndex].classList.remove('is-active');
+
+    currentIndex = (index + slides.length) % slides.length;
+
+    slides[currentIndex].classList.add('is-active');
+    if (dots.length) dots[currentIndex].classList.add('is-active');
+
+    track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+  }
+
+  function nextSlide() { goToSlide(currentIndex + 1); }
+  function prevSlide() { goToSlide(currentIndex - 1); }
+
+  function startTimer() { timer = setInterval(nextSlide, INTERVAL); }
+
+  /* Used after a manual interaction (dot click or swipe) so the
+     new slide gets a full interval before auto-advancing again */
+  function resetTimer() {
+    clearInterval(timer);
+    startTimer();
+  }
+
+  /* Wire up each dot button to jump to its slide */
+  dots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      goToSlide(parseInt(dot.getAttribute('data-index'), 10));
+      resetTimer();
+    });
+  });
+
+  startTimer();
+
+  /* --- Click-through to the gallery ---
+     Clicking the track opens the lightbox at whichever photo is
+     currently showing, matched by comparing image src against the
+     gallery photo array built in Section 1 (shared via window).
+     If the currently-shown photo isn't in the gallery for some
+     reason, it falls back to opening at the first gallery photo
+     rather than doing nothing. */
+  var justSwiped = false; /* true briefly after a swipe, so the
+                              resulting click doesn't ALSO open the gallery */
+
+  if (track) {
+    track.addEventListener('click', function () {
+      if (justSwiped) return;
+      if (typeof window.openGalleryLightbox !== 'function') return;
+
+      var activeImg = track.querySelector('.hero-slideshow__slide.is-active img');
+      if (!activeImg) return;
+
+      var images = window.galleryImages || [];
+      var matchIndex = images.findIndex(function (entry) {
+        return entry.src === activeImg.src;
+      });
+
+      window.openGalleryLightbox(matchIndex !== -1 ? matchIndex : 0);
+    });
+  }
+
+  /* --- Touch swipe (phones/tablets only) ---
+     Swipe left -> next slide, swipe right -> previous slide.
+     A mostly-vertical touch (e.g. scrolling the page) is ignored. */
+  var touchStartX = 0;
+  var touchStartY = 0;
+  var SWIPE_THRESHOLD = 40; /* minimum pixels to count as a deliberate swipe */
+
+  if (track) {
+    track.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].clientX;
+      touchStartY = e.changedTouches[0].clientY;
+      justSwiped = false;
+    }, { passive: true });
+
+    track.addEventListener('touchend', function (e) {
+      var deltaX = e.changedTouches[0].clientX - touchStartX;
+      var deltaY = e.changedTouches[0].clientY - touchStartY;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+        justSwiped = true;
+        resetTimer();
+        if (deltaX < 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    });
+  }
+
+})();
+/* End of hero slideshow IIFE */
+
+
 /* =============================================================
    END OF gallery.js
 
@@ -318,5 +489,7 @@
      [ ] gallery.js is linked at the bottom of <body>
      [ ] .lightbox HTML is present (see property page template)
      [ ] .photo-grid items are present with images
-
+     [ ] If using the hero-slideshow (not the single-image hero),
+         there is no separate inline <script> for it in the page —
+         Section 4 above handles it entirely
    ============================================================= */
