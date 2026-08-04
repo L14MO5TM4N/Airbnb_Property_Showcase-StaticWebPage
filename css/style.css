@@ -48,6 +48,7 @@
   --color-accent-hover: #395E44;  /* Darker green for hover states */
   --color-wood:         #8B5E3C;  /* Wood tone: card accents, borders, eyebrows */
   --color-wood-light:   #C4956A;  /* Lighter wood: decorative dividers */
+  --color-wood-dark:    #6C492F;  /* Wood mixed with ~20% black — hover for solid wood-filled buttons */
 
    /* Brand palette */
   --color-airbnb:  #FF385C;  /* Airbnb brand pink — used only for Airbnb button */
@@ -81,9 +82,11 @@
   --leading-normal: 1.6;  /* Body text: generous for readability */
 
   /* Font weights */
-  --weight-normal: 400;
-  --weight-medium: 500;
-  --weight-bold:   700;
+  --weight-normal:   400;
+  --weight-medium:   500;
+  --weight-semibold: 600;  /* Between medium and bold — used for the nav badge */
+  --weight-bold:     700;
+  --weight-boldbold: 850;  /* Extra-bold for hero headline — heavier than normal bold, but not black */
 
   /* --- Spacing scale ---
      All spacing uses multiples of a 4px base unit.
@@ -323,7 +326,7 @@ p {
   font-weight: var(--weight-bold);
   color: var(--color-text);
   text-decoration: none;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.002em;
   transition: color var(--transition-fast);
 }
 
@@ -331,29 +334,124 @@ p {
   color: var(--color-wood);
 }
 
-/* Navigation link list — horizontal row of links */
-.nav-links {
+/* Navigation: shows which property page you're currently on as a
+   static badge (not a link — there's nowhere for it to go), plus
+   a dropdown for switching to other properties. */
+.nav {
   display: flex;
-  gap: var(--space-6);
   align-items: center;
+  gap: var(--space-3);
 }
 
-.nav-links a {
+/* --- "You are here" badge ---
+   A solid rounded box rather than an underlined link, so it reads
+   clearly as "this is where you are" rather than "click me". */
+.nav-current {
+  display: inline-block;
+  background-color: var(--color-wood);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
   font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding-bottom: var(--space-1);
-  border-bottom: 2px solid transparent;
-  transition: color var(--transition-fast), border-color var(--transition-fast);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.02em;
+  line-height: 1;          /* Locks box height so the underline below
+                               can't make this look taller than its twin */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: var(--space-2) var(--space-2);
+  border-radius: var(--border-radius);
+  white-space: nowrap;    /* Never let the label wrap to a second line */
+  transition: background-color var(--transition-fast);
 }
 
-/* Hover state and active page indicator */
-.nav-links a:hover,
-.nav-links a[aria-current="page"] {
-  color: var(--color-wood);
-  border-bottom-color: var(--color-wood-light);
+.nav-current:hover {
+  background-color: var(--color-wood-dark);
+}
+
+/* --- "Other Locations" dropdown --- */
+
+/* Wrapping element anchors the dropdown panel below the button */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background-color: var(--color-wood);
+  color: #FFFFFF;
+  border: none;
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.02em;
+  line-height: 1;          /* Matches .nav-current so both boxes are the same height */
+  cursor: pointer;
+  padding: var(--space-2) var(--space-2);
+  border-radius: var(--border-radius);
+  white-space: nowrap;    /* Never let "Other Locations" wrap to two lines */
+  transition: background-color var(--transition-fast),
+              border-radius var(--transition-fast);
+}
+
+.nav-dropdown__toggle:hover,
+.nav-dropdown.is-open .nav-dropdown__toggle {
+  background-color: var(--color-wood-dark);
+}
+
+/* When open, square off the bottom corners so the menu attaches flush */
+.nav-dropdown.is-open .nav-dropdown__toggle {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* Small caret that flips upside-down while the dropdown is open */
+.nav-dropdown__caret {
+  font-size: 1em;
+  font-weight: var(--weight-bold);
+  transition: transform var(--transition-fast);
+}
+
+.nav-dropdown.is-open .nav-dropdown__caret {
+  transform: rotate(180deg);
+}
+
+/* The dropdown panel — hidden until gallery.js adds "is-open".
+   width: 100% makes it exactly match the toggle button above it
+   (its containing block, .nav-dropdown, is only as wide as that
+   button, since neither has been told to grow).
+   Attached look: sits directly under the toggle (no gap), square top
+   corners, rounded bottom corners — forming one continuous shape. */
+.nav-dropdown__menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  background-color: var(--color-wood);
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-1);
+  z-index: 50;
+}
+
+.nav-dropdown.is-open .nav-dropdown__menu {
+  display: block;
+}
+
+.nav-dropdown__menu a {
+  display: block;
+  padding: var(--space-1) var(--space-1);
+  border-radius: var(--border-radius);
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  color: var(--color-bg);  /* Creamy parchment — same family as the page background */
+  transition: background-color var(--transition-fast);
+}
+
+.nav-dropdown__menu a:hover {
+  background-color: var(--color-wood-dark);
 }
 
 
@@ -943,6 +1041,19 @@ p {
 
    On mobile: single column, text on top, media below.
    On desktop: side by side, roughly 55% / 45% split.
+
+   TEMPORARY SINGLE-COLUMN (until live YouTube embed is ready):
+   The right-hand media column is currently hidden on all screen
+   sizes so there is no empty space. The intro appears as a clean
+   single column of text + booking buttons.
+
+   When the live embed is ready:
+     1. Remove the temporary rules marked below (display:none on
+        .intro-grid__media and the commented-out desktop grid).
+     2. In index.html, replace the .youtube-placeholder with the
+        real <iframe class="youtube-embed" …> (see the comment
+        already present in the HTML).
+     3. The original two-column layout will return automatically.
    ============================================================= */
 
 /* Outer grid wrapper — single column on mobile */
@@ -977,9 +1088,14 @@ p {
 
 /* Right column: holds the placeholder or the live iframe.
    Sized to roughly match the combined width of the two booking
-   buttons — the CSS handles this automatically on desktop via the grid. */
+   buttons — the CSS handles this automatically on desktop via the grid.
+
+   TEMPORARY: hidden on all screen sizes so the empty column
+   does not leave blank space while the live camera is not yet ready.
+   Remove the display:none rule when the YouTube embed is added. */
 .intro-grid__media {
   width: 100%;
+  display: none; /* temporary — remove this line when embed goes live */
 }
 
 /* The YouTube iframe itself — applied when the placeholder is replaced.
@@ -1000,6 +1116,12 @@ p {
    is ready. Replaced by an <iframe> when the stream goes live.
    The .intro-grid__media wrapper handles sizing — this box just
    needs to fill it and look intentional.
+
+   NOTE: While the live camera is not yet available the whole
+   .intro-grid__media column is temporarily hidden (see the
+   display:none rule above). The styles below remain so that
+   when you later remove the temporary hide and drop in the
+   real embed, everything is already correct.
    ============================================================= */
 
 .youtube-placeholder {
@@ -1043,13 +1165,18 @@ p {
 }
 
 
-/* Responsive: two-column intro grid on desktop */
+/* Responsive: two-column intro grid on desktop
+   TEMPORARY: the two-column rule is commented out while the
+   live YouTube embed is not yet ready. The intro stays single-
+   column on all screen sizes. When the embed goes live, restore
+   the grid-template-columns line below (and remove the
+   display:none on .intro-grid__media). */
 @media (min-width: 768px) {
   .intro-grid {
     /* Left column takes ~58%, right column ~42%.
        This gives the text room to breathe while keeping the
        placeholder proportional to the booking buttons below it. */
-    grid-template-columns: 58fr 42fr;
+    /* grid-template-columns: 58fr 42fr; */ /* temporary — restore when embed goes live */
     gap: var(--space-10);
   }
 }
@@ -1057,6 +1184,21 @@ p {
 /* =============================================================
    END OF INTRO GRID AND YOUTUBE PLACEHOLDER
    ============================================================= */
+
+
+/* =============================================================
+   TEMPORARY: HIDE REVIEWS SECTION
+
+   The Reviews section is hidden on all property pages until the
+   screenshots / layout are finalised.
+
+   To restore the Reviews section later:
+     → Delete or comment out the rule below.
+   No HTML changes needed on either page.
+   ============================================================= */
+section[aria-labelledby="reviews-heading"] {
+  display: none;
+}
 
    /* =============================================================
    READ MORE — collapsible text block

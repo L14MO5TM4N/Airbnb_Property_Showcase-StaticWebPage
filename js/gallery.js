@@ -482,6 +482,59 @@
 
 
 /* =============================================================
+   SECTION 5 — "OTHER LOCATIONS" NAV DROPDOWN
+
+   The header's dropdown for switching between property pages.
+   Click the toggle to open/close it; clicking anywhere outside,
+   or pressing Escape, closes it too.
+   ============================================================= */
+
+(function () {
+
+  var dropdown = document.querySelector('[data-nav-dropdown]');
+  if (!dropdown) return;  /* Not on this page */
+
+  var toggle = dropdown.querySelector('[data-nav-dropdown-toggle]');
+  var menu   = dropdown.querySelector('[data-nav-dropdown-menu]');
+  if (!toggle || !menu) return;
+
+  function openMenu() {
+    dropdown.classList.add('is-open');
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMenu() {
+    dropdown.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle.addEventListener('click', function (e) {
+    /* Stop this click from also reaching the "click outside closes it"
+       listener below, which would immediately close what we just opened */
+    e.stopPropagation();
+
+    if (dropdown.classList.contains('is-open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  /* Clicking anywhere else on the page closes the dropdown */
+  document.addEventListener('click', function () {
+    closeMenu();
+  });
+
+  /* Escape closes it too — standard accessibility expectation for menus */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+})();
+/* End of nav dropdown IIFE */
+
+
+/* =============================================================
    END OF gallery.js
 
    Checklist for using this file on a property page:
