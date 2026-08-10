@@ -2,7 +2,7 @@
    gallery.js — Photo gallery lightbox + review slideshow logic
    Used on: index.html (Bälinge) and sodra-rorum/index.html
 
-   This file handles four things:
+   This file handles five things:
      1. Lightbox — opens when any gallery thumbnail, the single-image
         hero, or the hero slideshow is clicked; supports prev/next,
         keyboard nav, and touch swipe
@@ -11,12 +11,16 @@
      3. Read More toggle — expands/collapses long intro text
      4. Hero slideshow — auto-advance, dots, touch swipe, and
         clicking through to the matching lightbox photo
+     5. "Other Locations" nav dropdown
 
    Dependencies:
      - gallery.css must be loaded on the same page
      - The HTML structure must match what is described in gallery.css
 
-   This file is shared between both property pages.
+   Single source of truth for the lightbox:
+     All images that should appear in the lightbox live inside a
+     hidden <div class="gallery-full">. The visible photo-grid is
+     only for display and click targets.
    ============================================================= */
 
 
@@ -26,10 +30,10 @@
    The lightbox shows one gallery image at a time, full-screen.
 
    How it works:
-     - On page load, we collect all images inside .photo-grid
+     - On page load we collect every <img> inside .gallery-full
        into an array called "galleryImages"
-     - When any thumbnail (or the hero image) is clicked,
-       we open the lightbox and show that image
+     - When a thumbnail or hero image is clicked we find the
+       matching image by src and open the lightbox at that index
      - Prev/next buttons, arrow keys, and touch swipe move through
        the array
      - Clicking the overlay background or pressing Escape closes it
@@ -51,23 +55,25 @@
   if (!lightbox) return;
 
   /* --- Build the gallery image list ---
-     We look for all images inside .photo-grid items.
-     Each image's src and alt are stored so we can display them
-     in the lightbox without needing to duplicate data. */
+     Single source of truth: the hidden .gallery-full container.
+     This list controls both the order and the total number of
+     images shown in the lightbox. */
   var galleryImages = [];
+  var fullGallery = document.querySelector('.gallery-full');
 
-  document.querySelectorAll('.photo-grid__item img').forEach(function (img) {
-    galleryImages.push({
-      src: img.src,   /* Full URL to the image */
-      alt: img.alt    /* Alt text for screen readers */
+  if (fullGallery) {
+    fullGallery.querySelectorAll('img').forEach(function (img) {
+      galleryImages.push({
+        src: img.src,
+        alt: img.alt
+      });
     });
-  });
+  }
 
   /* The index of the image currently shown in the lightbox */
   var currentIndex = 0;
 
-  /* --- Open the lightbox at a given index ---
-     Called when a thumbnail or hero image is clicked */
+  /* --- Open the lightbox at a given index --- */
   function openLightbox(index) {
     currentIndex = index;
     showImage(currentIndex);
@@ -106,43 +112,49 @@
       lightboxImg.classList.remove('is-loading');
     };
 
-    /* Update the counter e.g. "3 / 12" */
+    /* Update the counter e.g. "3 / 20" */
     if (counter) {
       counter.textContent = (currentIndex + 1) + ' / ' + galleryImages.length;
     }
   }
 
   /* --- Wire up thumbnail clicks ---
-     Each .photo-grid__item gets a click handler that opens the
-     lightbox at the correct index */
-  document.querySelectorAll('.photo-grid__item').forEach(function (item, index) {
+     We match by image src so the visible order of the photo-grid
+     does not have to be the same as the lightbox order. */
+  document.querySelectorAll('.photo-grid__item').forEach(function (item) {
     item.addEventListener('click', function () {
-      openLightbox(index);
+      var thumbImg = item.querySelector('img');
+      if (!thumbImg) return;
+
+      var matchIndex = galleryImages.findIndex(function (entry) {
+        return entry.src === thumbImg.src;
+      });
+
+      openLightbox(matchIndex !== -1 ? matchIndex : 0);
     });
 
-    /* Make thumbnails keyboard-accessible — pressing Enter or Space
-       on a focused thumbnail opens the lightbox */
+    /* Make thumbnails keyboard-accessible */
     item.setAttribute('tabindex', '0');
     item.setAttribute('role', 'button');
-    item.setAttribute('aria-label', 'Open photo ' + (index + 1) + ' in full screen');
+    item.setAttribute('aria-label', 'Open photo in full screen');
 
     item.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        openLightbox(index);
+        item.click(); /* reuse the same logic */
       }
     });
   });
 
   /* --- Wire up the single-image hero (used on sodra-rorum/index.html) ---
      The hero image at the top of that property page opens the
-     lightbox at index 0 (the first/featured gallery photo). Pages
-     using the multi-image hero-slideshow instead are handled by
-     Section 4 further down, which links back into this section. */
+     lightbox at index 0 (the first gallery photo). Pages using
+     the multi-image hero-slideshow instead are handled by
+     Section 4 further down. */
   var heroTrigger = document.querySelector('.hero-image-link');
   if (heroTrigger) {
     heroTrigger.addEventListener('click', function (e) {
-      e.preventDefault();   /* Stop the link from navigating */
+      e.preventDefault();
       openLightbox(0);
     });
   }
@@ -159,20 +171,15 @@
   /* --- Close button --- */
   closeBtn.addEventListener('click', closeLightbox);
 
-  /* --- Close when clicking the dark overlay background ---
-     Only close if the click target is the lightbox itself,
-     not one of the buttons or the image inside it */
+  /* --- Close when clicking the dark overlay background --- */
   lightbox.addEventListener('click', function (e) {
     if (e.target === lightbox) {
       closeLightbox();
     }
   });
 
-  /* --- Keyboard navigation ---
-     Arrow keys navigate while lightbox is open.
-     Escape closes it. */
+  /* --- Keyboard navigation --- */
   document.addEventListener('keydown', function (e) {
-    /* Only respond to keys while the lightbox is open */
     if (!lightbox.classList.contains('is-open')) return;
 
     if (e.key === 'ArrowLeft')  showImage(currentIndex - 1);
@@ -180,13 +187,10 @@
     if (e.key === 'Escape')     closeLightbox();
   });
 
-  /* --- Touch swipe inside the lightbox (phones/tablets only) ---
-     Swipe left advances to the next photo, swipe right goes back.
-     Only the horizontal distance matters — a mostly-vertical touch
-     (e.g. an accidental scroll attempt) is ignored. */
+  /* --- Touch swipe inside the lightbox --- */
   var lbTouchStartX = 0;
   var lbTouchStartY = 0;
-  var SWIPE_THRESHOLD = 40; /* minimum pixels to count as a deliberate swipe */
+  var SWIPE_THRESHOLD = 40;
 
   lightbox.addEventListener('touchstart', function (e) {
     lbTouchStartX = e.changedTouches[0].clientX;
@@ -199,24 +203,19 @@
 
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
       if (deltaX < 0) {
-        showImage(currentIndex + 1); /* swiped left -> next */
+        showImage(currentIndex + 1); /* swiped left → next */
       } else {
-        showImage(currentIndex - 1); /* swiped right -> previous */
+        showImage(currentIndex - 1); /* swiped right → previous */
       }
     }
   });
 
-  /* --- Expose to Section 4 (hero slideshow) ---
-     Section 4 lives in its own IIFE below and needs to open the
-     lightbox at a specific photo, and needs to know which photos
-     exist, so we hand out references via window. This is the
-     simplest way for two independent, self-contained script blocks
-     to talk to each other without merging them into one. */
+  /* --- Expose to Section 4 (hero slideshow) --- */
   window.openGalleryLightbox = openLightbox;
   window.galleryImages       = galleryImages;
 
 })();
-/* End of lightbox IIFE — all variables above are private to this block */
+/* End of lightbox IIFE */
 
 
 /* =============================================================
@@ -228,22 +227,14 @@
    Both slideshows are initialised by the same function below.
    We look for all elements with [data-review-slideshow] and
    set up an independent timer for each one.
-
-   This means:
-     - Adding a third review slideshow to a page requires no JS changes —
-       just add the HTML with data-review-slideshow and it works
-     - Each slideshow runs at its own pace independently
    ============================================================= */
 
 (function () {
 
-  /* How long each review slide is shown before advancing */
-  var REVIEW_INTERVAL = 6000;  /* 6 seconds — reviews need more reading time */
+  var REVIEW_INTERVAL = 6000; /* 6 seconds */
 
-  /* Find all review slideshows on the page */
   var slideshows = document.querySelectorAll('[data-review-slideshow]');
 
-  /* Initialise each one independently */
   slideshows.forEach(function (slideshow) {
 
     var slides = slideshow.querySelectorAll('.review-slide');
@@ -251,37 +242,31 @@
     var current = 0;
     var timer;
 
-    /* If this slideshow has fewer than 2 slides, nothing to advance */
     if (slides.length < 2) return;
 
     function goToSlide(index) {
-  var previous = current;
-  current = (index + slides.length) % slides.length;
+      var previous = current;
+      current = (index + slides.length) % slides.length;
 
-  if (previous === current) return;
+      if (previous === current) return;
 
-  var outgoing = slides[previous];
-  var incoming = slides[current];
+      var outgoing = slides[previous];
+      var incoming = slides[current];
 
-  outgoing.classList.remove('is-active');
-  incoming.classList.add('is-active');
+      outgoing.classList.remove('is-active');
+      incoming.classList.add('is-active');
 
-  /* Incoming slide slides in from the right to center */
-  incoming.style.transform = 'translateX(0)';
-  /* Outgoing slide slides out to the left */
-  outgoing.style.transform = 'translateX(-100%)';
+      incoming.style.transform = 'translateX(0)';
+      outgoing.style.transform = 'translateX(-100%)';
 
-  /* Once the outgoing slide has finished sliding off-screen to the left,
-     silently snap it back to "waiting on the right" with no animation —
-     so it's ready to slide in correctly the next time it's its turn. */
-  outgoing.addEventListener('transitionend', function resetPosition() {
-    outgoing.style.transition = 'none';
-    outgoing.style.transform = 'translateX(100%)';
-    void outgoing.offsetWidth; /* forces the browser to apply the change immediately */
-    outgoing.style.transition = '';
-    outgoing.removeEventListener('transitionend', resetPosition);
-  });
-}
+      outgoing.addEventListener('transitionend', function resetPosition() {
+        outgoing.style.transition = 'none';
+        outgoing.style.transform = 'translateX(100%)';
+        void outgoing.offsetWidth;
+        outgoing.style.transition = '';
+        outgoing.removeEventListener('transitionend', resetPosition);
+      });
+    }
 
     function startTimer() {
       timer = setInterval(function () {
@@ -294,7 +279,6 @@
       startTimer();
     }
 
-    /* Wire up dot buttons for manual navigation */
     dots.forEach(function (dot) {
       dot.addEventListener('click', function () {
         var index = parseInt(dot.getAttribute('data-index'), 10);
@@ -303,24 +287,15 @@
       });
     });
 
-    /* Start the auto-advance timer */
     startTimer();
   });
 
 })();
 /* End of review slideshow IIFE */
 
+
 /* =============================================================
    SECTION 3 — READ MORE TOGGLE
-
-   Collapses long text blocks and reveals a "Read more" / "Read less"
-   button to expand them.
-
-   Structure expected in HTML:
-     <div class="read-more" data-read-more>
-       <p class="text-lead">...</p>
-     </div>
-     <button class="read-more__toggle" data-read-more-toggle>Read more</button>
    ============================================================= */
 
 (function () {
@@ -330,8 +305,6 @@
     var toggle = block.nextElementSibling;
     if (!toggle || !toggle.hasAttribute('data-read-more-toggle')) return;
 
-    /* If the text already fits within the collapsed height, there's
-       nothing to expand — hide the button entirely. */
     if (block.scrollHeight <= block.clientHeight + 4) {
       toggle.style.display = 'none';
       return;
@@ -355,37 +328,24 @@
    SECTION 4 — HERO SLIDESHOW
 
    Handles the auto-advancing multi-image hero banner used on
-   index.html (Bälinge). This logic used to live in an inline
-   <script> in index.html — it's been moved here so it can share
-   code with the lightbox (Section 1) for the gallery click-through
-   and touch swipe below.
-
-   If a page doesn't have a .hero-slideshow (e.g. sodra-rorum/index.html,
-   which still uses the single-image .property-hero), this entire
-   section quietly does nothing.
+   index.html (Bälinge). Pages that use the single-image
+   .property-hero (e.g. sodra-rorum) simply skip this section.
    ============================================================= */
 
 (function () {
 
-  var INTERVAL = 5000;  /* 5 seconds between auto-advances */
+  var INTERVAL = 5000; /* 5 seconds */
 
   var slideshow = document.querySelector('.hero-slideshow');
   var track     = document.querySelector('.hero-slideshow__track');
   var slides    = document.querySelectorAll('.hero-slideshow__slide');
   var dots      = document.querySelectorAll('.hero-slideshow__dot');
 
-  /* Not on this page — stop here */
   if (!slideshow || !slides.length) return;
 
   var currentIndex = 0;
   var timer;
 
-  /* Show the slide at the given index — slides the whole track so
-     that slide lines up in view, and updates the active dot.
-     The "is-active" class no longer controls visibility (the CSS
-     no longer uses it for that) — it's kept purely as a marker so
-     the click-to-gallery handler below can find "whichever slide
-     is currently showing" without tracking a separate variable. */
   function goToSlide(index) {
     slides[currentIndex].classList.remove('is-active');
     if (dots.length) dots[currentIndex].classList.remove('is-active');
@@ -403,14 +363,11 @@
 
   function startTimer() { timer = setInterval(nextSlide, INTERVAL); }
 
-  /* Used after a manual interaction (dot click or swipe) so the
-     new slide gets a full interval before auto-advancing again */
   function resetTimer() {
     clearInterval(timer);
     startTimer();
   }
 
-  /* Wire up each dot button to jump to its slide */
   dots.forEach(function (dot) {
     dot.addEventListener('click', function () {
       goToSlide(parseInt(dot.getAttribute('data-index'), 10));
@@ -421,14 +378,9 @@
   startTimer();
 
   /* --- Click-through to the gallery ---
-     Clicking the track opens the lightbox at whichever photo is
-     currently showing, matched by comparing image src against the
-     gallery photo array built in Section 1 (shared via window).
-     If the currently-shown photo isn't in the gallery for some
-     reason, it falls back to opening at the first gallery photo
-     rather than doing nothing. */
-  var justSwiped = false; /* true briefly after a swipe, so the
-                              resulting click doesn't ALSO open the gallery */
+     Match the currently visible hero image by src against the
+     full gallery list built in Section 1. */
+  var justSwiped = false;
 
   if (track) {
     track.addEventListener('click', function () {
@@ -446,13 +398,25 @@
       window.openGalleryLightbox(matchIndex !== -1 ? matchIndex : 0);
     });
   }
+    /* --- "View all photos" hint ---
+     Always opens the lightbox at the first image (index 0). */
+  var viewAllHint = document.querySelector('.hero-slideshow__hint');
+  if (viewAllHint) {
+    viewAllHint.style.pointerEvents = 'auto';   // make it clickable
+    viewAllHint.style.cursor = 'pointer';
 
-  /* --- Touch swipe (phones/tablets only) ---
-     Swipe left -> next slide, swipe right -> previous slide.
-     A mostly-vertical touch (e.g. scrolling the page) is ignored. */
+    viewAllHint.addEventListener('click', function (e) {
+      e.stopPropagation(); // stop the track click from also firing
+      if (typeof window.openGalleryLightbox === 'function') {
+        window.openGalleryLightbox(0);
+      }
+    });
+  }
+
+  /* --- Touch swipe --- */
   var touchStartX = 0;
   var touchStartY = 0;
-  var SWIPE_THRESHOLD = 40; /* minimum pixels to count as a deliberate swipe */
+  var SWIPE_THRESHOLD = 40;
 
   if (track) {
     track.addEventListener('touchstart', function (e) {
@@ -483,16 +447,12 @@
 
 /* =============================================================
    SECTION 5 — "OTHER LOCATIONS" NAV DROPDOWN
-
-   The header's dropdown for switching between property pages.
-   Click the toggle to open/close it; clicking anywhere outside,
-   or pressing Escape, closes it too.
    ============================================================= */
 
 (function () {
 
   var dropdown = document.querySelector('[data-nav-dropdown]');
-  if (!dropdown) return;  /* Not on this page */
+  if (!dropdown) return;
 
   var toggle = dropdown.querySelector('[data-nav-dropdown-toggle]');
   var menu   = dropdown.querySelector('[data-nav-dropdown-menu]');
@@ -509,8 +469,6 @@
   }
 
   toggle.addEventListener('click', function (e) {
-    /* Stop this click from also reaching the "click outside closes it"
-       listener below, which would immediately close what we just opened */
     e.stopPropagation();
 
     if (dropdown.classList.contains('is-open')) {
@@ -520,12 +478,10 @@
     }
   });
 
-  /* Clicking anywhere else on the page closes the dropdown */
   document.addEventListener('click', function () {
     closeMenu();
   });
 
-  /* Escape closes it too — standard accessibility expectation for menus */
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeMenu();
   });
@@ -540,9 +496,10 @@
    Checklist for using this file on a property page:
      [ ] gallery.css is linked in the <head>
      [ ] gallery.js is linked at the bottom of <body>
-     [ ] .lightbox HTML is present (see property page template)
-     [ ] .photo-grid items are present with images
-     [ ] If using the hero-slideshow (not the single-image hero),
-         there is no separate inline <script> for it in the page —
-         Section 4 above handles it entirely
+     [ ] .lightbox HTML is present
+     [ ] A hidden <div class="gallery-full"> contains ALL images
+         that should appear in the lightbox (in the desired order)
+     [ ] .photo-grid contains the visible thumbnails (any subset,
+         any order)
+     [ ] If using the hero-slideshow, Section 4 handles it
    ============================================================= */

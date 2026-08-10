@@ -67,7 +67,7 @@
        and uncomment the line below. A favicon is the small icon
        that appears in the browser tab.
        ============================================================ -->
-  <!-- <link rel="icon" href="favicon.ico"> -->
+  <link rel="icon" href="favicon.ico">
 </head>
 
 <body>
@@ -84,8 +84,8 @@
 
 																	
       <!-- Site logo: clicking it always returns to the homepage -->
-      <a href="./" class="site-logo">Swedish Stays</a>
-      <!-- TODO: Replace "Swedish Stays" with the client's preferred site name -->
+      <a href="./" class="site-logo">Scania Cottages</a>
+        <!-- TODO: Finalize the client's preferred site/brand name -->
 
       <!-- aria-label names this nav region for screen readers,
            since a page can have more than one <nav> element -->
@@ -148,18 +148,12 @@
          Add as many .hero-slideshow__slide divs as you have photos.
          The first one has "is-active" so something is visible immediately
          before JavaScript runs.
-
-         TODO: Replace the src attributes with real hero images.
-               Recommended: landscape, at least 1600px wide, well-lit.
-               Good candidates: exterior shots, landscape views, garden.
 																	 
          ========================================================= -->
     <section class="hero-slideshow" aria-label="Property photo slideshow">
 
-      <!-- Small "view all photos" hint, top-right corner. Same idea as the
-           hint used on the old single-image hero — just repositioned since
-           the slideshow overlay text already occupies the bottom. -->
-      <span class="hero-slideshow__hint" aria-hidden="true">View all photos</span>
+      <!-- Small "view all photos" hint -->
+      <span class="hero-slideshow__hint" aria-hidden="true">View All Photos</span>
 
       <!-- Slide track: all slides live here, stacked via CSS.
            Clicking anywhere on the track (not the dots) opens the lightbox
@@ -169,7 +163,7 @@
         <!-- Slide 1: visible on load (is-active) -->
         <div class="hero-slideshow__slide is-active">
           <img
-            src="media/balinge/gallery/hero-2.avif"
+            src="media/balinge/gallery/ext-01.webp"
             alt="Scenic view of the Swedish countryside"
             loading="eager"
             width="1600"
@@ -181,8 +175,8 @@
         <!-- Slide 2 -->
         <div class="hero-slideshow__slide">
           <img
-            src="media/balinge/gallery/gallery-01.avif"
-            alt="View of Private Pier"
+            src="media/balinge/gallery/pier-01.webp"
+            alt="Bälinge Private Pier"
             loading="eager"
             width="1600"
             height="900"
@@ -192,7 +186,7 @@
         <!-- Slide 3 -->
         <div class="hero-slideshow__slide">
           <img
-            src="media/balinge/gallery/gallery-03.avif"
+            src="media/balinge/gallery/lounge-01.webp"
             alt="Interior view of Living room"
             loading="eager"
             width="1600"
@@ -203,7 +197,7 @@
         <!-- Slide 4 -->
         <div class="hero-slideshow__slide">
           <img
-            src="media/balinge/gallery/hero-4.avif"
+            src="media/balinge/gallery/winter-01.webp"
             alt="Wintery Exterior view of Bälinge Lakehouse"
             loading="eager"
             width="1600"
@@ -211,7 +205,7 @@
           >
         </div>
 
-        <!-- TODO: Add more slides by copying a <div class="hero-slideshow__slide">
+        <!--       Add more slides by copying a <div class="hero-slideshow__slide">
                    block above. Also add a matching dot button below.
                    Store hero images in images/shared/ since they represent
                    both properties, not one specific property. -->
@@ -225,7 +219,7 @@
         <p class="hero__subtitle">
           Book your stay with Airbnb or Booking.com.
         </p>
-        <!-- TODO: Adjust this text to match the client's preferred tone -->
+
       </div>
 
       <!-- Dot navigation — one dot per slide.
@@ -236,7 +230,7 @@
         <button class="hero-slideshow__dot" data-index="1" aria-label="Go to slide 2"></button>
         <button class="hero-slideshow__dot" data-index="2" aria-label="Go to slide 3"></button>
         <button class="hero-slideshow__dot" data-index="3" aria-label="Go to slide 4"></button>
-        <!-- TODO: Add a dot button for each additional slide you add above -->
+
       </div>
 
     </section><!-- end .hero-slideshow -->
@@ -292,12 +286,12 @@
 
           <!-- -----------------------------------------------
                LEFT COLUMN — text and booking buttons
-               ----------------------------------------------- -->
+          ----------------------------------------------- -->
           <div class="intro-grid__text">
 
 																			  
             <span class="eyebrow">Bälinge · Perstorp </span>
-            <!-- TODO: Update location label for Bälinge page -->
+
 
             <h1 id="property-title">Welcome to Bälinge Lakehouse. </h1>
             
@@ -337,7 +331,6 @@
 												  
 
             <p class="intro-grid__facts">
-              <!-- TODO: Fill in accurate numbers for this property -->
               Up to 4 guests &middot; 2 bedrooms &middot; 1 bathroom &middot; Entire home
             </p>
 
@@ -605,25 +598,14 @@
     </section><!-- end reviews section -->
 
 
-<!-- =========================================================
+        <!--=========================================================
          MAP SECTION
 
          An embedded Google Maps iframe shows the property location.
-         A "Get Directions" button links to Google Maps in a new tab
+         A "Get Directions" button links to Google Maps // Or Apple Maps in a new tab
          so visitors can open it on their phone for navigation.
 
-         HOW TO GET THE EMBED CODE:
-           1. Go to maps.google.com
-           2. Search for the property address
-           3. Click Share → Embed a map
-           4. Copy the <iframe> src URL
-           5. Paste it into the iframe src below
-
-         HOW TO GET THE DIRECTIONS LINK:
-           1. In Google Maps, find the property
-           2. Copy the URL from your browser address bar
-           3. Paste it into the Get Directions <a> href below
-         ========================================================= -->
+        =========================================================-->
     <section class="section" aria-labelledby="map-heading">
       <div class="container">
 
@@ -632,13 +614,12 @@
 
         <p style="color: var(--color-text-muted); margin-bottom: var(--space-6);">
           Bälinge, Hörby municipality, Skåne, Sweden.
-          <!-- TODO: Update with the full address once confirmed with the client -->
+        
 																	
 															 
         </p>
 
-        <!-- Embedded Google Maps iframe
-             The title attribute is required for accessibility (screen readers). -->
+        <!-- Embedded Google Maps iframe The title attribute is required for accessibility (screen readers). -->
         <div class="map-wrapper">
           <iframe
             title="Map showing the location of Bälinge"
@@ -697,19 +678,24 @@
         <h2 id="gallery-heading">Photos</h2>
         <hr class="divider--wood">
 
+        <!--=========================================================
+          Visible photo grid — these are the thumbnails visitors see.
+          Clicking any of them opens the lightbox at the matching image.
+          Order here does NOT have to match the lightbox order. 
+         =========================================================-->
         <div class="photo-grid">
 
           <div class="photo-grid__item photo-grid__item--featured">
             <img
-              src="media/balinge/gallery/gallery-01.avif"
-              alt="Lake view from the pier at Bälinge"
+              src="media/balinge/gallery/pier-01.webp"
+              alt="Bälinge private pier"
               loading="lazy"
             >
           </div>
 
           <div class="photo-grid__item">
             <img
-              src="media/balinge/gallery/gallery-02.avif"
+              src="media/balinge/gallery/pier-02.webp"
               alt="Pier at Bälinge"
               loading="lazy"
             >
@@ -717,7 +703,7 @@
 
           <div class="photo-grid__item">
             <img
-              src="media/balinge/gallery/gallery-03.avif"
+              src="media/balinge/gallery/lounge-01.webp"
               alt="Living room at Bälinge"
               loading="lazy"
             >
@@ -725,15 +711,15 @@
 
           <div class="photo-grid__item">
             <img
-              src="media/balinge/gallery/gallery-04.avif"
-              alt="Open green by the lake"
+              src="media/balinge/gallery/lounge-02.webp"
+              alt="Big lounge area with comfy sofas"
               loading="lazy"
             >
           </div>
 
           <div class="photo-grid__item">
             <img
-              src="media/balinge/gallery/gallery-05.avif"
+              src="media/balinge/gallery/ext-03.webp"
               alt="Outdoor seating area"
               loading="lazy"
             >
@@ -741,35 +727,39 @@
 
           <div class="photo-grid__item">
             <img
-              src="media/balinge/gallery/gallery-06.avif"
-              alt="Wintery exterior view"
+              src="media/balinge/gallery/ext-01.webp"
+              alt="Scenic view of Bälinge"
               loading="lazy"
             >
           </div>
 
           <div class="photo-grid__item">
             <img
-              src="media/balinge/gallery/gallery-07.avif"
-              alt="Cozy fireplace"
-              loading="lazy"
-            >
-          </div>
-
-          <!-- These two are also used as hero slideshow slides above.
-               They're included here so they exist in the lightbox photo
-               array — otherwise clicking them in the hero would have
-               nowhere correct to open to. -->
-          <div class="photo-grid__item">
-            <img
-              src="media/balinge/gallery/hero-2.avif"
-              alt="Scenic view of the Swedish countryside"
+              src="media/balinge/gallery/ext-02.webp"
+              alt="Open green by the lake at Bälinge"
               loading="lazy"
             >
           </div>
 
           <div class="photo-grid__item">
             <img
-              src="media/balinge/gallery/hero-4.avif"
+              src="media/balinge/gallery/winter-02.webp"
+              alt="Cozy fireplace at Bälinge Lakehouse"
+              loading="lazy"
+            >
+          </div>
+
+          <div class="photo-grid__item">
+            <img
+              src="media/balinge/gallery/winter-03.webp"
+              alt="View of Bälinge lake through snowy trees on a sunny winter day"
+              loading="lazy"
+            >
+          </div>
+
+          <div class="photo-grid__item">
+            <img
+              src="media/balinge/gallery/winter-01.webp"
               alt="Wintery exterior view of Bälinge Lakehouse"
               loading="lazy"
             >
@@ -777,12 +767,56 @@
 
         </div><!-- end .photo-grid -->
       </div><!-- end .container -->
+
+
+      <!-- =========================================================
+           FULL GALLERY (hidden)
+           This is the single source of truth for the lightbox.
+           - Put ALL images you want in the lightbox here
+           - The order of these <img> tags = the order in the lightbox
+           - Visitors never see this list
+           ========================================================= -->
+      <div class="gallery-full" hidden aria-hidden="true">
+
+        <!-- Current images (same files you already have) -->
+        <img src="media/balinge/gallery/pier-01.webp" alt="Bälinge private pier">
+        <img src="media/balinge/gallery/pier-02.webp" alt="Pier at Bälinge">
+        <img src="media/balinge/gallery/pier-03.webp" alt="Fishing by the pier at Bälinge">
+        <img src="media/balinge/gallery/lounge-01.webp" alt="Living room at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/lounge-02.webp" alt="Big lounge area with comfy sofas at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/lounge-03.webp" alt="Roomy dining area in open plan lounge at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/kitchen-01.webp" alt="Garden view from kitchen window at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/kitchen-02.webp" alt="Modern kitchen at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/kitchen-03.webp" alt="Kitchen utensils and appliances at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/bathroom-01.webp" alt="Modern Shower and washing machine at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/bathroom-02.webp" alt="Modern shower at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/bathroom-03.webp" alt="Toilet and sink">
+        <img src="media/balinge/gallery/bedroom-01.webp" alt="King-size bed and bunk bed in the bedroom at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/bedroom-03.webp" alt="Children's Bunkbed at Bälinge Lakhouse">
+        <img src="media/balinge/gallery/bedroom-04.webp" alt="Bedroom with 2 single beds at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/ext-03.webp" alt="Outdoor seating area at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/ext-01.webp" alt="Scenic view of hammock at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/ext-02.webp" alt="Open green by the lake at Bälinge">
+        <img src="media/balinge/gallery/ext-04.webp" alt="Picnic table at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/activities-01.webp" alt="Harvest after peaceful chanterelle picking near Lakehouse">
+        <img src="media/balinge/gallery/activities-02.webp" alt="Fishing at Bälinge lake">
+        <img src="media/balinge/gallery/activities-03.webp" alt="Berrypicking at Bälinge">
+        <img src="media/balinge/gallery/activities-04.webp" alt="Chanterelle cooking in kitchen at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/winter-02.webp" alt="Cozy fireplace at Bälinge Lakehouse">
+        <img src="media/balinge/gallery/winter-03.webp" alt="View of Bälinge lake through snowy trees on a sunny winter day">
+        <img src="media/balinge/gallery/winter-01.webp" alt="Wintery exterior view of Bälinge Lakehouse">
+        <img src="media/balinge/gallery/winter-04.webp" alt="Iceskating on the frozen lake in Bälinge">
+        <img src="media/balinge/gallery/winter-05.webp" alt="Exterior view of Bälinge in snowy wintertimes">
+        
+
+      </div><!-- end .gallery-full -->
+
     </section><!-- end gallery section -->
 
 
     <!-- =========================================================
-         LIGHTBOX
-         ========================================================= -->
+                          LIGHTBOX
+      ========================================================= -->
     <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox">
 
       <img class="lightbox__image" src="" alt="">
@@ -816,8 +850,8 @@
 
       <p class="footer-note">
         <!-- &copy; is the © copyright symbol in HTML -->
-        &copy; <span id="footer-year"></span> Swedish Stays. All rights reserved.
-        <!-- TODO: Replace "Swedish Stays" with the client's site/brand name -->
+        &copy; <span id="footer-year"></span> Scania Cottages. All rights reserved.
+        <!-- TODO: Finalize the client's preferred site/brand name -->
       </p>
 
       <p class="footer-note">
