@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--
   index.html — Homepage (Bälinge)
   Airbnb & Booking.com Rentals Showcase Website
@@ -18,9 +18,8 @@
     4. <footer>
 -->
 <html lang="en">
-
-<head>
-  <!-- ============================================================
+  <head>
+    <!-- ============================================================
        META & SEO
 	   
        charset: tells the browser this file uses UTF-8 text encoding
@@ -30,13 +29,16 @@
 																 
 												   																	   
        ============================================================ -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Bälinge — Lake cottage with private pier by the lake in Bälinge, Skåne, Sweden. Book on Airbnb or Booking.com.">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Bälinge — Lake cottage with private pier by the lake in Bälinge, Skåne, Sweden. Book on Airbnb or Booking.com."
+    />
 
-  <title>Bälinge — Vacation Rental in Skåne, Sweden</title>
+    <title>Bälinge — Vacation Rental in Skåne, Sweden</title>
 
-  <!-- ============================================================
+    <!-- ============================================================
        GOOGLE FONTS 
        We load two typefaces:
          - Playfair Display (headings): weight 700 (bold)
@@ -48,195 +50,196 @@
        These must be loaded before style.css so the fonts are available
        when the stylesheet runs.							 								
        ============================================================ -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- ============================================================
+    <!-- ============================================================
        STYLESHEETS
        ============================================================ -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/gallery.css">
-																	 
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/gallery.css" />
 
-																   
-			  
-  <!-- ============================================================
-       FAVICON
-       TODO: Add a favicon.ico or favicon.png to the project root
-       and uncomment the line below. A favicon is the small icon
-       that appears in the browser tab.
+    <!-- ============================================================
+                            FAVICON
        ============================================================ -->
-  <link rel="icon" href="favicon.ico">
-</head>
+    <link rel="icon" href="favicon.ico" />
+  </head>
 
-<body>
-
-  <!-- ============================================================
+  <body>
+    <!-- ============================================================
        HEADER — identical on all pages
        Only change: aria-current="page" moves to the correct nav link
 																	 
 
 																		  
        ============================================================ -->
-  <header class="site-header">
-    <div class="container">
+    <header class="site-header">
+      <div class="container">
+        <!-- Site logo: clicking it always returns to the homepage -->
+        <a href="./" class="site-logo">Scania Cottages</a>
 
-																	
-      <!-- Site logo: clicking it always returns to the homepage -->
-      <a href="./" class="site-logo">Scania Cottages</a>
-        <!-- TODO: Finalize the client's preferred site/brand name -->
-
-      <!-- aria-label names this nav region for screen readers,
+        <!-- aria-label names this nav region for screen readers,
            since a page can have more than one <nav> element -->
-      <nav aria-label="Main navigation" class="nav">
-        <!-- Current page — a real link back to this page. Styled
+        <nav aria-label="Main navigation" class="nav">
+          <!-- Current page — a real link back to this page. Styled
              identically to the "Other Locations" button, but it's an
              <a> since it's genuinely navigating (even if just to itself) -->
-        <a href="./" class="nav-current" aria-current="page">Bälinge</a>
+          <a href="./" class="nav-current" aria-current="page">Bälinge</a>
 
-        <!-- Dropdown listing other properties. Only one entry today,
+          <!-- Dropdown listing other properties. Only one entry today,
              but this structure holds more without needing a redesign
              once additional properties are added. -->
-        <div class="nav-dropdown" data-nav-dropdown>
-          <button
-            class="nav-dropdown__toggle"
-            data-nav-dropdown-toggle
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Other Locations
-            <span class="nav-dropdown__caret" aria-hidden="true">▾</span>
-          </button>
+          <div class="nav-dropdown" data-nav-dropdown>
+            <button
+              class="nav-dropdown__toggle"
+              data-nav-dropdown-toggle
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Other Locations
+              <span class="nav-dropdown__caret" aria-hidden="true">▾</span>
+            </button>
 
-          <ul class="nav-dropdown__menu" data-nav-dropdown-menu>
-            <li><a href="sodra-rorum/">Södra Rörum</a></li>
-          </ul>
-        </div>
-      </nav>
+            <ul class="nav-dropdown__menu" data-nav-dropdown-menu>
+              <li><a href="sodra-rorum/">Södra Rörum</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
 
-    </div>
-  </header>
-
-
-																   
-				   
-																		   
-																			
-																	   
-  <!-- ============================================================
+    <!-- ============================================================
        MAIN CONTENT
        <main> is a semantic landmark — there should be only one per page.
        It wraps all the unique content of this page (not the header/footer).
        ============================================================ -->
-  <main>
+    <main>
+      <!-- =========================================================
+     HERO SLIDESHOW
 
-    <!-- =========================================================
-         HERO SLIDESHOW
+     A full-width image banner that automatically cycles through
+     multiple photos. JavaScript (gallery.js) handles the timing,
+     dots, swipe and click-through to the lightbox.
+     CSS handles the sliding animation.
 
-         A full-width image banner that automatically cycles through
-         multiple photos. JavaScript (gallery.js) handles the timing
-         and transitions; CSS handles the fade effect.
+     How it works:
+       - All slides sit side-by-side in a horizontal track
+         (.hero-slideshow__track)
+       - JavaScript moves the whole track with transform: translateX()
+       - The "is-active" class is used for the dots and for matching
+         the current slide when opening the lightbox
+       - The dot buttons at the bottom let users jump to any slide
+       - Clicking the track (or the "View all photos" hint) opens
+         the lightbox
 
-         How it works:
-           - All slides are stacked on top of each other
-           - Only the slide with class "is-active" is visible (opacity: 1)
-           - JS removes "is-active" from the current slide and adds it
-             to the next one every X seconds — CSS fades between them
-           - The dot buttons at the bottom let users jump to any slide
+     Add as many .hero-slideshow__slide divs as you have photos.
+     The first one has "is-active" so something is visible immediately
+     before JavaScript runs.
+     ========================================================= -->
+      <section class="hero-slideshow" aria-label="Property photo slideshow">
+        <!-- Small "view all photos" hint -->
+        <span class="hero-slideshow__hint" aria-hidden="true"
+          >View All Photos</span
+        >
 
-         Add as many .hero-slideshow__slide divs as you have photos.
-         The first one has "is-active" so something is visible immediately
-         before JavaScript runs.
-																	 
-         ========================================================= -->
-    <section class="hero-slideshow" aria-label="Property photo slideshow">
-
-      <!-- Small "view all photos" hint -->
-      <span class="hero-slideshow__hint" aria-hidden="true">View All Photos</span>
-
-      <!-- Slide track: all slides live here, stacked via CSS.
+        <!-- Slide track: all slides live here, stacked via CSS.
            Clicking anywhere on the track (not the dots) opens the lightbox
            at whichever photo is currently showing — handled in gallery.js -->
-      <div class="hero-slideshow__track">
+        <div class="hero-slideshow__track">
+          <!-- Slide 1: visible on load (is-active) -->
+          <div class="hero-slideshow__slide is-active">
+            <img
+              src="media/balinge/gallery/ext-01.webp"
+              alt="Scenic view of the Swedish countryside"
+              loading="eager"
+              width="1600"
+              height="900"
+            />
+            <!-- loading="eager" on the first slide: load immediately, don't wait -->
+          </div>
 
-        <!-- Slide 1: visible on load (is-active) -->
-        <div class="hero-slideshow__slide is-active">
-          <img
-            src="media/balinge/gallery/ext-01.webp"
-            alt="Scenic view of the Swedish countryside"
-            loading="eager"
-            width="1600"
-            height="900"
-          >
-          <!-- loading="eager" on the first slide: load immediately, don't wait -->
+          <!-- Slide 2 -->
+          <div class="hero-slideshow__slide">
+            <img
+              src="media/balinge/gallery/pier-01.webp"
+              alt="Bälinge Private Pier"
+              loading="eager"
+              width="1600"
+              height="900"
+            />
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="hero-slideshow__slide">
+            <img
+              src="media/balinge/gallery/lounge-01.webp"
+              alt="Interior view of Living room"
+              loading="eager"
+              width="1600"
+              height="900"
+            />
+          </div>
+
+          <!-- Slide 4 -->
+          <div class="hero-slideshow__slide">
+            <img
+              src="media/balinge/gallery/winter-01.webp"
+              alt="Wintery Exterior view of Bälinge Lakehouse"
+              loading="eager"
+              width="1600"
+              height="900"
+            />
+          </div>
+
+          <!--       Add more slides by copying a <div class="hero-slideshow__slide">
+                   block above. Also add a matching dot button below. -->
+        </div>
+        <!-- end .hero-slideshow__track -->
+
+        <!-- Overlay: text sits on top of the photos with a gradient behind it -->
+        <div class="hero-slideshow__overlay">
+          <p class="hero__eyebrow">Vacation Rental · Skåne, Sweden</p>
+          <h1 class="hero__title">
+            Bälinge, A Lakeside cabin - With a Private Pier
+          </h1>
+          <p class="hero__subtitle">
+            Book your stay with Airbnb or Booking.com.
+          </p>
         </div>
 
-        <!-- Slide 2 -->
-        <div class="hero-slideshow__slide">
-          <img
-            src="media/balinge/gallery/pier-01.webp"
-            alt="Bälinge Private Pier"
-            loading="eager"
-            width="1600"
-            height="900"
-          >
-        </div>
-
-        <!-- Slide 3 -->
-        <div class="hero-slideshow__slide">
-          <img
-            src="media/balinge/gallery/lounge-01.webp"
-            alt="Interior view of Living room"
-            loading="eager"
-            width="1600"
-            height="900"
-          >
-        </div>
-
-        <!-- Slide 4 -->
-        <div class="hero-slideshow__slide">
-          <img
-            src="media/balinge/gallery/winter-01.webp"
-            alt="Wintery Exterior view of Bälinge Lakehouse"
-            loading="eager"
-            width="1600"
-            height="900"
-          >
-        </div>
-
-        <!--       Add more slides by copying a <div class="hero-slideshow__slide">
-                   block above. Also add a matching dot button below.
-                   Store hero images in images/shared/ since they represent
-                   both properties, not one specific property. -->
-
-      </div><!-- end .hero-slideshow__track -->
-
-      <!-- Overlay: text sits on top of the photos with a gradient behind it -->
-      <div class="hero-slideshow__overlay">
-        <p class="hero__eyebrow">Vacation Rental · Skåne, Sweden</p>
-        <h1 class="hero__title">Bälinge, A Lakeside cabin - With a Private Pier</h1>
-        <p class="hero__subtitle">
-          Book your stay with Airbnb or Booking.com.
-        </p>
-
-      </div>
-
-      <!-- Dot navigation — one dot per slide.
+        <!-- Dot navigation — one dot per slide.
            aria-label gives screen readers a description of each button.
            The JS file reads data-index to know which slide to jump to. -->
-      <div class="hero-slideshow__dots" aria-label="Slideshow navigation">
-        <button class="hero-slideshow__dot is-active" data-index="0" aria-label="Go to slide 1"></button>
-        <button class="hero-slideshow__dot" data-index="1" aria-label="Go to slide 2"></button>
-        <button class="hero-slideshow__dot" data-index="2" aria-label="Go to slide 3"></button>
-        <button class="hero-slideshow__dot" data-index="3" aria-label="Go to slide 4"></button>
+        <div class="hero-slideshow__dots" aria-label="Slideshow navigation">
+          <button
+            class="hero-slideshow__dot is-active"
+            data-index="0"
+            aria-label="Go to slide 1"
+          ></button>
+          <button
+            class="hero-slideshow__dot"
+            data-index="1"
+            aria-label="Go to slide 2"
+          ></button>
+          <button
+            class="hero-slideshow__dot"
+            data-index="2"
+            aria-label="Go to slide 3"
+          ></button>
+          <button
+            class="hero-slideshow__dot"
+            data-index="3"
+            aria-label="Go to slide 4"
+          ></button>
+        </div>
+      </section>
+      <!-- end .hero-slideshow -->
 
-      </div>
-
-    </section><!-- end .hero-slideshow -->
-
-
-    <!-- =========================================================
+      <!-- =========================================================
          INTRO — two-column layout on desktop:
            Left column:  eyebrow, title, description, quick facts, booking buttons
            Right column: YouTube live camera placeholder
@@ -245,144 +248,177 @@
          The placeholder width matches the booking buttons naturally because
          both columns share equal space in the grid.
          ========================================================= -->
-    <section class="section property-intro" aria-labelledby="property-title">
-      <div class="container">
-
-													   
-
-																  
-								  
-
-																								
-
-								   
-        <div class="intro-grid">
-
-
-																	  
-									
-																		  
-																			 
-				
-																   
-																		
-
-							 
-																			
-																					  
-																					   
-																					  
-			   
-				
-										  
-													  
-																										  
-							
-						 
-						  
-			 
-																			 
-																	   
-
-          <!-- -----------------------------------------------
+      <section class="section property-intro" aria-labelledby="property-title">
+        <div class="container">
+          <div class="intro-grid">
+            <!-- -----------------------------------------------
                LEFT COLUMN — text and booking buttons
           ----------------------------------------------- -->
-          <div class="intro-grid__text">
+            <div class="intro-grid__text">
+              <span class="eyebrow"
+                >Bälinge &middot; Perstorp Municipality</span
+              >
+              <h1 id="property-title">Welcome to Bälinge Lakehouse.</h1>
+              <hr class="divider--wood" />
+              <div class="read-more" data-read-more>
+                <p class="text-lead">
+                  A charming 100-year-old cottage nestled by the serene waters
+                  of Bälinge lake. With its very own private pier, rowing boat
+                  and direct lake access, this is the perfect place for morning
+                  swims, peaceful fishing sessions or simply watching the sun
+                  rise over the water.
+                </p>
 
-																			  
-            <span class="eyebrow">Bälinge · Perstorp </span>
+                <p class="text-lead">
+                  The house measures 86 m² and offers a warm blend of rustic
+                  charm and modern comforts. Inside you’ll find a fully equipped
+                  kitchen with a large dining table that seats up to 10 people,
+                  a cozy living area with fireplace, fast Wi-Fi (1 Gbit),
+                  air-conditioning and a TV. Outside, a spacious 1 400 m² garden
+                  invites you to relax in the hammock, play badminton or enjoy a
+                  barbecue.
+                </p>
 
+                <p class="text-lead">
+                  <strong>Sleeping arrangements</strong><br />
+                  • Main bedroom – one double bed + one bunk bed (ideal for two
+                  children or extra guests)<br />
+                  • Second bedroom – two single beds
+                </p>
 
-            <h1 id="property-title">Welcome to Bälinge Lakehouse. </h1>
-            
+                <p class="text-lead">
+                  <strong>Please note</strong><br />
+                  Bed linen and towels are not included. Pillows and blankets
+                  are provided. If you would like to rent a complete set (towel
+                  + duvet cover + mattress sheet), the cost is 150 SEK per set.
+                  Please let us know a few days in advance. Payment is made in
+                  cash on arrival.
+                </p>
 
-            <hr class="divider--wood">
-            <div class="read-more" data-read-more>
-																			  
-																	   
-				  
-																				 
+                <p class="text-lead">
+                  Final cleaning can be ordered for 1 500 SEK. If you choose not
+                  to order cleaning, we kindly ask that you leave the house in
+                  the same condition as when you arrived.
+                </p>
 
-            <p class="text-lead">
-              Escape to our lake house nestled on the serene of Bälinge lake. 
-              Enjoy direct access to the lake with a private pier/dock that belongs
-              to the house and a rowing boat, perfect for morning swims 
-              or fishing.
-            </p>
-            <p class="text-lead">
-              Fully equipped kitchen with a stove, oven, fridge & freezer 
-              microwave, dishwasher, coffee maker and kettle. Fast Wi-Fi, a fireplace 
-              for cozy evenings and a 1400 square meter garden, BBQ area. 
-              This historical home, over 100 years old, offers a perfect blend 
-              of rustic charm and modern comforts.
-            </p>
-            <p class="text-lead">
-              Söderåsens National Park is 29 km away, 
-              and Ängelholm-Helsingborg Airport is 45 km from the property. 
-              Water sports facilities are available, along with fishing,
-              walking tours, bike tours, hiking, and diving.
-              
-              
-              
-            </p>
-            </div>
-            <button class="read-more__toggle" data-read-more-toggle>Read more</button>
+                <p class="text-lead">
+                  Feel free to use the indoor fireplace — some wood is available
+                  in the house, but for longer stays please bring or buy
+                  additional firewood. The outdoor grill is also at your
+                  disposal; simply bring your own charcoal.
+                </p>
 
-												  
+                <p class="text-lead">
+                  <strong>Outdoor life &amp; location</strong><br />
+                  The private pier is perfect for swimming, sunbathing or
+                  enjoying a ride in the rowing boat (life jackets provided).
+                  The garden includes a children’s swing, hammock and badminton
+                  set. Indoor games are available for rainy days.
+                </p>
 
-            <p class="intro-grid__facts">
-              Up to 4 guests &middot; 2 bedrooms &middot; 1 bathroom &middot; Entire home
-            </p>
+                <p class="text-lead">
+                  Nearby attractions include
+                  <a
+                    href="https://www.sverigesnationalparker.se/en/parks/soderasen-national-park"
+                    class="link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><strong>Söderåsen National Park ↗</strong></a
+                  >
+                  (29 km),
+                  <a
+                    href="https://www.kungsbygget.com/eng"
+                    class="link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><strong>Kungsbygget Adventure Park ↗</strong></a
+                  >
+                  (22 km) and
+                  <a
+                    href="https://www.naturkartan.se/en/skane-lan/herrevadskloster-2"
+                    class="link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><strong>Herrevadskloster ↗</strong></a
+                  >(27 km). and Ängelholm-Helsingborg Airport is 45 km away.
+                  Across the lake you’ll find a small summer campground with a
+                  sandy beach, playground and kiosk.
+                </p>
 
-            <!-- Booking buttons -->
-            <div class="intro-grid__buttons">
-													   
-              <a
+                <p class="text-lead">
+                  The house sits about 100 metres from the lake, with trees in
+                  between, so there is no direct lake view from the windows. The
+                  three small red buildings you see in the photos all belong to
+                  the property (main house, storage and garage).
+                </p>
+
+                <p class="text-lead">
+                  Whether you’re looking for quiet time to recharge, a fun
+                  family gathering or simply a well-earned break by the water,
+                  we hope you’ll feel right at home. We look forward to
+                  welcoming you to Bälinge Lakehouse.
+                </p>
+              </div>
+              <button class="read-more__toggle" data-read-more-toggle>
+                Read more
+              </button>
+
+              <p class="intro-grid__facts">
+                <strong>
+                  Up to 4 Guests
+                  <span class="dot">&middot;</span>
+                  2 Bedrooms
+                  <span class="dot">&middot;</span>
+                  1 Bathroom
+                  <span class="dot">&middot;</span>
+                  Full Kitchen
+                  <span class="dot">&middot;</span>
+                  Entire Cottage
+                </strong>
+              </p>
+
+              <!-- Booking buttons -->
+              <div class="intro-grid__buttons">
+                <a
                   href="https://www.airbnb.co.uk/rooms/1323315106283045184"
                   class="btn btn-secondary btn-secondary--airbnb"
                   target="_blank"
                   rel="noopener noreferrer"
-                >                
+                >
                   <img
-                  src="media/shared/icons/airbnb.0.svg"
-                  alt="View on Airbnb.co.uk"
-                  class="btn__icon btn__icon--airbnb"
-                  >
+                    src="media/shared/icons/airbnb.0.svg"
+                    alt="View on Airbnb.co.uk"
+                    class="btn__icon btn__icon--airbnb"
+                  />
                 </a>
-
 
                 <a
                   href="https://www.booking.com/hotel/se/lake-cottage-with-private-pier-by-the-water.en-gb.html"
-				  
                   class="btn btn-secondary btn-secondary--booking"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src="media/shared/icons/booking.com.0.svg"
-                  alt="View on Booking.com"
-                  class="btn__icon"
-                  >
+                  <img
+                    src="media/shared/icons/booking.com.0.svg"
+                    alt="View on Booking.com"
+                    class="btn__icon"
+                  />
                 </a>
+              </div>
             </div>
+            <!-- end .intro-grid__text -->
 
-          </div><!-- end .intro-grid__text -->
-
-				  
-													
-
-          <!-- -----------------------------------------------
+            <!-- -----------------------------------------------
                RIGHT COLUMN — YouTube live camera placeholder
 
                When the live duck pond camera is ready:
                  1. Remove the entire .youtube-placeholder div
                  2. Replace it with a standard YouTube embed iframe:
 																		  
-																		
-
                <iframe
                  class="youtube-embed"
                  src="https://www.youtube.com/embed/LIVE_STREAM_ID?autoplay=1&mute=1"
-                 title="Live duck pond camera at Sodra Rorum"
+                 title="Live duck pond camera "
                  allow="autoplay; encrypted-media; picture-in-picture"
                  allowfullscreen
                  loading="lazy"
@@ -393,212 +429,190 @@
                The .intro-grid__media wrapper and its CSS will handle
                sizing automatically — no other changes needed.
                ----------------------------------------------- -->
-          <div class="intro-grid__media">
+            <div class="intro-grid__media">
+              <!-- Placeholder box — remove and replace with iframe when live -->
+              <div
+                class="youtube-placeholder"
+                aria-label="Live camera coming soon"
+              >
+                <!-- Camera icon using a unicode emoji — no icon library needed -->
+                <div class="youtube-placeholder__icon" aria-hidden="true">
+                  &#x1F4F9;
+                </div>
+                <!-- &#x1F4F9; renders as the video camera emoji in all modern browsers -->
 
-            <!-- Placeholder box — remove and replace with iframe when live -->
-            <div class="youtube-placeholder" aria-label="Live camera coming soon">
+                <p class="youtube-placeholder__text">Live duck pond camera</p>
+                <p class="youtube-placeholder__sub">Coming soon</p>
+              </div>
+              <!-- end .youtube-placeholder -->
+            </div>
+            <!-- end .intro-grid__media -->
+          </div>
+          <!-- end .intro-grid -->
+        </div>
+        <!-- end .container -->
+      </section>
 
-              <!-- Camera icon using a unicode emoji — no icon library needed -->
-              <div class="youtube-placeholder__icon" aria-hidden="true">&#x1F4F9;</div>
-              <!-- &#x1F4F9; renders as the video camera emoji in all modern browsers -->
-
-              <p class="youtube-placeholder__text">Live duck pond camera</p>
-              <p class="youtube-placeholder__sub">Coming soon</p>
-
-            </div><!-- end .youtube-placeholder -->
-																   
-																	
-														   
-				  
-																				 
-
-          </div><!-- end .intro-grid__media -->
-														   
-																											 
-				  
-
-        </div><!-- end .intro-grid -->
-      </div><!-- end .container -->
-    </section>
-
-														   
-							   
-					
-
-    <!-- =========================================================
+      <!-- =========================================================
          AMENITIES
          ========================================================= -->
-    <section class="section section--light" aria-labelledby="amenities-heading">
-      <div class="container">
-								 
-					  
-													   
-											
-													 
-				   
-					
+      <section
+        class="section section--light"
+        aria-labelledby="amenities-heading"
+      >
+        <div class="container">
+          <h2 id="amenities-heading">What's included</h2>
+          <hr class="divider--wood" />
 
-        <h2 id="amenities-heading">What's included</h2>
-        <hr class="divider--wood">
+          <ul class="amenities-grid">
+            <li class="amenity-item">WiFi</li>
+            <li class="amenity-item">Free parking on premises</li>
+            <li class="amenity-item">Fully equipped kitchen</li>
+            <li class="amenity-item">Washing machine and Tumbledryer</li>
+            <li class="amenity-item">1 400 m² Garden</li>
+            <li class="amenity-item">Hammock & Outdoor furniture</li>
+            <li class="amenity-item">BBQ grill & Outdoor dining area</li>
+            <li class="amenity-item">Pets allowed</li>
+            <li class="amenity-item">Self check-in</li>
+            <li class="amenity-item">Tv & Board games</li>
+            <li class="amenity-item">Air-conditioning</li>
+            <li class="amenity-item">Indoor Fireplace</li>
+            <li class="amenity-item">Smoke & Carbon monoxide alarms</li>
+            <li class="amenity-item">Private Pier</li>
+            <li class="amenity-item">Lake & Beach access</li>
+            <li class="amenity-item">Long-term stays allowed</li>
+            <li class="amenity-non-item">Free Bed linen (see info above)</li>
+            <li class="amenity-non-item">Free Towels (see info above)</li>
+          </ul>
+        </div>
+      </section>
 
-        <ul class="amenities-grid">
-          <li class="amenity-item">WiFi</li>
-          <li class="amenity-item">Free parking on premises</li>
-          <li class="amenity-item">Fully equipped kitchen</li>
-          <li class="amenity-item">Washing machine and Tumbledryer</li>
-          <li class="amenity-item">1400 Sqm Garden</li>
-          <li class="amenity-item">Hammock & Outdoor furniture</li>
-          <li class="amenity-item">BBQ grill & Outdoor dining area</li>
-          <li class="amenity-item">Pets allowed</li>
-          <li class="amenity-item">Self check-in</li>
-          <li class="amenity-item">Tv & Board games</li>
-          <li class="amenity-item">Air-conditioning</li>
-          <li class="amenity-item">Indoor Fireplace</li>
-          <li class="amenity-item">Smoke & Carbon monoxide alarms</li>
-          <li class="amenity-item">Private Pier</li>
-          <li class="amenity-item">Lake & Beach access</li>
-          <li class="amenity-item">Long-term stays allowed</li>
-        </ul>
-
-      </div>
-    </section>
-
-
-    <!-- =========================================================
+      <!-- =========================================================
          REVIEWS
          ========================================================= -->
-    <section class="section section--warm" aria-labelledby="reviews-heading">
-      <div class="container">
+      <section class="section section--warm" aria-labelledby="reviews-heading">
+        <div class="container">
+          <h2 id="reviews-heading">What guests say</h2>
+          <hr class="divider--wood" />
 
-        <h2 id="reviews-heading">What guests say</h2>
-        <hr class="divider--wood">
+          <div class="reviews-grid">
+            <div class="review-column">
+              <p class="review-column__label">Airbnb</p>
 
-        <div class="reviews-grid">
+              <div class="review-column__platform">
+                <img
+                  src="media/balinge/reviews/airbnb-overall-review-07-26.jpg"
+                  alt="Bälinge overall rating on Airbnb"
+                />
+              </div>
 
-          <div class="review-column">
+              <div class="review-slideshow" data-review-slideshow>
+                <div class="review-slide is-active">
+                  <img
+                    src="media/balinge/reviews/airbnb-r1.jpg"
+                    alt="Airbnb guest review screenshot 1"
+                    loading="lazy"
+                  />
+                </div>
 
-            <p class="review-column__label">Airbnb</p>
+                <div class="review-slide">
+                  <img
+                    src="media/balinge/reviews/airbnb-r2.jpg"
+                    alt="Airbnb guest review screenshot 2"
+                    loading="lazy"
+                  />
+                </div>
 
-            <div class="review-column__platform">
-              <img
-                src="media/balinge/reviews/airbnb-overall-review-07-26.jpg"
-                alt="Bälinge overall rating on Airbnb"
-              >
+                <div class="review-slide">
+                  <img
+                    src="media/balinge/reviews/airbnb-r3.jpg"
+                    alt="Airbnb guest review screenshot 3"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="review-slide">
+                  <img
+                    src="media/balinge/reviews/airbnb-r4.jpg"
+                    alt="Airbnb guest review screenshot 4"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="review-slide">
+                  <img
+                    src="media/balinge/reviews/airbnb-r5.jpg"
+                    alt="Airbnb guest review screenshot 5"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <!-- end .review-slideshow (Airbnb) -->
             </div>
+            <!-- end .review-column (Airbnb) -->
 
-            <div class="review-slideshow" data-review-slideshow>
+            <div class="review-column">
+              <p class="review-column__label">Booking.com</p>
 
-              <div class="review-slide is-active">
+              <div class="review-column__platform">
                 <img
-                  src="media/balinge/reviews/airbnb-r1.jpg"
-                  alt="Airbnb guest review screenshot 1"
-                  loading="lazy"
-                >
-																 
-										   
-								   
-				   
-              </div>
-																						   
-
-              <div class="review-slide">
-                <img
-                  src="media/balinge/reviews/airbnb-r2.jpg"
-                  alt="Airbnb guest review screenshot 2"
-                  loading="lazy"
-                >
+                  src="media/balinge/reviews/2booking-overall-review-07-26.jpg"
+                  alt="Bälinge overall rating on Booking.com"
+                />
               </div>
 
-              <div class="review-slide">
-                <img
-                  src="media/balinge/reviews/airbnb-r3.jpg"
-                  alt="Airbnb guest review screenshot 3"
-                  loading="lazy"
-                >
+              <div class="review-slideshow" data-review-slideshow>
+                <div class="review-slide is-active">
+                  <img
+                    src="media/balinge/reviews/booking-r1.jpg"
+                    alt="Booking.com guest review screenshot 1"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="review-slide">
+                  <img
+                    src="media/balinge/reviews/booking-r2.jpg"
+                    alt="Booking.com guest review screenshot 2"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="review-slide">
+                  <img
+                    src="media/balinge/reviews/booking-r3.jpg"
+                    alt="Booking.com guest review screenshot 3"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="review-slide">
+                  <img
+                    src="media/balinge/reviews/booking-r4.jpg"
+                    alt="Booking.com guest review screenshot 4"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="review-slide">
+                  <img
+                    src="media/balinge/reviews/booking-r5.jpg"
+                    alt="Booking.com guest review screenshot 5"
+                    loading="lazy"
+                  />
+                </div>
               </div>
-
-              <div class="review-slide">
-                <img
-                  src="media/balinge/reviews/airbnb-r4.jpg"
-                  alt="Airbnb guest review screenshot 4"
-                  loading="lazy"
-                >
-              </div>
-
-              <div class="review-slide">
-                <img
-                  src="media/balinge/reviews/airbnb-r5.jpg"
-                  alt="Airbnb guest review screenshot 5"
-                  loading="lazy"
-                >
-              </div>
-
-            </div><!-- end .review-slideshow (Airbnb) -->
-          </div><!-- end .review-column (Airbnb) -->
-
-          <div class="review-column">
-
-            <p class="review-column__label">Booking.com</p>
-
-            <div class="review-column__platform">
-              <img
-                src="media/balinge/reviews/2booking-overall-review-07-26.jpg"
-                alt="Bälinge overall rating on Booking.com"
-              >
+              <!-- end .review-slideshow (Booking.com) -->
             </div>
-											   
+            <!-- end .review-column (Booking.com) -->
+          </div>
+          <!-- end .reviews-grid -->
+        </div>
+        <!-- end .container -->
+      </section>
+      <!-- end reviews section -->
 
-            <div class="review-slideshow" data-review-slideshow>
-
-              <div class="review-slide is-active">
-                <img
-                  src="media/balinge/reviews/booking-r1.jpg"
-                  alt="Booking.com guest review screenshot 1"
-                  loading="lazy"
-                >
-              </div>
-
-              <div class="review-slide">
-                <img
-                  src="media/balinge/reviews/booking-r2.jpg"
-                  alt="Booking.com guest review screenshot 2"
-                  loading="lazy"
-                >
-              </div>
-
-              <div class="review-slide">
-                <img
-                  src="media/balinge/reviews/booking-r3.jpg"
-                  alt="Booking.com guest review screenshot 3"
-                  loading="lazy"
-                >
-              </div>
-
-              <div class="review-slide">
-                <img
-                  src="media/balinge/reviews/booking-r4.jpg"
-                  alt="Booking.com guest review screenshot 4"
-                  loading="lazy"
-                >
-              </div>
-
-              <div class="review-slide">
-                <img
-                  src="media/balinge/reviews/booking-r5.jpg"
-                  alt="Booking.com guest review screenshot 5"
-                  loading="lazy"
-                >
-              </div>
-
-            </div><!-- end .review-slideshow (Booking.com) -->
-          </div><!-- end .review-column (Booking.com) -->
-
-        </div><!-- end .reviews-grid -->
-      </div><!-- end .container -->
-    </section><!-- end reviews section -->
-
-
-        <!--=========================================================
+      <!--=========================================================
          MAP SECTION
 
          An embedded Google Maps iframe shows the property location.
@@ -606,292 +620,382 @@
          so visitors can open it on their phone for navigation.
 
         =========================================================-->
-    <section class="section" aria-labelledby="map-heading">
-      <div class="container">
+      <section class="section" aria-labelledby="map-heading">
+        <div class="container">
+          <h2 id="map-heading">Location</h2>
+          <hr class="divider--wood" />
 
-        <h2 id="map-heading">Location</h2>
-        <hr class="divider--wood">
-
-        <p style="color: var(--color-text-muted); margin-bottom: var(--space-6);">
-          Bälinge, Hörby municipality, Skåne, Sweden.
-        
-																	
-															 
-        </p>
-
-        <!-- Embedded Google Maps iframe The title attribute is required for accessibility (screen readers). -->
-        <div class="map-wrapper">
-          <iframe
-            title="Map showing the location of Bälinge"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2216.489346655429!2d13.365500812424905!3d56.25233067316166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46516105625f5273%3A0x8450819961f90cd2!2sB%C3%A4linge%20326%2C%20284%2092%20Perstorp!5e0!3m2!1sen!2sse!4v1783931512807!5m2!1sen!2sse"
-            width="100%" 
-            height="400" 
-            style="border: 0; border-radius: var(--border-radius-lg);"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-
-        <!-- Get Directions button — opens Google Maps in a new tab -->
-        <div style="margin-top: var(--space-5);">
-          <a
-            href="https://www.google.com/maps/place/B%C3%A4linge+326,+284+92+Perstorp/@56.2523307,13.3655008,17z/data=!4m6!3m5!1s0x46516105625f5273:0x8450819961f90cd2!8m2!3d56.2523307!4d13.3680811!16s%2Fg%2F11c4slxkd1?entry=ttu&g_ep=EgoyMDI2MDcwOC4wIKXMDSoASAFQAw%3D%3D"
-            class="btn btn-directions--google"
-            target="_blank"
-            rel="noopener noreferrer"
+          <p
+            style="
+              color: var(--color-text-muted);
+              margin-bottom: var(--space-6);
+            "
           >
-            <img src="./media/shared/icons/googlepin-svgrepo.0.svg"
-             alt="" 
-             class="btn__icon btn__icon--googlemaps"
-             >
-          
-            ↗ Directions
-          </a>
+            Bälinge, Perstorp municipality, Skåne, Sweden.
+          </p>
 
-          <a
-             href="https://maps.apple.com/place?address=B%C3%A4linge+326%2C+284+92+Perstorp%2C+Sweden&coordinate=56.252282%2C13.368065&name=B%C3%A4linge+326"          
-             class="btn btn-directions--apple"
-             target="_blank"
-             rel="noopener noreferrer"
-          > 
-            <img src="./media/shared/icons/apple-svgrepo.0.svg"
-             alt="" 
-             class="btn__icon  btn__icon--applmaps "
-             >
-          
-            ↗ Directions
-          </a>
+          <!-- Embedded Google Maps iframe The title attribute is required for accessibility (screen readers). -->
+          <div class="map-wrapper">
+            <iframe
+              title="Map showing the location of Bälinge"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2216.489346655429!2d13.365500812424905!3d56.25233067316166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46516105625f5273%3A0x8450819961f90cd2!2sB%C3%A4linge%20326%2C%20284%2092%20Perstorp!5e0!3m2!1sen!2sse!4v1783931512807!5m2!1sen!2sse"
+              width="100%"
+              height="400"
+              style="border: 0; border-radius: var(--border-radius-lg)"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            >
+            </iframe>
+          </div>
 
+          <!-- Get Directions button — opens Google Maps in a new tab -->
+          <div style="margin-top: var(--space-5)">
+            <a
+              href="https://www.google.com/maps/place/B%C3%A4linge+326,+284+92+Perstorp/@56.2523307,13.3655008,17z/data=!4m6!3m5!1s0x46516105625f5273:0x8450819961f90cd2!8m2!3d56.2523307!4d13.3680811!16s%2Fg%2F11c4slxkd1?entry=ttu&g_ep=EgoyMDI2MDcwOC4wIKXMDSoASAFQAw%3D%3D"
+              class="btn btn-directions--google"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="./media/shared/icons/googlepin-svgrepo.0.svg"
+                alt=""
+                class="btn__icon btn__icon--googlemaps"
+              />
+
+              Directions ↗
+            </a>
+
+            <a
+              href="https://maps.apple.com/place?address=B%C3%A4linge+326%2C+284+92+Perstorp%2C+Sweden&coordinate=56.252282%2C13.368065&name=B%C3%A4linge+326"
+              class="btn btn-directions--apple"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="./media/shared/icons/apple-svgrepo.0.svg"
+                alt=""
+                class="btn__icon btn__icon--applmaps"
+              />
+
+              Directions ↗
+            </a>
+          </div>
         </div>
+      </section>
 
-      </div>
-    </section>
-
-
-    <!-- =========================================================
+      <!-- =========================================================
          PHOTO GALLERY
          ========================================================= -->
-    <section class="section section--light" id="gallery" aria-labelledby="gallery-heading">
-      <div class="container">
+      <section
+        class="section section--light"
+        id="gallery"
+        aria-labelledby="gallery-heading"
+      >
+        <div class="container">
+          <h2 id="gallery-heading">Photos</h2>
+          <hr class="divider--wood" />
 
-        <h2 id="gallery-heading">Photos</h2>
-        <hr class="divider--wood">
-
-        <!--=========================================================
+          <!--=========================================================
           Visible photo grid — these are the thumbnails visitors see.
           Clicking any of them opens the lightbox at the matching image.
           Order here does NOT have to match the lightbox order. 
          =========================================================-->
-        <div class="photo-grid">
+          <div class="photo-grid">
+            <div class="photo-grid__item photo-grid__item--featured">
+              <img
+                src="media/balinge/gallery/pier-01.webp"
+                alt="Bälinge private pier"
+                loading="lazy"
+              />
+            </div>
 
-          <div class="photo-grid__item photo-grid__item--featured">
-            <img
-              src="media/balinge/gallery/pier-01.webp"
-              alt="Bälinge private pier"
-              loading="lazy"
-            >
+            <div class="photo-grid__item">
+              <img
+                src="media/balinge/gallery/pier-02.webp"
+                alt="Pier at Bälinge"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="photo-grid__item">
+              <img
+                src="media/balinge/gallery/lounge-01.webp"
+                alt="Living room at Bälinge"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="photo-grid__item">
+              <img
+                src="media/balinge/gallery/lounge-02.webp"
+                alt="Big lounge area with comfy sofas"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="photo-grid__item">
+              <img
+                src="media/balinge/gallery/ext-03.webp"
+                alt="Outdoor seating area"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="photo-grid__item">
+              <img
+                src="media/balinge/gallery/ext-01.webp"
+                alt="Scenic view of Bälinge"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="photo-grid__item">
+              <img
+                src="media/balinge/gallery/ext-02.webp"
+                alt="Open green by the lake at Bälinge"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="photo-grid__item">
+              <img
+                src="media/balinge/gallery/winter-02.webp"
+                alt="Cozy fireplace at Bälinge Lakehouse"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="photo-grid__item">
+              <img
+                src="media/balinge/gallery/winter-03.webp"
+                alt="View of Bälinge lake through snowy trees on a sunny winter day"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="photo-grid__item">
+              <img
+                src="media/balinge/gallery/winter-01.webp"
+                alt="Wintery exterior view of Bälinge Lakehouse"
+                loading="lazy"
+              />
+            </div>
           </div>
+          <!-- end .photo-grid -->
+        </div>
+        <!-- end .container -->
 
-          <div class="photo-grid__item">
-            <img
-              src="media/balinge/gallery/pier-02.webp"
-              alt="Pier at Bälinge"
-              loading="lazy"
-            >
-          </div>
-
-          <div class="photo-grid__item">
-            <img
-              src="media/balinge/gallery/lounge-01.webp"
-              alt="Living room at Bälinge"
-              loading="lazy"
-            >
-          </div>
-
-          <div class="photo-grid__item">
-            <img
-              src="media/balinge/gallery/lounge-02.webp"
-              alt="Big lounge area with comfy sofas"
-              loading="lazy"
-            >
-          </div>
-
-          <div class="photo-grid__item">
-            <img
-              src="media/balinge/gallery/ext-03.webp"
-              alt="Outdoor seating area"
-              loading="lazy"
-            >
-          </div>
-
-          <div class="photo-grid__item">
-            <img
-              src="media/balinge/gallery/ext-01.webp"
-              alt="Scenic view of Bälinge"
-              loading="lazy"
-            >
-          </div>
-
-          <div class="photo-grid__item">
-            <img
-              src="media/balinge/gallery/ext-02.webp"
-              alt="Open green by the lake at Bälinge"
-              loading="lazy"
-            >
-          </div>
-
-          <div class="photo-grid__item">
-            <img
-              src="media/balinge/gallery/winter-02.webp"
-              alt="Cozy fireplace at Bälinge Lakehouse"
-              loading="lazy"
-            >
-          </div>
-
-          <div class="photo-grid__item">
-            <img
-              src="media/balinge/gallery/winter-03.webp"
-              alt="View of Bälinge lake through snowy trees on a sunny winter day"
-              loading="lazy"
-            >
-          </div>
-
-          <div class="photo-grid__item">
-            <img
-              src="media/balinge/gallery/winter-01.webp"
-              alt="Wintery exterior view of Bälinge Lakehouse"
-              loading="lazy"
-            >
-          </div>
-
-        </div><!-- end .photo-grid -->
-      </div><!-- end .container -->
-
-
-      <!-- =========================================================
+        <!-- =========================================================
            FULL GALLERY (hidden)
            This is the single source of truth for the lightbox.
            - Put ALL images you want in the lightbox here
            - The order of these <img> tags = the order in the lightbox
            - Visitors never see this list
            ========================================================= -->
-      <div class="gallery-full" hidden aria-hidden="true">
+        <div class="gallery-full" hidden aria-hidden="true">
+          <!-- Current images (same files you already have) -->
+          <img
+            src="media/balinge/gallery/pier-01.webp"
+            alt="Bälinge private pier"
+          />
+          <img src="media/balinge/gallery/pier-02.webp" alt="Pier at Bälinge" />
+          <img
+            src="media/balinge/gallery/pier-03.webp"
+            alt="Fishing by the pier at Bälinge"
+          />
+          <img
+            src="media/balinge/gallery/lounge-01.webp"
+            alt="Living room at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/lounge-02.webp"
+            alt="Big lounge area with comfy sofas at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/lounge-03.webp"
+            alt="Roomy dining area in open plan lounge at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/kitchen-01.webp"
+            alt="Garden view from kitchen window at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/kitchen-02.webp"
+            alt="Modern kitchen at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/kitchen-03.webp"
+            alt="Kitchen utensils and appliances at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/bathroom-01.webp"
+            alt="Modern Shower and washing machine at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/bathroom-02.webp"
+            alt="Modern shower at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/bathroom-03.webp"
+            alt="Toilet and sink"
+          />
+          <img
+            src="media/balinge/gallery/bedroom-01.webp"
+            alt="King-size bed and bunk bed in the bedroom at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/bedroom-03.webp"
+            alt="Children's Bunkbed at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/bedroom-04.webp"
+            alt="Bedroom with 2 single beds at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/ext-03.webp"
+            alt="Outdoor seating area at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/ext-01.webp"
+            alt="Scenic view of hammock at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/ext-02.webp"
+            alt="Open green by the lake at Bälinge"
+          />
+          <img
+            src="media/balinge/gallery/ext-04.webp"
+            alt="Picnic table at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/activities-01.webp"
+            alt="Harvest after peaceful chanterelle picking near Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/activities-02.webp"
+            alt="Fishing at Bälinge lake"
+          />
+          <img
+            src="media/balinge/gallery/activities-03.webp"
+            alt="Berrypicking at Bälinge"
+          />
+          <img
+            src="media/balinge/gallery/activities-04.webp"
+            alt="Chanterelle cooking in kitchen at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/winter-02.webp"
+            alt="Cozy fireplace at Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/winter-03.webp"
+            alt="View of Bälinge lake through snowy trees on a sunny winter day"
+          />
+          <img
+            src="media/balinge/gallery/winter-01.webp"
+            alt="Wintery exterior view of Bälinge Lakehouse"
+          />
+          <img
+            src="media/balinge/gallery/winter-04.webp"
+            alt="Iceskating on the frozen lake in Bälinge"
+          />
+          <img
+            src="media/balinge/gallery/winter-05.webp"
+            alt="Exterior view of Bälinge in snowy wintertimes"
+          />
+        </div>
+        <!-- end .gallery-full -->
+      </section>
+      <!-- end gallery section -->
 
-        <!-- Current images (same files you already have) -->
-        <img src="media/balinge/gallery/pier-01.webp" alt="Bälinge private pier">
-        <img src="media/balinge/gallery/pier-02.webp" alt="Pier at Bälinge">
-        <img src="media/balinge/gallery/pier-03.webp" alt="Fishing by the pier at Bälinge">
-        <img src="media/balinge/gallery/lounge-01.webp" alt="Living room at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/lounge-02.webp" alt="Big lounge area with comfy sofas at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/lounge-03.webp" alt="Roomy dining area in open plan lounge at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/kitchen-01.webp" alt="Garden view from kitchen window at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/kitchen-02.webp" alt="Modern kitchen at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/kitchen-03.webp" alt="Kitchen utensils and appliances at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/bathroom-01.webp" alt="Modern Shower and washing machine at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/bathroom-02.webp" alt="Modern shower at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/bathroom-03.webp" alt="Toilet and sink">
-        <img src="media/balinge/gallery/bedroom-01.webp" alt="King-size bed and bunk bed in the bedroom at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/bedroom-03.webp" alt="Children's Bunkbed at Bälinge Lakhouse">
-        <img src="media/balinge/gallery/bedroom-04.webp" alt="Bedroom with 2 single beds at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/ext-03.webp" alt="Outdoor seating area at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/ext-01.webp" alt="Scenic view of hammock at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/ext-02.webp" alt="Open green by the lake at Bälinge">
-        <img src="media/balinge/gallery/ext-04.webp" alt="Picnic table at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/activities-01.webp" alt="Harvest after peaceful chanterelle picking near Lakehouse">
-        <img src="media/balinge/gallery/activities-02.webp" alt="Fishing at Bälinge lake">
-        <img src="media/balinge/gallery/activities-03.webp" alt="Berrypicking at Bälinge">
-        <img src="media/balinge/gallery/activities-04.webp" alt="Chanterelle cooking in kitchen at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/winter-02.webp" alt="Cozy fireplace at Bälinge Lakehouse">
-        <img src="media/balinge/gallery/winter-03.webp" alt="View of Bälinge lake through snowy trees on a sunny winter day">
-        <img src="media/balinge/gallery/winter-01.webp" alt="Wintery exterior view of Bälinge Lakehouse">
-        <img src="media/balinge/gallery/winter-04.webp" alt="Iceskating on the frozen lake in Bälinge">
-        <img src="media/balinge/gallery/winter-05.webp" alt="Exterior view of Bälinge in snowy wintertimes">
-        
-
-      </div><!-- end .gallery-full -->
-
-    </section><!-- end gallery section -->
-
-
-    <!-- =========================================================
+      <!-- =========================================================
                           LIGHTBOX
       ========================================================= -->
-    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox">
+      <div
+        class="lightbox"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Photo lightbox"
+      >
+        <img class="lightbox__image" src="" alt="" />
 
-      <img class="lightbox__image" src="" alt="">
+        <button
+          class="lightbox__btn lightbox__close"
+          aria-label="Close photo viewer"
+        >
+          &times;
+        </button>
 
-      <button class="lightbox__btn lightbox__close" aria-label="Close photo viewer">
-        &times;
-      </button>
+        <button
+          class="lightbox__btn lightbox__prev"
+          aria-label="Previous photo"
+        >
+          &#8249;
+        </button>
 
-      <button class="lightbox__btn lightbox__prev" aria-label="Previous photo">
-        &#8249;
-      </button>
+        <button class="lightbox__btn lightbox__next" aria-label="Next photo">
+          &#8250;
+        </button>
 
-      <button class="lightbox__btn lightbox__next" aria-label="Next photo">
-        &#8250;
-      </button>
+        <div class="lightbox__counter" aria-live="polite"></div>
+      </div>
+      <!-- end .lightbox -->
+    </main>
+    <!-- end <main> -->
 
-      <div class="lightbox__counter" aria-live="polite"></div>
-
-    </div><!-- end .lightbox -->
-
-  </main><!-- end <main> -->
-
-
-  <!-- ============================================================
+    <!-- ============================================================
        FOOTER
        Minimal by design — the site's job is to send visitors to
        the booking platforms, not to keep them on this page.
        ============================================================ -->
-  <footer class="site-footer">
-    <div class="container">
+    <footer class="site-footer">
+      <div class="container">
+        <p class="footer-note">
+          <!-- &copy; is the © copyright symbol in HTML -->
+          &copy; <span id="footer-year"></span> Scania Cottages. All rights
+          reserved.
+        </p>
 
-      <p class="footer-note">
-        <!-- &copy; is the © copyright symbol in HTML -->
-        &copy; <span id="footer-year"></span> Scania Cottages. All rights reserved.
-        <!-- TODO: Finalize the client's preferred site/brand name -->
-      </p>
+        <p class="footer-note">
+          Bookings via
+          <a
+            href="https://www.airbnb.com"
+            class="link"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Airbnb</a
+          >
+          &amp;
+          <a
+            href="https://www.booking.com"
+            class="link"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Booking.com</a
+          >
+        </p>
+      </div>
+    </footer>
 
-      <p class="footer-note">
-        Bookings via
-        <a
-          href="https://www.airbnb.com"
-          class="link"
-          target="_blank"
-          rel="noopener noreferrer"
-        >Airbnb</a>
-        &amp;
-        <a
-          href="https://www.booking.com"
-          class="link"
-          target="_blank"
-          rel="noopener noreferrer"
-        >Booking.com</a>
-      </p>
-
-    </div>
-  </footer>
-
-
-  <!-- ============================================================
+    <!-- ============================================================
        SCRIPTS
        Placed at the bottom of <body> so the HTML renders before
        JavaScript runs. This makes the page feel faster.
        ============================================================ -->
 
-  <!-- Auto-update copyright year so the footer never shows a stale year -->
-  <script>
-    document.getElementById('footer-year').textContent = new Date().getFullYear();
-  </script>
+    <!-- Auto-update copyright year so the footer never shows a stale year -->
+    <script>
+      document.getElementById("footer-year").textContent =
+        new Date().getFullYear();
+    </script>
 
-  <!-- The hero slideshow's logic (auto-advance, dots, swipe, and
+    <!-- The hero slideshow's logic (auto-advance, dots, swipe, and
        clicking through to the gallery) now lives in gallery.js
        (Section 4) instead of an inline script here — it needs to
        share code with the lightbox, which also lives in gallery.js. -->
 
-  <!-- gallery.js handles:
+    <!-- gallery.js handles:
        - Lightbox (open/close/navigate/keyboard/swipe)
        - Review slideshow auto-advance
        - Read More toggle
@@ -899,7 +1003,6 @@
        This page lives at the site root, so the path is js/gallery.js
        (no ../ needed, unlike the sodra-rorum/ subpage). -->
 
-  <script src="js/gallery.js"></script>
-
-</body>
+    <script src="js/gallery.js"></script>
+  </body>
 </html>

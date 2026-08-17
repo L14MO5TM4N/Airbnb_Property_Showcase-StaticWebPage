@@ -1,6 +1,6 @@
 /* =============================================================
-   style.css — Global styles for Airbnb Showcase Website
-   Properties: Södra Rörum (Hörby, Skåne) and Bälinge (Skåne)
+   style.css — Global styles for Showcase Website
+   Properties: Bälinge (Perstorp, Skåne) and Södra Rörum (Hörby, Skåne)
 
    Structure of this file:
      1. CSS Custom Properties (design tokens)
@@ -10,10 +10,10 @@
      5. Header & navigation
      6. Footer
      7. Buttons & links
-     8. Property cards (homepage)
+     8. Property cards (Obsolete//Removed)
      9. Hero slideshow
     10. Amenities list
-    11. Photo grid (property pages)
+    11. Photo grid
     12. Responsive overrides (desktop)
 
    All visual decisions (colors, fonts, spacing) are controlled
@@ -43,6 +43,7 @@
   --color-text:         #2A2118;  /* Deep warm brown: primary text */
   --color-text-muted:   #7A6A55;  /* Mid warm brown: captions, subtitles */
 
+
   /* Accent palette */
   --color-accent:       #4A7C59;  /* Earthy forest green: primary interactive */
   --color-accent-hover: #395E44;  /* Darker green for hover states */
@@ -56,7 +57,7 @@
   --color-airbnb-tint:  rgba(255, 56, 92, 0.15);  /* Airbnb pink at 30% — hover background */
   --color-booking-tint: rgba(0, 52, 121, 0.25);   /* Booking.com blue at 30% — hover background */
   --color-google-maps:       #1A73E8;  /* Google Maps directions-button blue */
-  --color-apple-maps:        #1A73E8;  /* Apple system blue (using google blue for both, but here is appl hex #007AFF*/
+  --color-apple-maps:        #1A73E8;  /* Google Maps blue (using google blue for both, but here is Apple System Blue hex #007AFF */
   --color-hover-tint-black: rgba(0, 0, 0, 0.15);  /* black at 10% — used to darken solid buttons on hover */
 
   /* Borders and dividers */
@@ -70,6 +71,7 @@
   --font-body:    'Inter', system-ui, -apple-system, sans-serif;
 
   /* Type scale — each step is ~1.25x the previous (Major Third scale) */
+  --text-vsm:   0.7rem; 
   --text-sm:   0.85rem;   /* ~13.6px — captions, labels */
   --text-base: 1rem;      /* 16px    — body text */
   --text-lg:   1.25rem;   /* ~20px   — lead paragraphs */
@@ -624,34 +626,11 @@ p {
    JavaScript (gallery.js) cycles through multiple photos
    automatically every few seconds.
 
-   Structure used in index.html:
 
-     <section class="hero-slideshow">
-       <div class="hero-slideshow__track">
-         <div class="hero-slideshow__slide is-active">
-           <img src="..." alt="...">
-         </div>
-         <div class="hero-slideshow__slide">
-           <img src="..." alt="...">
-         </div>
-         ...
-       </div>
-       <div class="hero-slideshow__overlay">
-         <p class="hero__eyebrow">...</p>
-         <h1 class="hero__title">...</h1>
-         <p class="hero__subtitle">...</p>
-       </div>
-       <div class="hero-slideshow__dots" aria-label="Slideshow navigation">
-         <button class="hero-slideshow__dot is-active" ...></button>
-         ...
-       </div>
-     </section>
-
-   How the fade transition works:
-     All slides are stacked on top of each other (position: absolute).
-     The active slide has opacity: 1. All others have opacity: 0.
-     JavaScript adds/removes the "is-active" class to switch slides.
-     CSS handles the fade via transition: opacity.
+   How the transition works:
+   All slides sit side-by-side in a flex row (.hero-slideshow__track).
+   JavaScript moves the whole track with transform: translateX().
+   CSS handles the smooth sliding animation.
    ============================================================= */
 
 .hero-slideshow {
@@ -693,9 +672,7 @@ p {
   display: block;
 }
 
-/* Small "view all photos" hint, top-right corner of the slideshow.
-   Positioned top-right (rather than bottom, like the single-image hero's
-   hint) since the overlay text below already occupies the bottom area. */
+/* Small "view all photos" hint, a corner of the slideshow. */
 .hero-slideshow__hint {
   position: absolute;
   bottom: var(--space-3);
@@ -809,6 +786,9 @@ p {
 
    Used on property pages to display features like "WiFi",
    "Parking", "Pet-friendly" in a compact grid.
+
+   ".amenity-non-item" is used for amenities that are not available or need to be booked, 
+   e.g. "Carbon monoxide detector".
    ============================================================= */
 
 .amenities-grid {
@@ -826,12 +806,29 @@ p {
   color: var(--color-text);
 }
 
+.amenity-non-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-base);
+  opacity: 0.6;
+  color: #D10000;
+}
+
 /* Wood-tone checkmark before each amenity item */
 .amenity-item::before {
   content: "✓";
   color: var(--color-wood);
   font-weight: var(--weight-bold);
   flex-shrink: 0;  /* Prevent the checkmark from being squeezed */
+}
+
+.amenity-non-item::before {
+  content: "✗";
+  color: #D10000;
+  font-weight: var(--weight-bold);
+  text-decoration: none;
+  flex-shrink: 0;  /* Prevent the cross from being squeezed */
 }
 
 
@@ -942,17 +939,6 @@ p {
   }
 }
 
-
-/* =============================================================
-   END OF style.css
-
-   Next files to build:
-   - index.html      — Homepage (hero slideshow + property cards)
-   - gallery.css     — Lightbox styles for photo grids
-   - gallery.js      — Slideshow timer + lightbox interaction logic
-   - sodra-rorum/index.html
-   - balinge/index.html
-   ============================================================= */
 
 
 /* =============================================================
@@ -1074,8 +1060,15 @@ p {
 /* Quick facts line (guests, bedrooms, etc.) */
 .intro-grid__facts {
   color: var(--color-text-muted);
-  font-size: var(--text-sm);
+  font-size: var(--text-vsm);
   margin-top: var(--space-1);
+}
+
+.intro-grid__facts .dot {
+  font-size: 2.5em;
+  line-height: 0;
+  vertical-align: middle;
+  margin: 0 0.04em;
 }
 
 /* Booking buttons row */
@@ -1255,6 +1248,14 @@ section[aria-labelledby="reviews-heading"] {
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.read-more.is-expanded .text-lead {
+  margin-bottom: 0.8em;
+}
+
+.read-more.is-expanded .text-lead:last-child {
+  margin-bottom: 0;
 }
 
 .read-more__toggle:hover {

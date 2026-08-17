@@ -28,7 +28,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Södra Rörum — Little Pinecone Lodge a Cozy Forest Retreat in Hörby, Skåne, Sweden. Book on Airbnb or Booking.com.">
 
-  <title>Södra Rörum — Holiday Rental in Skåne, Sweden</title>
+  <title>Södra Rörum — Vacation Rental in Skåne, Sweden</title>
 
   <!-- ============================================================
        GOOGLE FONTS
@@ -39,34 +39,27 @@
 
   <!-- ============================================================
        STYLESHEETS
-       Note the path: this page is inside sodra-rorum/ so we need
-       to go up one level (../) to reach the css/ folder
        ============================================================ -->
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/gallery.css">
 
-  <!-- TODO: Add favicon once available
-  <link rel="icon" href="../favicon.ico"> -->
+  <!-- Favicon -->
+  <link rel="icon" href="../favicon.ico">
 </head>
 
 <body>
 
   <!-- ============================================================
-       HEADER — identical pattern on all pages
-       Only change: aria-current="page" and the current-page label
+       HEADER
        ============================================================ -->
   <header class="site-header">
     <div class="container">
 
-      <!-- Site logo: clicking it always returns to the homepage (Bälinge) -->
-      <a href="../" class="site-logo">Swedish Stays</a>
-      <!-- TODO: Replace "Swedish Stays" with the client's preferred site name -->
+      <a href="../" class="site-logo">Scania Cottages</a>
 
       <nav aria-label="Main navigation" class="nav">
-        <!-- Current page badge -->
         <a href="./" class="nav-current" aria-current="page">Södra Rörum</a>
 
-        <!-- Dropdown listing other properties -->
         <div class="nav-dropdown" data-nav-dropdown>
           <button
             class="nav-dropdown__toggle"
@@ -81,34 +74,23 @@
           <ul class="nav-dropdown__menu" data-nav-dropdown-menu>
             <li><a href="../">Bälinge</a></li>
           </ul>
+
         </div>
+
       </nav>
-
+      
     </div>
-  </header>
 
+  </header>
 
   <!-- ============================================================
        MAIN CONTENT
        ============================================================ -->
+
   <main>
 
     <!-- =========================================================
          HERO SLIDESHOW
-
-         A full-width image banner that automatically cycles through
-         multiple photos. JavaScript (gallery.js Section 4) handles
-         the timing, dots, swipe, and click-through to the lightbox.
-
-         Add as many .hero-slideshow__slide divs as you have photos.
-         The first one has "is-active" so something is visible immediately
-         before JavaScript runs.
-
-         TODO: Replace the src attributes with the best hero images for
-               Södra Rörum (landscape, ≥1600px wide). Good candidates:
-               exterior, garden, forest, living room. Also add matching
-               images into the photo-grid below so the lightbox can open
-               them at the correct index.
          ========================================================= -->
     <section class="hero-slideshow" aria-label="Property photo slideshow">
 
@@ -116,56 +98,48 @@
 
       <div class="hero-slideshow__track">
 
-        <!-- Slide 1: visible on load (is-active) -->
         <div class="hero-slideshow__slide is-active">
           <img
-            src="../media/sodra-rorum/cover.avif"
-            alt="Exterior view of Södra Rörum farmhouse in Hörby, Skåne"
+            src="../media/sodra-rorum/gallery/ext-01.webp"
+            alt="Exterior of Pinecone Lodge, Södra Rörum forest retreat"
             loading="eager"
             width="1600"
             height="900"
           >
         </div>
 
-        <!-- Slide 2 -->
         <div class="hero-slideshow__slide">
           <img
-            src="../images/sodra-rorum/gallery-01.jpg"
-            alt="Main view of Södra Rörum — exterior from the garden"
+            src="../media/sodra-rorum/gallery/garden-01.webp"
+            alt="Garden and forest surroundings at Södra Rörum"
             loading="eager"
             width="1600"
             height="900"
           >
         </div>
 
-        <!-- Slide 3 -->
         <div class="hero-slideshow__slide">
           <img
-            src="../images/sodra-rorum/gallery-02.jpg"
-            alt="Living room at Södra Rörum"
+            src="../media/sodra-rorum/gallery/lounge-01.webp"
+            alt="Cozy living room at Pinecone Lodge"
             loading="eager"
             width="1600"
             height="900"
           >
         </div>
 
-        <!-- Slide 4 -->
         <div class="hero-slideshow__slide">
           <img
-            src="../images/sodra-rorum/gallery-05.jpg"
-            alt="Outdoor seating area at Södra Rörum"
+            src="../media/sodra-rorum/gallery/winter-01.webp"
+            alt="Winter view of the forest retreat at Södra Rörum"
             loading="eager"
             width="1600"
             height="900"
           >
         </div>
-
-        <!-- TODO: Add more slides by copying a .hero-slideshow__slide block.
-                   Also add a matching dot button below. -->
 
       </div><!-- end .hero-slideshow__track -->
 
-      <!-- Overlay text -->
       <div class="hero-slideshow__overlay">
         <p class="hero__eyebrow">Vacation Rental · Skåne, Sweden</p>
         <h1 class="hero__title">Södra Rörum, Cozy Forest Retreat</h1>
@@ -174,60 +148,121 @@
         </p>
       </div>
 
-      <!-- Dot navigation — one dot per slide -->
       <div class="hero-slideshow__dots" aria-label="Slideshow navigation">
         <button class="hero-slideshow__dot is-active" data-index="0" aria-label="Go to slide 1"></button>
         <button class="hero-slideshow__dot" data-index="1" aria-label="Go to slide 2"></button>
         <button class="hero-slideshow__dot" data-index="2" aria-label="Go to slide 3"></button>
         <button class="hero-slideshow__dot" data-index="3" aria-label="Go to slide 4"></button>
-        <!-- TODO: Add a dot button for each additional slide you add above -->
       </div>
 
     </section><!-- end .hero-slideshow -->
 
 
     <!-- =========================================================
-         INTRO — two-column layout on desktop (temporarily single-column
-         until the live YouTube camera is ready — controlled by style.css):
-           Left column:  eyebrow, title, description, quick facts, booking buttons
-           Right column: YouTube live camera placeholder (currently hidden)
+         INTRO
          ========================================================= -->
     <section class="section property-intro" aria-labelledby="property-title">
       <div class="container">
 
         <div class="intro-grid">
 
-          <!-- -----------------------------------------------
-               LEFT COLUMN — text and booking buttons
-               ----------------------------------------------- -->
           <div class="intro-grid__text">
 
-            <span class="eyebrow">Hörby · Skåne</span>
+            <span class="eyebrow">Södra Rörum  &middot;  Hörby Municipality</span>
 
-            <h1 id="property-title">Södra Rörum, Cozy Forest Retreat - Pinecone Lodge</h1>
+            <h1 id="property-title">Welcome to Little Pinecone Lodge.</h1>
 
             <hr class="divider--wood">
 
             <div class="read-more" data-read-more>
-              <p class="text-lead">
-                Welcome to Little Pinecone Lodge, your charming red cottage Located
-                in the serene forests of Southern Sweden. Surrounded by towering trees,
-                fresh air, and the soothing sounds of nature. Inside,
-                you’ll find 2 warm and inviting rooms across 47 m².
-                Curl up with a good book or simply relax
-                after exploring the beautiful Swedish countryside.
-                Outside, A big 2 000 m² garden opens into the forest.
-                Two of the guests will sleep in the garden annex,
-                a cozy space just steps from the main cottage.
-              </p>
-            </div>
-            <button class="read-more__toggle" data-read-more-toggle>Read more</button>
-
-            <p class="intro-grid__facts">
-              Up to 4 guests &middot; 2 bedrooms &middot; 1 bathroom &middot; Entire home
+            <p class="text-lead">
+            A charming red cottage tucked away in the peaceful forests of southern Sweden.
+            Surrounded by towering trees, 
+            fresh air and the gentle sounds of nature, this is the perfect place to 
+            slow down and reconnect.
             </p>
 
-            <!-- Booking buttons -->
+            <p class="text-lead">
+            Inside the main cottage you’ll find two warm and inviting rooms across 47 m² 
+            — ideal for curling up with a book or simply relaxing after a day exploring the 
+            Swedish countryside. Outside, a spacious 2 000 m² garden opens directly into the 
+            forest. Two of the guests sleep in the small garden annex, a cozy space just 
+            a few steps from the main house.
+            </p>
+
+            <p class="text-lead">
+            <strong>Sleeping arrangements</strong><br>
+            • Living-room sofa bed – converts into one full-size double bed (sleeps 2)<br>
+            • Bunk-bed system – three full-size beds in total (sleeps 3)<br>
+            • Garden annex – two full-size double beds (90 × 200 cm)
+            </p>
+
+            <p class="text-lead">
+            In total there are five full-size beds in the main house and two in the annex.
+            </p>
+
+            <p class="text-lead">
+            <strong>Please note</strong><br>
+            Bed linen (sheets, duvet covers, pillowcases) and towels are not included. 
+            If you would like us to provide a complete set, please reserve it at least 10 
+            days before arrival. The cost is €20 per set (one set = linen for one bed + 
+            one bath towel).
+            </p>
+
+            <p class="text-lead">
+            The key to the annex is waiting for you in the key box. The grounds cover 
+            2 000 m² and there is plenty of space to park several cars.
+            </p>
+
+            <p class="text-lead">
+            Feel free to use the indoor fireplace as much as you like — just bring 
+            your own firewood (logs, kindling, etc.).
+            The outdoor grill is also yours to enjoy; please bring 
+            your own charcoal (and matches or lighter fluid if needed).
+            </p>
+
+            <p class="text-lead">
+            We want you to have the most relaxing and enjoyable stay possible. Happy 
+            fireside chats and delicious barbecues ahead! Let us know if you have any 
+            questions or need tips for the perfect fire or grill session.
+            </p>
+
+            <p class="text-lead">
+            <strong>Modern amenities</strong><br>
+            Guests can enjoy air-conditioning, a fully equipped kitchen, washing machine and streaming services. 
+            There is also an outdoor fireplace and outdoor play area.
+            </p>
+
+            <p class="text-lead">
+            <strong>Outdoor activities & Location</strong><br>
+            The property offers easy access to cycling, Mushroom picking and outdoor dining areas. 
+            Nearby attractions include 
+              <a href="https://www.sverigesnationalparker.se/en/parks/soderasen-national-park" 
+                class="link" 
+                target="_blank" 
+                rel="noopener noreferrer"><strong>Söderåsen National Park ↗</strong></a> (38 km) and 
+              <a href="https://elisefarm.se/?lang=en" 
+                class="link" 
+                target="_blank" 
+                rel="noopener noreferrer"><strong>Elisefarm Golf Club ↗</strong></a> (18 km). 
+              Malmö Airport is 60 km away.
+            </p>
+
+          </div>
+          <button class="read-more__toggle" data-read-more-toggle>Read more</button>
+
+            <p class="intro-grid__facts"><strong>
+             Up to 5 Guests 
+            <span class="dot">&middot;</span>
+             6 Beds 
+            <span class="dot">&middot;</span>
+             1 Bathroom 
+            <span class="dot">&middot;</span>
+             Full Kitchen
+            <span class="dot">&middot;</span>
+             Entire Cottage
+            </strong></p>
+
             <div class="intro-grid__buttons">
               <a
                 href="https://www.airbnb.co.uk/rooms/1504147633152658767"
@@ -258,32 +293,7 @@
 
           </div><!-- end .intro-grid__text -->
 
-
-          <!-- -----------------------------------------------
-               RIGHT COLUMN — YouTube live camera placeholder
-
-               Currently hidden via CSS (temporary single-column intro).
-               When the live duck pond camera is ready:
-                 1. Remove the temporary display:none / single-column rules
-                    in style.css (see comments there)
-                 2. Remove the entire .youtube-placeholder div
-                 3. Replace it with a standard YouTube embed iframe:
-
-               <iframe
-                 class="youtube-embed"
-                 src="https://www.youtube.com/embed/LIVE_STREAM_ID?autoplay=1&mute=1"
-                 title="Live duck pond camera at Södra Rörum"
-                 allow="autoplay; encrypted-media; picture-in-picture"
-                 allowfullscreen
-                 loading="lazy"
-               ></iframe>
-
-               The .intro-grid__media wrapper and its CSS will handle
-               sizing automatically — no other changes needed.
-               ----------------------------------------------- -->
           <div class="intro-grid__media">
-
-            <!-- Placeholder box — remove and replace with iframe when live -->
             <div class="youtube-placeholder" aria-label="Live camera coming soon">
               <div class="youtube-placeholder__icon" aria-hidden="true">&#x1F4F9;</div>
               <p class="youtube-placeholder__text">Live duck pond camera</p>
@@ -293,7 +303,9 @@
           </div><!-- end .intro-grid__media -->
 
         </div><!-- end .intro-grid -->
+
       </div><!-- end .container -->
+
     </section>
 
 
@@ -307,17 +319,37 @@
         <hr class="divider--wood">
 
         <ul class="amenities-grid">
-          <li class="amenity-item">Free WiFi</li>
-          <li class="amenity-item">Free parking</li>
+          <li class="amenity-item">WiFi</li>
           <li class="amenity-item">Full kitchen</li>
+          <li class="amenity-item">Dishwasher</li>
           <li class="amenity-item">Washing machine</li>
           <li class="amenity-item">Outdoor seating</li>
-          <li class="amenity-item">BBQ grill</li>
+          <li class="amenity-item">BBQ grill & Firepit</li>
           <li class="amenity-item">Pets allowed</li>
           <li class="amenity-item">Self check-in</li>
+          <li class="amenity-item">Free parking on premises</li>
+          <li class="amenity-item">Washing machine & Dryer</li>
+          <li class="amenity-item">2000 m² Garden</li>
+          <li class="amenity-item">BBQ grill & Outdoor dining area</li>
+          <li class="amenity-item">Pets allowed</li>
+          <li class="amenity-item">Self check-in</li>
+          <li class="amenity-item">Tv & PS3</li>
+          <li class="amenity-item">Children's books, toys and bikes</li>          
+          <li class="amenity-item">Air-conditioning & Heating</li>
+          <li class="amenity-item">Indoor Fireplace</li>
+          <li class="amenity-item">Smoke alarm & Fire extinguisher</li>
+          <li class="amenity-item">Room-darkening blinds</li>
+          <li class="amenity-item">Forest access</li>
+          <li class="amenity-item">Long-term stays allowed</li>
+          <li class="amenity-item">Smoke alarm & Fire extinguisher</li>
+          <li class="amenity-non-item">Carbon monoxide alarm</li>
+          <li class="amenity-non-item"> Free Bed linen (see info above)</li>
+          <li class="amenity-non-item">Free Towels (see info above)</li>
+        </ul>
         </ul>
 
       </div>
+
     </section>
 
 
@@ -332,9 +364,7 @@
 
         <div class="reviews-grid">
 
-          <!-- Airbnb column -->
           <div class="review-column">
-
             <p class="review-column__label">Airbnb</p>
 
             <div class="review-column__platform">
@@ -345,48 +375,22 @@
             </div>
 
             <div class="review-slideshow" data-review-slideshow>
-
               <div class="review-slide is-active">
-                <img
-                  src="../images/sodra-rorum/reviews/airbnb-review-1.png"
-                  alt="Airbnb guest review screenshot 1"
-                  loading="lazy"
-                >
+                <img src="../images/sodra-rorum/reviews/airbnb-review-1.png" alt="Airbnb guest review screenshot 1" loading="lazy">
               </div>
-
               <div class="review-slide">
-                <img
-                  src="../images/sodra-rorum/reviews/airbnb-review-2.png"
-                  alt="Airbnb guest review screenshot 2"
-                  loading="lazy"
-                >
+                <img src="../images/sodra-rorum/reviews/airbnb-review-2.png" alt="Airbnb guest review screenshot 2" loading="lazy">
               </div>
-
               <div class="review-slide">
-                <img
-                  src="../images/sodra-rorum/reviews/airbnb-review-3.png"
-                  alt="Airbnb guest review screenshot 3"
-                  loading="lazy"
-                >
+                <img src="../images/sodra-rorum/reviews/airbnb-review-3.png" alt="Airbnb guest review screenshot 3" loading="lazy">
               </div>
-
               <div class="review-slide">
-                <img
-                  src="../images/sodra-rorum/reviews/airbnb-review-4.png"
-                  alt="Airbnb guest review screenshot 4"
-                  loading="lazy"
-                >
+                <img src="../images/sodra-rorum/reviews/airbnb-review-4.png" alt="Airbnb guest review screenshot 4" loading="lazy">
               </div>
-
               <div class="review-slide">
-                <img
-                  src="../images/sodra-rorum/reviews/airbnb-review-5.png"
-                  alt="Airbnb guest review screenshot 5"
-                  loading="lazy"
-                >
+                <img src="../images/sodra-rorum/reviews/airbnb-review-5.png" alt="Airbnb guest review screenshot 5" loading="lazy">
               </div>
 
-              <!-- Dot navigation — one dot per slide -->
               <div class="review-slideshow__dots" aria-label="Airbnb review navigation">
                 <button class="review-dot is-active" data-index="0" aria-label="Review 1"></button>
                 <button class="review-dot" data-index="1" aria-label="Review 2"></button>
@@ -395,13 +399,11 @@
                 <button class="review-dot" data-index="4" aria-label="Review 5"></button>
               </div>
 
-            </div><!-- end .review-slideshow (Airbnb) -->
-          </div><!-- end .review-column (Airbnb) -->
+            </div>
 
+          </div>
 
-          <!-- Booking.com column -->
           <div class="review-column">
-
             <p class="review-column__label">Booking.com</p>
 
             <div class="review-column__platform">
@@ -412,45 +414,20 @@
             </div>
 
             <div class="review-slideshow" data-review-slideshow>
-
               <div class="review-slide is-active">
-                <img
-                  src="../images/sodra-rorum/reviews/booking-review-1.png"
-                  alt="Booking.com guest review screenshot 1"
-                  loading="lazy"
-                >
+                <img src="../images/sodra-rorum/reviews/booking-review-1.png" alt="Booking.com guest review screenshot 1" loading="lazy">
               </div>
-
               <div class="review-slide">
-                <img
-                  src="../images/sodra-rorum/reviews/booking-review-2.png"
-                  alt="Booking.com guest review screenshot 2"
-                  loading="lazy"
-                >
+                <img src="../images/sodra-rorum/reviews/booking-review-2.png" alt="Booking.com guest review screenshot 2" loading="lazy">
               </div>
-
               <div class="review-slide">
-                <img
-                  src="../images/sodra-rorum/reviews/booking-review-3.png"
-                  alt="Booking.com guest review screenshot 3"
-                  loading="lazy"
-                >
+                <img src="../images/sodra-rorum/reviews/booking-review-3.png" alt="Booking.com guest review screenshot 3" loading="lazy">
               </div>
-
               <div class="review-slide">
-                <img
-                  src="../images/sodra-rorum/reviews/booking-review-4.png"
-                  alt="Booking.com guest review screenshot 4"
-                  loading="lazy"
-                >
+                <img src="../images/sodra-rorum/reviews/booking-review-4.png" alt="Booking.com guest review screenshot 4" loading="lazy">
               </div>
-
               <div class="review-slide">
-                <img
-                  src="../images/sodra-rorum/reviews/booking-review-5.png"
-                  alt="Booking.com guest review screenshot 5"
-                  loading="lazy"
-                >
+                <img src="../images/sodra-rorum/reviews/booking-review-5.png" alt="Booking.com guest review screenshot 5" loading="lazy">
               </div>
 
               <div class="review-slideshow__dots" aria-label="Booking.com review navigation">
@@ -461,12 +438,14 @@
                 <button class="review-dot" data-index="4" aria-label="Review 5"></button>
               </div>
 
-            </div><!-- end .review-slideshow (Booking.com) -->
-          </div><!-- end .review-column (Booking.com) -->
+            </div>
 
-        </div><!-- end .reviews-grid -->
-      </div><!-- end .container -->
-    </section><!-- end reviews section -->
+          </div>
+
+        </div>
+      </div>
+
+    </section>
 
 
     <!-- =========================================================
@@ -495,7 +474,6 @@
           </iframe>
         </div>
 
-        <!-- Get Directions buttons -->
         <div style="margin-top: var(--space-5);">
           <a
             href="https://www.google.com/maps/place/S%C3%B6dra+R%C3%B6rum+4774,+242+94+H%C3%B6rby/@55.9301902,13.6939493,17z/data=!3m1!4b1!4m6!3m5!1s0x4653f12bb6d108f5:0x6a1043fbb8a0243f!8m2!3d55.9301902!4d13.6965296!16s%2Fg%2F11c2bzlxcn?hl=en&entry=ttu&g_ep=EgoyMDI2MDcwOC4wIKXMDSoASAFQAw%3D%3D"
@@ -508,7 +486,7 @@
               alt=""
               class="btn__icon btn__icon--googlemaps"
             >
-            ↗ Directions
+            Directions ↗
           </a>
 
           <a
@@ -522,11 +500,12 @@
               alt=""
               class="btn__icon btn__icon--applmaps"
             >
-            ↗ Directions
+            Directions ↗
           </a>
         </div>
 
       </div>
+
     </section>
 
 
@@ -541,89 +520,91 @@
 
         <div class="photo-grid">
 
-          <!-- Featured image: spans full width, opens lightbox at index 0 -->
           <div class="photo-grid__item photo-grid__item--featured">
-            <img
-              src="../images/sodra-rorum/gallery-01.jpg"
-              alt="Main view of Södra Rörum — exterior from the garden"
-              loading="lazy"
-              width="1200"
-              height="675"
-            >
+            <img src="../media/sodra-rorum/gallery/ext-03.webp" alt="Exterior detail of Pinecone Lodge" loading="lazy">
           </div>
 
           <div class="photo-grid__item">
-            <img
-              src="../images/sodra-rorum/gallery-02.jpg"
-              alt="Living room at Södra Rörum"
-              loading="lazy"
-              width="800"
-              height="600"
-            >
+            <img src="../media/sodra-rorum/gallery/kitchen-00.webp" alt="Kitchen overview at Södra Rörum" loading="lazy">
           </div>
 
           <div class="photo-grid__item">
-            <img
-              src="../images/sodra-rorum/gallery-03.jpg"
-              alt="Kitchen at Södra Rörum"
-              loading="lazy"
-              width="800"
-              height="600"
-            >
+            <img src="../media/sodra-rorum/gallery/lounge-01.webp" alt="Living room at Pinecone Lodge" loading="lazy">
           </div>
 
           <div class="photo-grid__item">
-            <img
-              src="../images/sodra-rorum/gallery-04.jpg"
-              alt="Bedroom at Södra Rörum"
-              loading="lazy"
-              width="800"
-              height="600"
-            >
+            <img src="../media/sodra-rorum/gallery/bathroom-01.webp" alt="Bathroom at Pinecone Lodge" loading="lazy">
           </div>
 
           <div class="photo-grid__item">
-            <img
-              src="../images/sodra-rorum/gallery-05.jpg"
-              alt="Outdoor seating area at Södra Rörum"
-              loading="lazy"
-              width="800"
-              height="600"
-            >
+            <img src="../media/sodra-rorum/gallery/garden-04.webp" alt="Garden path leading into the forest" loading="lazy">
           </div>
 
           <div class="photo-grid__item">
-            <img
-              src="../images/sodra-rorum/gallery-06.jpg"
-              alt="Garden and surroundings at Södra Rörum"
-              loading="lazy"
-              width="800"
-              height="600"
-            >
+            <img src="../media/sodra-rorum/gallery/garden-01.webp" alt="Garden and forest at Södra Rörum" loading="lazy">
           </div>
 
           <div class="photo-grid__item">
-            <img
-              src="../images/sodra-rorum/gallery-07.jpg"
-              alt="Countryside view from Södra Rörum"
-              loading="lazy"
-              width="800"
-              height="600"
-            >
+            <img src="../media/sodra-rorum/gallery/garden-03.webp" alt="Outdoor seating in the garden" loading="lazy">
           </div>
 
           <div class="photo-grid__item">
-            <img
-              src="../images/sodra-rorum/gallery-08.jpg"
-              alt="Another view of Södra Rörum"
-              loading="lazy"
-              width="800"
-              height="600"
-            >
+            <img src="../media/sodra-rorum/gallery/winter-03.webp" alt="Snowy outside of Pinecone Lodge" loading="lazy">
           </div>
+
+          <div class="photo-grid__item">
+            <img src="../media/sodra-rorum/gallery/winter-01.webp" alt="Winter view of the forest retreat" loading="lazy">
+          </div>
+
+          <div class="photo-grid__item">
+            <img src="../media/sodra-rorum/gallery/winter-02.webp" alt="Snowy surroundings of Pinecone Lodge" loading="lazy">
+          </div>
+
 
         </div><!-- end .photo-grid -->
+
       </div><!-- end .container -->
+
+
+      <!-- Full gallery (hidden) – single source of truth for the lightbox -->
+      <div class="gallery-full" hidden aria-hidden="true">
+
+        <img src="../media/sodra-rorum/gallery/ext-01.webp" alt="Exterior of Pinecone Lodge at Södra Rörum">
+        <img src="../media/sodra-rorum/gallery/ext-02.webp" alt="Patio view of the red cottage in the forest retreat of Södra Rörum">
+        <img src="../media/sodra-rorum/gallery/ext-03.webp" alt="Exterior detail of Pinecone Lodge">
+        <img src="../media/sodra-rorum/gallery/ext-04.webp" alt="Entrance area at Södra Rörum forest retreat">
+
+        <img src="../media/sodra-rorum/gallery/garden-01.webp" alt="Garden and forest surroundings at Södra Rörum">
+        <img src="../media/sodra-rorum/gallery/garden-02.webp" alt="Lush garden at Pinecone Lodge">
+        <img src="../media/sodra-rorum/gallery/garden-03.webp" alt="Outdoor seating in the garden">
+        <img src="../media/sodra-rorum/gallery/garden-04.webp" alt="Garden path leading into the forest">
+
+        <img src="../media/sodra-rorum/gallery/lounge-01.webp" alt="Cozy living room at Pinecone Lodge">
+        <img src="../media/sodra-rorum/gallery/lounge-02.webp" alt="Seating area in the living room">
+        <img src="../media/sodra-rorum/gallery/lounge-03.webp" alt="Living room detail at the forest retreat">
+        <img src="../media/sodra-rorum/gallery/lounge-04.webp" alt="Comfortable lounge space at Södra Rörum">
+        <img src="../media/sodra-rorum/gallery/lounge-05.webp" alt="Living room with natural light">
+        <img src="../media/sodra-rorum/gallery/lounge-06.webp" alt="Interior of Pinecone Lodge">
+
+        <img src="../media/sodra-rorum/gallery/bedroom-01.webp" alt="Bedroom at Södra Rörum forest retreat">
+
+        <img src="../media/sodra-rorum/gallery/kitchen-00.webp" alt="Kitchen overview at Södra Rörum">
+        <img src="../media/sodra-rorum/gallery/kitchen-01.webp" alt="Kitchen at Pinecone Lodge">
+        <img src="../media/sodra-rorum/gallery/kitchen-02.webp" alt="Kitchen details and appliances">
+
+        <img src="../media/sodra-rorum/gallery/bathroom-01.webp" alt="Bathroom at Pinecone Lodge">
+        <img src="../media/sodra-rorum/gallery/bathroom-02.webp" alt="Bathroom details">
+        <img src="../media/sodra-rorum/gallery/bathroom-03.webp" alt="Bathroom at the forest retreat">
+
+        <img src="../media/sodra-rorum/gallery/activities-01.webp" alt="Outdoor activities near Södra Rörum">
+        <img src="../media/sodra-rorum/gallery/activities-02.webp" alt="Nature experiences around Pinecone Lodge">
+
+        <img src="../media/sodra-rorum/gallery/winter-03.webp" alt="Snowy outside of Pinecone Lodge">
+        <img src="../media/sodra-rorum/gallery/winter-01.webp" alt="Winter view of the forest retreat at Södra Rörum">
+        <img src="../media/sodra-rorum/gallery/winter-02.webp" alt="Snowy surroundings of Pinecone Lodge">
+
+      </div><!-- end .gallery-full -->
+
     </section><!-- end gallery section -->
 
 
@@ -660,8 +641,7 @@
     <div class="container">
 
       <p class="footer-note">
-        &copy; <span id="footer-year"></span> Swedish Stays. All rights reserved.
-        <!-- TODO: Replace "Swedish Stays" with the client's site/brand name -->
+        &copy; <span id="footer-year"></span> Scania Cottages. All rights reserved.
       </p>
 
       <p class="footer-note">
@@ -682,25 +662,17 @@
       </p>
 
     </div>
+    
   </footer>
 
 
   <!-- ============================================================
        SCRIPTS
        ============================================================ -->
-
-  <!-- Auto-update copyright year -->
   <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
   </script>
 
-  <!-- gallery.js handles:
-       - Lightbox (open/close/navigate/keyboard/swipe)
-       - Review slideshow auto-advance
-       - Read More toggle
-       - Nav dropdown
-       - Hero slideshow (auto-advance, dots, swipe, gallery click-through)
-       Path uses ../ because this page is inside sodra-rorum/ -->
   <script src="../js/gallery.js"></script>
 
 </body>

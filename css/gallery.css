@@ -1,6 +1,6 @@
 /* =============================================================
    gallery.css — Styles for photo galleries and lightbox
-   Used on: sodra-rorum/index.html and balinge/index.html
+   Used on: index.html (Bälinge) and sodra-rorum/index.html
 
    This file handles two things:
      1. The photo grid thumbnails on property pages
@@ -82,8 +82,7 @@
 }
 
 /* Featured/hero thumbnail — spans full grid width, wider aspect ratio.
-   This is the first image in the grid and also the hero image at the
-   top of the page. Clicking it opens the lightbox at index 0. */
+   Clicking it opens the lightbox at the matching image (by src). */
 .photo-grid__item--featured {
   grid-column: span 2;
   aspect-ratio: 16 / 9;
@@ -410,6 +409,7 @@
    Handles:
      - Lightbox open/close/navigate
      - Keyboard navigation (arrow keys, Escape)
-     - Hero image click → open lightbox at index 0
+     - Hero slideshow click → open lightbox at the matching image
+     - “View all photos” hint → open lightbox at index 0
      - Review slideshow auto-advance timers
    ============================================================= */
