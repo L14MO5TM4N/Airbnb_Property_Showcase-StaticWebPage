@@ -1,0 +1,13 @@
+# Scania Cottages
+
+> Scania Cottages showcases two independently owned vacation rental cottages in Skåne, Sweden — booked directly through Airbnb and Booking.com. This site is a photo-rich showcase for each property, not a booking platform itself.
+
+## Properties
+
+- [Bälinge Lakehouse](https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/): Lake cottage with private pier, rowing boat and 1 400 m² garden in Perstorp, Skåne. Up to 4 guests, 2 bedrooms, 1 bathroom.
+- [Little Pinecone Lodge](https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/sodra-rorum/): Forest cottage with garden annex, fireplace and 2 000 m² grounds in Södra Rörum, Hörby, Skåne. Up to 5 guests.
+
+## Optional
+
+- [Airbnb](https://www.airbnb.com): Platform used for direct bookings of both properties.
+- [Booking.com](https://www.booking.com): Platform used for direct bookings of both properties.

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  sitemap.xml — lists every page on the site for search engines.
+
+  TODO: once this site is live on its own domain (not GitHub Pages),
+  update every <loc> below — replace
+  https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/
+  with the new domain.
+
+  If you add a third property page later, add a matching <url> block.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/</loc>
+  </url>
+  <url>
+    <loc>https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/sodra-rorum/</loc>
+  </url>
+</urlset>

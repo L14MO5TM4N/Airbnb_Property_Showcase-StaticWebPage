@@ -300,6 +300,12 @@
       var expanded = block.classList.toggle("is-expanded");
       toggle.textContent = expanded ? "Read less" : "Read more";
       toggle.setAttribute("aria-expanded", expanded);
+
+      if (expanded) {
+        block.style.maxHeight = block.scrollHeight + "px";
+      } else {
+        block.style.maxHeight = ""; // back to the CSS collapsed value (*em)
+      }
     });
   });
 })();

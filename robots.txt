@@ -1,0 +1,8 @@
+# This site has no private/admin areas — everything is open to crawlers.
+User-agent: *
+Allow: /
+
+# TODO: once this site is live on its own domain (not GitHub Pages),
+# update this line to the new domain instead of
+# https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/
+Sitemap: https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/sitemap.xml

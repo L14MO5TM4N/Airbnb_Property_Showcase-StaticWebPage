@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  index.html — Homepage (Bälinge)
+  Root index.html — Homepage (Bälinge)
   Airbnb & Booking.com Rentals Showcase Website
 																  
 
@@ -21,22 +21,71 @@
   <head>
     <!-- ============================================================
        META & SEO
-	   
+
        charset: tells the browser this file uses UTF-8 text encoding
                 (required for Swedish characters like ä, ö, å)
        viewport: makes the layout mobile-responsive
-       description: shown in Google search results under the page title																	
-																 
-												   																	   
+       description: shown in Google search results under the page title
        ============================================================ -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Bälinge — Lake cottage with private pier by the lake in Bälinge, Skåne, Sweden. Book on Airbnb or Booking.com."
+      content="Charming lake cottage by Bälingesjön in Perstorp, Skåne with private pier, rowing boat and large garden. Up to 4 guests. Book on Airbnb or Booking.com."
     />
 
-    <title>Bälinge — Vacation Rental in Skåne, Sweden</title>
+    <title>Bälinge Lakehouse — Lake Cottage with Private Pier | Skåne</title>
+    <!-- ============================================================
+         OPEN GRAPH + TWITTER CARD
+         Used when the page is shared (social media, messaging apps, etc.)
+
+         TODO: When the custom domain is live, replace every
+         https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/ 
+         with https://yourdomain.com/
+         ============================================================ -->
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Scania Cottages" />
+    <meta
+      property="og:title"
+      content="Bälinge Lakehouse — Lake Cottage with Private Pier | Skåne"
+    />
+    <meta
+      property="og:description"
+      content="Charming lake cottage by Bälingesjön in Perstorp, Skåne with private pier, rowing boat and large garden. Up to 4 guests. Book on Airbnb or Booking.com."
+    />
+    <meta
+      property="og:url"
+      content="https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/"
+    />
+    <meta
+      property="og:image"
+      content="https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/media/balinge/gallery/pier-01.webp"
+    />
+    <meta property="og:image:alt" content="Private pier at Bälinge Lakehouse" />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Bälinge Lakehouse — Lake Cottage with Private Pier | Skåne"
+    />
+    <meta
+      name="twitter:description"
+      content="Charming lake cottage by Bälingesjön in Perstorp, Skåne with private pier, rowing boat and large garden. Up to 4 guests. Book on Airbnb or Booking.com."
+    />
+    <meta
+      name="twitter:image"
+      content="https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/media/balinge/gallery/pier-01.webp"
+    />
+
+    <!-- TODO:  update when the custom domain is live -->
+    <link
+      rel="canonical"
+      href="https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/"
+    />
 
     <!-- ============================================================
        GOOGLE FONTS 
@@ -67,6 +116,64 @@
                             FAVICON
        ============================================================ -->
     <link rel="icon" href="favicon.ico" />
+
+    <!-- ============================================================
+       STRUCTURED DATA (JSON-LD)
+       Gives search engines and AI tools (ChatGPT, Perplexity, Google
+       AI Overviews, etc.) clean, unambiguous facts about this property
+       instead of making them guess from the page's prose.
+       Reference: https://schema.org/VacationRental
+
+       TODO: once this site is live on its own domain (not GitHub
+       Pages), update the "url" field and every "image" URL below —
+       replace https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/
+       with the new domain.
+       ============================================================ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "VacationRental",
+        "name": "Bälinge Lakehouse",
+        "identifier": "balinge-lakehouse-perstorp",
+        "description": "Charming lake cottage by Bälingesjön in Perstorp, Skåne with private pier, rowing boat and large garden. Up to 4 guests. Book on Airbnb or Booking.com.",
+        "url": "https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/",
+        "petsAllowed": true,
+        "containsPlace": {
+          "@type": "Accommodation",
+          "occupancy": {
+            "@type": "QuantitativeValue",
+            "value": 4
+          }
+        },
+        "image": [
+          "https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/media/balinge/gallery/ext-01.webp",
+          "https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/media/balinge/gallery/pier-01.webp",
+          "https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/media/balinge/gallery/lounge-01.webp",
+          "https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/media/balinge/gallery/activities-01.webp",
+          "https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/media/balinge/gallery/bathroom-01.webp",
+          "https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/media/balinge/gallery/bedroom-01.webp",
+          "https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/media/balinge/gallery/kitchen-01.webp",
+          "https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/media/balinge/gallery/winter-01.webp"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Bälinge 326",
+          "postalCode": "284 92",
+          "addressLocality": "Perstorp",
+          "addressRegion": "Skåne",
+          "addressCountry": "SE"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 56.2523307,
+          "longitude": 13.3655008
+        }
+      }
+    </script>
+
+    <!-- ============================================================
+             END OF STRUCTURED DATA (JSON-LD)
+      ============================================================ -->
   </head>
 
   <body>
@@ -258,7 +365,7 @@
               <span class="eyebrow"
                 >Bälinge &middot; Perstorp Municipality</span
               >
-              <h1 id="property-title">Welcome to Bälinge Lakehouse.</h1>
+              <h2 id="property-title">Welcome to Bälinge Lakehouse.</h2>
               <hr class="divider--wood" />
               <div class="read-more" data-read-more>
                 <p class="text-lead">
@@ -340,7 +447,7 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     ><strong>Herrevadskloster ↗</strong></a
-                  >(27 km). and Ängelholm-Helsingborg Airport is 45 km away.
+                  >(27 km). Ängelholm-Helsingborg Airport is 45 km away.
                   Across the lake you’ll find a small summer campground with a
                   sandy beach, playground and kiosk.
                 </p>
@@ -427,7 +534,7 @@
                ></iframe>
 
                The .intro-grid__media wrapper and its CSS will handle
-               sizing automatically — no other changes needed.
+               sizing automatically — no other changes needed..
                ----------------------------------------------- -->
             <div class="intro-grid__media">
               <!-- Placeholder box — remove and replace with iframe when live -->
@@ -468,7 +575,7 @@
             <li class="amenity-item">WiFi</li>
             <li class="amenity-item">Free parking on premises</li>
             <li class="amenity-item">Fully equipped kitchen</li>
-            <li class="amenity-item">Washing machine and Tumbledryer</li>
+            <li class="amenity-item">Washing machine and Tumble dryer</li>
             <li class="amenity-item">1 400 m² Garden</li>
             <li class="amenity-item">Hammock & Outdoor furniture</li>
             <li class="amenity-item">BBQ grill & Outdoor dining area</li>
