@@ -486,6 +486,91 @@
 /* End of nav dropdown IIFE */
 
 /* =============================================================
+   SECTION 6 — BUG REPORT DIALOG
+   Opens from footer "Report a bug", closes on backdrop / Cancel /
+   Escape, fills page_url, submits via Web3Forms (fetch).
+   ============================================================= */
+(function () {
+  var dialog = document.querySelector("[data-bug-dialog]");
+  if (!dialog) return;
+
+  var form = dialog.querySelector(".bug-dialog__form");
+  var pageField = document.getElementById("bug-page-url");
+  var openers = document.querySelectorAll("[data-open-bug-report]");
+  var closers = dialog.querySelectorAll("[data-bug-close]");
+
+  function openDialog(e) {
+    if (e) e.preventDefault();
+    if (pageField) pageField.value = window.location.href;
+    dialog.hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeDialog() {
+    dialog.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  openers.forEach(function (el) {
+    el.addEventListener("click", openDialog);
+  });
+
+  closers.forEach(function (el) {
+    el.addEventListener("click", closeDialog);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !dialog.hidden) closeDialog();
+  });
+
+  if (!form) return;
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var originalText = submitBtn ? submitBtn.textContent : "";
+
+    if (pageField) pageField.value = window.location.href;
+
+    var formData = new FormData(form);
+
+    if (submitBtn) {
+      submitBtn.textContent = "Sending...";
+      submitBtn.disabled = true;
+    }
+
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData,
+    })
+      .then(function (response) {
+        return response.json().then(function (data) {
+          return { ok: response.ok, data: data };
+        });
+      })
+      .then(function (result) {
+        if (result.ok) {
+          alert("Thank you — your report was sent.");
+          form.reset();
+          closeDialog();
+        } else {
+          alert("Error: " + (result.data.message || "Could not send."));
+        }
+      })
+      .catch(function () {
+        alert("Something went wrong. Please try again.");
+      })
+      .finally(function () {
+        if (submitBtn) {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }
+      });
+  });
+})();
+
+/* =============================================================
    END OF gallery.js
 
    Checklist for using this file on a property page:

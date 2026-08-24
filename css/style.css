@@ -497,22 +497,55 @@ p {
 
 .site-footer {
   background-color: var(--color-surface);
-  border-top: 2px solid var(--color-border);
-  padding: var(--space-10) 0;
-  margin-top: var(--space-16);
+  border-top: 2px solid var(--color-border-strong);
+  border-bottom: 3px solid var(--color-border-strong);
+  padding: var(--space-5) 0;
 }
 
 .site-footer .container {
   display: flex;
   flex-direction: column; /* Stack vertically on mobile */
-  gap: var(--space-4);
+  gap: var(--space-2);
   align-items: center;
   text-align: center;
 }
 
 .footer-note {
   font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
   color: var(--color-text-muted);
+}
+
+.footer-note--actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.footer-action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--border-radius);
+  padding: var(--space-1) var(--space-2);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.footer-action:hover {
+  background-color: var(--color-accent);
+  color: #ffffff;
+}
+
+.footer-action__icon {
+  display: inline-flex;
+  align-items: center;
 }
 
 /* =============================================================
@@ -656,6 +689,61 @@ p {
 .link:hover {
   text-decoration-color: var(--color-accent);
 }
+
+/* FAQ categories — collapsible sections, one per property + General */
+.faq-category {
+  margin-bottom: var(--space-4);
+}
+
+/* =============================================================
+   FAQ CATEGORIES — collapsible sections (General / Bälinge / Södra Rörum)
+   Same <details>/<summary> mechanism as .faq-item, just one level
+   up, so whole categories can be shown/hidden the same way.
+   ============================================================= */
+
+.faq-category {
+  margin-bottom: var(--space-4);
+}
+
+.faq-category__label {
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  padding: var(--space-2) 0;
+  list-style: none; /* removes the native disclosure triangle so our own can replace it */
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Custom triangle marker — hollow while closed */
+.faq-category__label::before {
+  content: "▷"; /* hollow/outline triangle, closed state */
+  display: inline-block;
+  font-size: 0.8em;
+  color: var(--color-accent);
+  transition: color var(--transition-fast);
+}
+
+/* Filled triangle once the category is expanded.
+   [open] is set natively by the browser on <details> — no JS needed. */
+.faq-category[open] > .faq-category__label::before {
+  content: "▶"; /* filled triangle, open state */
+}
+
+
+.faq-category__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+/* =============================================================
+   END OF FAQ CATEGORIES
+   ============================================================= */
 
 /* =============================================================
    9. HERO SLIDESHOW
@@ -1307,4 +1395,238 @@ section[aria-labelledby="reviews-heading"] {
 
 /* =============================================================
    END OF READ MORE TOGGLE BUTTON
+   ============================================================= */
+
+/* =============================================================
+   FAQ CATEGORIES — collapsible sections (General / Bälinge / Södra Rörum)
+   Same <details>/<summary> mechanism as .faq-item, just one level
+   up, so whole categories can be shown/hidden the same way.
+   ============================================================= */
+
+.faq-category {
+  margin-bottom: var(--space-4);
+}
+
+.faq-category__label {
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  padding: var(--space-2) 0;
+  list-style: none; /* removes the native disclosure triangle so our own can replace it */
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Custom triangle marker — hollow while closed, points right */
+.faq-category__label::before {
+  content: "▷";
+  display: inline-block;
+  font-size: 0.8em;
+  color: var(--color-accent);
+  transition: transform var(--transition-fast);
+}
+
+/* Filled + rotated to point down once the category is expanded.
+   [open] is set natively by the browser on <details> — no JS needed. */
+.faq-category[open] > .faq-category__label::before {
+  content: "▶";
+  transform: rotate(90deg);
+}
+
+
+.faq-category__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+/* =============================================================
+   END OF FAQ CATEGORIES
+   ============================================================= */
+
+/* =============================================================
+   FAQ ITEM — individual question triangle marker
+   Same hollow-to-filled, rotate-on-open pattern as .faq-category,
+   just smaller since a question is a lower-level element than
+   a whole category.
+   ============================================================= */
+
+.faq-item summary {
+  list-style: none; /* removes native triangle so our own can replace it */
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.faq-item summary::before {
+  content: "▷";
+  display: inline-block;
+  font-size: 0.7em;
+  color: var(--color-accent);
+  transition: transform var(--transition-fast);
+}
+
+.faq-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-4) var(--space-5);
+}
+
+.faq-item[open] > summary::before {
+  content: "▶";
+  transform: rotate(90deg);
+}
+
+/* =============================================================
+   END OF FAQ ITEM TRIANGLE MARKER
+   ============================================================= */
+
+/* =============================================================
+   BUG REPORT DIALOG
+   ============================================================= */
+
+.bug-dialog[hidden] {
+  display: none;
+}
+
+.bug-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.bug-dialog__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 14, 8, 0.55);
+}
+
+.bug-dialog__panel {
+  position: relative;
+  width: fit-content;
+  min-width: min(28rem, 100%);
+  max-width: min(42rem, calc(100vw - 2rem));
+  max-height: 90vh;
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-bg);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  z-index: 1;
+}
+
+.bug-dialog__scroll {
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: var(--space-6);
+  padding-top: calc(var(--space-6) + 0.25rem);
+}
+
+.bug-dialog__scroll h2 {
+  padding-left: 1.75rem;
+}
+
+.bug-dialog__scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.bug-dialog__scroll::-webkit-scrollbar-thumb {
+  background: var(--color-wood-light, #c4a574);
+  border-radius: 8px;
+}
+
+.bug-dialog__scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bug-dialog__close {
+  position: absolute;
+  top: var(--space-1);
+  left: var(--space-2);
+  z-index: 2;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-text-muted);
+}
+
+.bug-dialog__intro {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  margin: var(--space-2) 0 var(--space-5);
+}
+
+.bug-dialog__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.bug-dialog__form label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+.bug-dialog__form input,
+.bug-dialog__form textarea {
+  font: inherit;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: #fff;
+  color: var(--color-text);
+}
+
+.bug-dialog__form textarea {
+  resize: both;
+  min-height: 7rem;
+  min-width: 100%;
+}
+
+.bug-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.bug-dialog__form input:focus,
+.bug-dialog__form textarea:focus {
+  outline-color: var(--color-wood);
+}
+
+@media (max-width: 767px) {
+  .bug-dialog__form textarea {
+    resize: none;
+  }
+
+  .bug-dialog__panel {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+/* =============================================================
+   END OF BUG REPORT DIALOG
    ============================================================= */

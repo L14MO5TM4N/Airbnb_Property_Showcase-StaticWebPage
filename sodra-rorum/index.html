@@ -998,6 +998,8 @@
 
     <!-- ============================================================
        FOOTER
+       Minimal by design — the site's job is to send visitors to
+       the booking platforms, not to keep them on this page.
        ============================================================ -->
     <footer class="site-footer">
       <div class="container">
@@ -1024,6 +1026,50 @@
             >Booking.com</a
           >
         </p>
+
+        <p class="footer-note footer-note--actions">
+          <a href="../faq/" class="footer-action">
+            <span class="footer-action__icon" aria-hidden="true">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </span>
+            FAQ
+          </a>
+
+          <a href="#" class="footer-action" data-open-bug-report>
+            <span class="footer-action__icon" aria-hidden="true">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="8" y="6" width="8" height="14" rx="4"></rect>
+                <path d="M19 10h-2M7 10H5M19 14h-2M7 14H5"></path>
+                <path d="M9 6 7.5 3.5"></path>
+                <path d="M15 6 16.5 3.5"></path>
+                <path d="M10 20v2M14 20v2"></path>
+              </svg>
+            </span>
+            Report bug
+          </a>
+        </p>
       </div>
     </footer>
 
@@ -1035,6 +1081,111 @@
         new Date().getFullYear();
     </script>
 
+    <!-- ============================================================
+       BUG REPORT DIALOG
+       Opened from the footer "Report a bug" link.
+       Uses Web3Forms so the site can stay fully static.
+
+       TODO: Replace:dbdb617b-0272-4e19-b090-751997177da2
+       with your key from https://web3forms.com
+       ============================================================ -->
+    <div class="bug-dialog" data-bug-dialog hidden>
+      <div class="bug-dialog__backdrop" data-bug-close></div>
+
+      <div
+        class="bug-dialog__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="bug-dialog-title"
+      >
+        <!-- Close stays on the panel so it doesn’t scroll away -->
+        <button
+          type="button"
+          class="bug-dialog__close"
+          data-bug-close
+          aria-label="Close"
+        >
+          &times;
+        </button>
+
+        <!-- Only this inner part scrolls -->
+        <div class="bug-dialog__scroll">
+          <h2 id="bug-dialog-title">Report a bug</h2>
+          <p class="bug-dialog__intro">
+            Describe what went wrong. We’ll take a look as soon as we can.
+          </p>
+
+          <form
+            class="bug-dialog__form"
+            action="https://api.web3forms.com/submit"
+            method="POST"
+          >
+            <input
+              type="hidden"
+              name="access_key"
+              value="dbdb617b-0272-4e19-b090-751997177da2"
+            />
+            <input
+              type="hidden"
+              name="subject"
+              value="Bug report — Scania Cottages"
+            />
+            <input
+              type="hidden"
+              name="from_name"
+              value="Scania Cottages website"
+            />
+            <input type="hidden" name="page_url" id="bug-page-url" value="" />
+            <input
+              type="checkbox"
+              name="botcheck"
+              style="display: none"
+              tabindex="-1"
+              autocomplete="off"
+            />
+
+            <label>
+              Your email
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="your-email@example.com"
+              />
+            </label>
+
+            <label>
+              What were you doing when the bug/issue occurred?
+              <input
+                type="text"
+                name="context"
+                placeholder="e.g. Opening the photo gallery on my phone"
+              />
+            </label>
+
+            <label>
+              Description, steps to reproduce the bug (if possible)
+              <textarea
+                name="message"
+                rows="4"
+                required
+                placeholder="What happened? What did you expect to happen?"
+              ></textarea>
+            </label>
+
+            <div class="bug-dialog__actions">
+              <button type="button" class="btn btn-secondary" data-bug-close>
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">Send report</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================
+       END OF BUG REPORT DIALOG
+       ============================================================ -->
     <script src="../js/gallery.js"></script>
   </body>
 </html>
