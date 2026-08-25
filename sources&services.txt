@@ -1,0 +1,65 @@
+╔══════════════════════════════════════════════════════════════════╗
+║                       SOURCES  &  SERVICES                       ║
+╚══════════════════════════════════════════════════════════════════╝
+
+
+┌──────────────────────────────────────────────────────────────────┐
+│ IMAGES                                                           │
+└──────────────────────────────────────────────────────────────────┘
+
+  All photography on this site was taken by the client and is not
+  re-used from elsewhere — and should not be reused anywhere else.
+
+
+┌──────────────────────────────────────────────────────────────────┐
+│ SERVICES                                                         │
+└──────────────────────────────────────────────────────────────────┘
+
+  ── Bug reports ──────────────────────────────────────────────────
+
+    Web3Forms
+    https://web3forms.com/
+    Experience: 5/5  ·  Free tier
+
+
+  ── Image conversion ─────────────────────────────────────────────
+
+    ToWebP
+    https://towebp.net/
+    Experience: 5/5  ·  Free tier
+
+    Favicon.io (favicon creation)
+    https://favicon.io/favicon-generator/
+    Experience: 4/5  ·  Free
+
+
+  ── LLMs // "AI" ─────────────────────────────────────────────────
+
+    Claude
+    https://claude.ai/
+    Experience: 5/5  ·  Free tier
+    Used for sanity checking, code optimizing, and best-practice
+    suggestions.
+
+    Grok
+    https://grok.com/
+    Experience: 4.4/5  ·  Free tier
+    Used for bulk generation — did its job most of the time. If not
+    happy with output, sent to Claude and explained why not.
+
+    ChatGPT
+    https://chatgpt.com
+    Experience: 4/5  ·  Free tier
+    Used for trivial questions and token usage, or in the rare
+    cases where the aforementioned models hit their limits.
+    (e.g. "Where can I convert to WebP?")
+
+    Google Search "AI Mode"
+    Experience: NaN/NaN  ·  Paid subliminally with data
+    Still unhinged — will 100% gaslight you into believing you
+    should rob that bank because yes, you do pay taxes and that
+    money is yours goddarnit. Reminds me of Bumblebee from
+    Transformers; also, when asked, self-identifies as Bumblebee.
+    KEKW.
+
+╚══════════════════════════════════════════════════════════════════╝

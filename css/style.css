@@ -3,18 +3,25 @@
    Properties: Bälinge (Perstorp, Skåne) and Södra Rörum (Hörby, Skåne)
 
    Structure of this file:
-     1. CSS Custom Properties (design tokens)
+     0. Learning notes — how common CSS ideas show up on this site  
+     1. CSS Custom Properties (design tokens) [Starts at Line 233]
      2. Reset & base
      3. Typography scale
      4. Layout utilities
      5. Header & navigation
      6. Footer
-     7. Buttons & links
-     8. Property cards (Obsolete//Removed)
+     7. Buttons & links (incl. FAQ deep-link button labels)
+     8. Property cards (obsolete — not in use; kept for possible later use)
      9. Hero slideshow
     10. Amenities list
-    11. Photo grid
+    11. Photo grid (property pages)
     12. Responsive overrides (desktop)
+    13. Property hero image (legacy single-image hero)
+    14. Property intro grid + YouTube placeholder
+    15. Temporary: hide reviews section
+    16. Read more (collapsible intro text)
+    17. FAQ page (categories + items)
+    18. Bug report dialog
 
    All visual decisions (colors, fonts, spacing) are controlled
    via the custom properties in section 1. To retheme the site,
@@ -22,12 +29,214 @@
    ============================================================= */
 
 /* =============================================================
+   LEARNING NOTES — how common CSS ideas show up on this site
+
+   These are plain-language reminders, not rules the browser reads
+   as styles. Safe to keep or delete anytime.
+
+   ----------------------------------------------------------
+   POSITION
+   ----------------------------------------------------------
+   Controls HOW an element is placed in the page flow.
+
+   static (default)
+     Normal document flow. Top/left/right/bottom do nothing.
+
+   relative
+     Still in normal flow, but you can nudge it with top/left/etc.
+     Also becomes the “anchor” for absolutely positioned children.
+     Example: .hero-slideshow, .bug-dialog__panel
+
+   absolute
+     Taken OUT of normal flow. Placed relative to the nearest
+     ancestor that has position: relative/absolute/fixed/sticky
+     (or the whole page if none).
+     Example: close button on the bug dialog, slideshow dots,
+     “View all photos” hint.
+
+   fixed
+     Like absolute, but relative to the *viewport* (the screen).
+     Stays put while you scroll.
+     Example: .bug-dialog overlay (covers the whole screen).
+
+   sticky
+     Acts like relative until you scroll past a threshold, then
+     “sticks” like fixed.
+     Example: .site-header { position: sticky; top: 0; }
+     → header stays at the top while the page scrolls.
+
+   z-index
+     Stacking order when things overlap. Higher number = on top.
+     Only works on positioned elements (not static).
+     Example: header z-index: 100, bug dialog z-index: 2000.
+
+   inset: 0
+     Shorthand for top/right/bottom/left all set to 0.
+     Example: full-screen backdrop on the bug dialog.
+
+   ----------------------------------------------------------
+   DISPLAY — FLEX & GRID
+   ----------------------------------------------------------
+   display: flex
+     Lays out *direct children* in a row or column.
+     Great for nav bars, button rows, centering a dialog.
+
+     Useful flex properties:
+       flex-direction: row | column
+       justify-content: main axis (horizontal if row)
+       align-items: cross axis (vertical if row)
+       gap: space between children
+       flex-wrap: wrap → allow items onto a second line
+
+     Examples on this site:
+       .site-header .container  → logo left, nav right
+       .intro-grid__buttons     → booking + FAQ buttons in a row
+       .bug-dialog              → centers the panel on screen
+
+   display: grid
+     Two-dimensional layout (rows AND columns).
+     Example: .photo-grid, .amenities-grid
+       grid-template-columns: repeat(2, 1fr) → two equal columns
+       1fr = “one share of the free space”
+
+   ----------------------------------------------------------
+   BORDERS — “solid” and friends
+   ----------------------------------------------------------
+   border: 2px solid var(--color-wood);
+
+     2px     = thickness
+     solid   = continuous line (also: dashed, dotted, none)
+     color   = usually a variable from section 1
+
+   “Solid” is just the *style* of the line, not a special layout mode.
+
+   ----------------------------------------------------------
+   UNITS — em vs rem (and why this file mostly uses rem)
+   ----------------------------------------------------------
+   rem  = “root em” → size relative to the <html> root font size
+          (usually 16px in browsers, unless the user changes it).
+          1rem ≈ 16px, 1.5rem ≈ 24px.
+          Best for spacing, type scale, and layout: consistent
+          and respects user zoom / accessibility settings.
+          This site’s tokens (--space-*, --text-*) are mostly rem.
+
+   em   = relative to the *current element’s* font-size
+          (or the parent’s, when used on font-size itself).
+          Can “compound”: nested ems multiply and get surprising.
+          Handy for things that should scale with nearby text
+          (e.g. icon height: 1em next to a label).
+
+   px   = fixed pixels. Fine for hairlines (1px borders) or rare
+          tweaks; avoid for main typography if you can use rem.
+
+   %    = relative to the parent’s size (width/height context).
+   vw/vh = % of the viewport width/height (e.g. max-height: 90vh
+          on the bug dialog = 90% of the screen height).
+
+   ch   = roughly the width of one “0” character in the current font.
+          Example: max-width: 22ch on the hero title → readable line length.
+
+   ----------------------------------------------------------
+   SPECIFICITY — which rule wins when two rules conflict
+   ----------------------------------------------------------
+   The browser does not pick “the rule that appears last” alone.
+   It scores *how specific* the selector is, then uses order as a tie-break.
+
+   Rough ranking (low → high):
+     1. Element selectors     p, h1, button
+     2. Classes / attributes  .btn, .faq-item, [open]
+     3. IDs                   #property-title
+     4. Inline style="..."    (avoid; hard to override)
+     5. !important            (avoid; emergency only)
+
+   Examples from this project:
+     .btn { ... }
+     .btn-secondary--faq { ... }
+     → both apply to the FAQ button; the more specific class
+       pair wins for properties they both set.
+
+     #property-title { font-size: ... }
+     → beats a plain h2 { font-size: ... } because IDs score higher.
+
+   Practical habit:
+     Prefer classes over IDs for styling.
+     Prefer a clear class name over !important.
+     When something “won’t change”, check: is a *more specific*
+     rule elsewhere still overriding you?
+
+   ----------------------------------------------------------
+   PSEUDO-CLASSES & STATE — :hover, :focus, [open], etc.
+   ----------------------------------------------------------
+   These style an element only in a certain *state*.
+
+   :hover
+     Mouse is over the element.
+     Example: .btn-secondary:hover { background fills in }
+
+   :focus / :focus-visible
+     Element is focused (keyboard Tab, or click into a field).
+     :focus-visible is preferred for buttons — shows the ring
+     mainly for keyboard users, less noisy for pure mouse clicks.
+     Example: .btn:focus-visible { outline: 3px solid ... }
+
+   :first-child / :last-child
+     Element is the first/last child of its parent.
+     Example: hiding the last photo-grid item on mobile.
+
+   [open]
+     Attribute selector. On <details>, the browser sets open
+     when the disclosure is expanded — no JS required for the
+     open/closed style swap.
+     Example:
+       .faq-category[open] > .faq-category__label::before
+       → filled triangle when that category is open.
+
+   .is-open / .is-expanded / .is-active
+     Classes *we* add with JavaScript for UI state
+     (dropdown open, read-more expanded, active slideshow dot).
+     Same idea as [open], but controlled by our gallery.js.
+
+   ::before / ::after
+     Pseudo-*elements* (not states): extra “fake” boxes for
+     decorations (checkmark ✓, triangle ▷) without extra HTML.
+
+   ----------------------------------------------------------
+   OTHER PATTERNS YOU’LL SEE A LOT HERE
+   ----------------------------------------------------------
+   var(--name)
+     Reads a value from :root (section 1). Change once → updates
+     everywhere. That’s what “design tokens” means.
+
+   overflow: hidden
+     Clips anything that sticks outside the box.
+     Example: rounded dialog panel clips the scrollbar area.
+
+   object-fit: cover
+     Image fills its box, crops the overflow, keeps aspect ratio.
+     Example: hero and gallery photos.
+
+   transform: translateX() / scale()
+     Moves or scales without affecting document flow the same way
+     left/top would. Used for slideshow track and hover zoom.
+
+   transition
+     Smoothly animates a property change (hover colors, etc.).
+
+   @media (min-width: 768px) / (max-width: 767px)
+     Conditional styles by screen width.
+     This project is mobile-first: base styles = phone,
+     then min-width: 768px adds tablet/desktop improvements.
+     767px ≈ phones; 768px+ ≈ tablets and desktops.
+
+   ============================================================= */
+
+/* =============================================================
    1. CSS CUSTOM PROPERTIES (design tokens)
 
    "Custom properties" are CSS variables. They start with --.
    You set them once here and reference them anywhere in the file
-   with var(--name). This means changing a color in one place
-   updates it everywhere on the site.
+   with var(--name). Changing a color in one place updates it
+   everywhere on the site.
    ============================================================= */
 
 :root {
@@ -47,43 +256,33 @@
   --color-accent-hover: #395e44; /* Darker green for hover states */
   --color-wood: #8b5e3c; /* Wood tone: card accents, borders, eyebrows */
   --color-wood-light: #c4956a; /* Lighter wood: decorative dividers */
-  --color-wood-dark: #6c492f; /* Wood mixed with ~20% black — hover for solid wood-filled buttons */
+  --color-wood-dark: #6c492f; /* Darker wood — hover for solid wood-filled buttons */
 
   /* Brand palette */
-  --color-airbnb: #ff385c; /* Airbnb brand pink — used only for Airbnb button */
-  --color-booking: #003479; /* Booking.com brand blue — used only for Booking.com button */
-  --color-airbnb-tint: rgba(
-    255,
-    56,
-    92,
-    0.15
-  ); /* Airbnb pink at 30% — hover background */
-  --color-booking-tint: rgba(
-    0,
-    52,
-    121,
-    0.25
-  ); /* Booking.com blue at 30% — hover background */
-  --color-google-maps: #1a73e8; /* Google Maps directions-button blue */
-  --color-apple-maps: #1a73e8; /* Google Maps blue (using google blue for both, but here is Apple System Blue hex #007AFF */
+  --color-airbnb: #ff385c; /* Airbnb brand pink — Airbnb button only */
+  --color-booking: #003479; /* Booking.com brand blue — Booking button only */
+  --color-airbnb-tint: rgba(255, 56, 92, 0.15); /* Airbnb pink tint — hover */
+  --color-booking-tint: rgba(0, 52, 121, 0.25); /* Booking blue tint — hover */
+  --color-google-maps: #1a73e8; /* Google Maps directions button */
+  --color-apple-maps: #1a73e8; /* Directions button (shared blue for now) */
   --color-hover-tint-black: rgba(
     0,
     0,
     0,
     0.15
-  ); /* black at 10% — used to darken solid buttons on hover */
+  ); /* Darken solid buttons on hover */
 
   /* Borders and dividers */
   --color-border: #d4c9b5; /* Warm sand: standard dividers */
   --color-border-strong: #b8a898; /* Slightly stronger: card outlines */
 
   /* --- Typography --- */
-  /* Playfair Display: a quality serif for headings — unhurried and warm */
-  /* Inter: clean, highly readable sans-serif for body text */
+  /* Playfair Display: serif for headings — unhurried and warm */
+  /* Inter: clean sans-serif for body text */
   --font-heading: "Playfair Display", Georgia, serif;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
 
-  /* Type scale — each step is ~1.25x the previous (Major Third scale) */
+  /* Type scale — each step is ~1.25× the previous (Major Third) */
   --text-vsm: 0.7rem;
   --text-sm: 0.85rem; /* ~13.6px — captions, labels */
   --text-base: 1rem; /* 16px    — body text */
@@ -94,18 +293,16 @@
 
   /* Line heights */
   --leading-tight: 1.2; /* Headings */
-  --leading-normal: 1.6; /* Body text: generous for readability */
+  --leading-normal: 1.6; /* Body text */
 
   /* Font weights */
   --weight-normal: 400;
   --weight-medium: 500;
-  --weight-semibold: 600; /* Between medium and bold — used for the nav badge */
+  --weight-semibold: 600;
   --weight-bold: 700;
-  --weight-boldbold: 850; /* Extra-bold for hero headline — heavier than normal bold, but not black */
+  --weight-boldbold: 850; /* Extra-bold for hero headline */
 
-  /* --- Spacing scale ---
-     All spacing uses multiples of a 4px base unit.
-     This keeps rhythm consistent throughout the layout. */
+  /* --- Spacing scale (4px base unit) --- */
   --space-1: 0.25rem; /* 4px  */
   --space-2: 0.5rem; /* 8px  */
   --space-3: 0.75rem; /* 12px */
@@ -115,7 +312,7 @@
   --space-8: 2rem; /* 32px */
   --space-10: 2.5rem; /* 40px */
   --space-12: 3rem; /* 48px */
-  --space-14: 2.5rem; /* 40px */
+  --space-14: 2.5rem; /* 40px — used for large section padding */
   --space-16: 4rem; /* 64px */
   --space-20: 5rem; /* 80px */
 
@@ -125,16 +322,13 @@
   --border-radius: 6px;
   --border-radius-lg: 12px;
 
-  /* --- Shadows ---
-     Warm-tinted shadows to match the earthy palette.
-     A cold grey shadow would feel out of place here. */
+  /* --- Shadows (warm-tinted to match the earthy palette) --- */
   --shadow-sm:
     0 1px 4px rgba(90, 60, 30, 0.1), 0 1px 2px rgba(90, 60, 30, 0.07);
   --shadow-md:
     0 4px 16px rgba(90, 60, 30, 0.13), 0 2px 4px rgba(90, 60, 30, 0.07);
 
-  /* --- Transitions ---
-     Used for hover effects. "ease" accelerates then decelerates naturally. */
+  /* --- Transitions --- */
   --transition-fast: 150ms ease;
   --transition-normal: 250ms ease;
 }
@@ -142,13 +336,11 @@
 /* =============================================================
    2. RESET & BASE
 
-   Browsers have their own default styles that differ from each
-   other. A reset neutralizes them so we start from a clean slate.
+   Browsers ship different defaults. A reset neutralizes them so
+   we start from a clean, consistent slate.
    ============================================================= */
 
-/* "Box sizing" controls how width/height are calculated.
-   border-box means padding and borders are included in the
-   element's total width — much more intuitive to work with. */
+/* border-box: padding and borders count toward width/height */
 *,
 *::before,
 *::after {
@@ -158,10 +350,7 @@
 }
 
 html {
-  /* Smooth scrolling when clicking anchor links (e.g. #about) */
   scroll-behavior: smooth;
-
-  /* Prevent text from scaling oddly when orientation changes on mobile */
   -webkit-text-size-adjust: 100%;
 }
 
@@ -172,26 +361,21 @@ body {
   line-height: var(--leading-normal);
   color: var(--color-text);
   background-color: var(--color-bg);
-
-  /* Improves text rendering on most screens */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Images should never overflow their containers */
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-/* Remove default list bullets — we add our own styling when needed */
 ul,
 ol {
   list-style: none;
 }
 
-/* Links inherit text color by default (we style them specifically below) */
 a {
   color: inherit;
   text-decoration: none;
@@ -199,9 +383,6 @@ a {
 
 /* =============================================================
    3. TYPOGRAPHY SCALE
-
-   These classes let you apply the type scale to any element.
-   Example: <p class="text-muted">Some secondary note...</p>
    ============================================================= */
 
 h1,
@@ -228,33 +409,31 @@ h3 {
 h4 {
   font-size: var(--text-lg);
 }
-/* #property-title is an <h2> (not <h1> — the page's single h1 is the
-   hero title), but should still look like a big page title, so it
-   keeps the h1-sized font here rather than the smaller default h2 size. */
+
+/* #property-title is an <h2> (the page's single <h1> is the hero
+   title) but should still read as a large page title. */
 #property-title {
   font-size: var(--text-3xl);
 }
+
 p {
   font-size: var(--text-base);
   line-height: var(--leading-normal);
   color: var(--color-text);
 }
 
-/* A larger lead paragraph, used for property summaries and intros */
 .text-lead {
   font-size: var(--text-lg);
   line-height: var(--leading-normal);
   color: var(--color-text-muted);
 }
 
-/* Muted/secondary text — captions, helper text, fine print */
 .text-muted {
   color: var(--color-text-muted);
   font-size: var(--text-sm);
 }
 
-/* Small uppercase label above a heading — e.g. "Property · Skåne"
-   Uses wood tone rather than green: warmer, less like a UI tag */
+/* Small uppercase label above a heading — e.g. "Bälinge · Perstorp" */
 .eyebrow {
   font-family: var(--font-body);
   font-size: var(--text-sm);
@@ -268,12 +447,8 @@ p {
 
 /* =============================================================
    4. LAYOUT UTILITIES
-
-   Reusable layout building blocks used throughout all pages.
    ============================================================= */
 
-/* .container centers content and adds horizontal padding.
-   Every section's content should wrap in this. */
 .container {
   width: 100%;
   max-width: var(--max-width);
@@ -283,33 +458,26 @@ p {
   padding-right: var(--page-padding);
 }
 
-/* .section adds vertical breathing room between page sections.
-   Slightly tighter than a typical blog/marketing site — these pages
-   are content-dense (photos, reviews, map) so compact spacing feels better. */
 .section {
   padding-top: var(--space-10);
   padding-bottom: var(--space-10);
 }
 
-/* Near-white cream — used for alternating section backgrounds */
 .section--light {
   background-color: var(--color-surface-alt);
 }
 
-/* Warm mid-tone — used for the about section and similar */
 .section--warm {
   background-color: var(--color-surface);
 }
 
-/* Standard full-width horizontal divider */
 .divider {
   border: none;
   border-top: 1px solid var(--color-border);
   margin: var(--space-8) 0;
 }
 
-/* Short wood-tone decorative rule — placed under major headings.
-   60px wide so it reads as an accent, not a structural line. */
+/* Short wood-tone rule under major headings */
 .divider--wood {
   border: none;
   border-top: 2px solid var(--color-wood-light);
@@ -317,9 +485,7 @@ p {
   margin: var(--space-4) 0 var(--space-6);
 }
 
-/* Screen-reader only — visually hidden but accessible to assistive tech.
-   Used for context that is visually obvious but needs to be explicit
-   for screen readers (e.g. "opens in new tab"). */
+/* Visually hidden but available to screen readers */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -339,21 +505,18 @@ p {
 .site-header {
   background-color: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
-
-  /* sticky: the header stays at the top of the screen while scrolling */
   position: sticky;
   top: 0;
-  z-index: 100; /* Sits above all page content */
+  z-index: 100;
 }
 
 .site-header .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px; /* Fixed header height */
+  height: 64px;
 }
 
-/* The site name / logo text */
 .site-logo {
   font-family: var(--font-heading);
   font-size: var(--text-lg);
@@ -368,18 +531,13 @@ p {
   color: var(--color-wood);
 }
 
-/* Navigation: shows which property page you're currently on as a
-   static badge (not a link — there's nowhere for it to go), plus
-   a dropdown for switching to other properties. */
 .nav {
   display: flex;
   align-items: center;
   gap: var(--space-3);
 }
 
-/* --- "You are here" badge ---
-   A solid rounded box rather than an underlined link, so it reads
-   clearly as "this is where you are" rather than "click me". */
+/* "You are here" badge */
 .nav-current {
   display: inline-block;
   background-color: var(--color-wood);
@@ -388,13 +546,12 @@ p {
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
   letter-spacing: 0.02em;
-  line-height: 1; /* Locks box height so the underline below
-                               can't make this look taller than its twin */
+  line-height: 1;
   text-decoration: underline;
   text-underline-offset: 3px;
   padding: var(--space-2) var(--space-2);
   border-radius: var(--border-radius);
-  white-space: nowrap; /* Never let the label wrap to a second line */
+  white-space: nowrap;
   transition: background-color var(--transition-fast);
 }
 
@@ -402,9 +559,8 @@ p {
   background-color: var(--color-wood-dark);
 }
 
-/* --- "Other Locations" dropdown --- */
+/* --- "Other Locations" / "Return to" dropdown --- */
 
-/* Wrapping element anchors the dropdown panel below the button */
 .nav-dropdown {
   position: relative;
 }
@@ -420,11 +576,11 @@ p {
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
   letter-spacing: 0.02em;
-  line-height: 1; /* Matches .nav-current so both boxes are the same height */
+  line-height: 1;
   cursor: pointer;
   padding: var(--space-2) var(--space-2);
   border-radius: var(--border-radius);
-  white-space: nowrap; /* Never let "Other Locations" wrap to two lines */
+  white-space: nowrap;
   transition:
     background-color var(--transition-fast),
     border-radius var(--transition-fast);
@@ -435,13 +591,11 @@ p {
   background-color: var(--color-wood-dark);
 }
 
-/* When open, square off the bottom corners so the menu attaches flush */
 .nav-dropdown.is-open .nav-dropdown__toggle {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-/* Small caret that flips upside-down while the dropdown is open */
 .nav-dropdown__caret {
   font-size: 1em;
   font-weight: var(--weight-bold);
@@ -452,12 +606,6 @@ p {
   transform: rotate(180deg);
 }
 
-/* The dropdown panel — hidden until gallery.js adds "is-open".
-   width: 100% makes it exactly match the toggle button above it
-   (its containing block, .nav-dropdown, is only as wide as that
-   button, since neither has been told to grow).
-   Attached look: sits directly under the toggle (no gap), square top
-   corners, rounded bottom corners — forming one continuous shape. */
 .nav-dropdown__menu {
   display: none;
   position: absolute;
@@ -481,9 +629,7 @@ p {
   border-radius: var(--border-radius);
   font-family: var(--font-heading);
   font-size: var(--text-sm);
-  color: var(
-    --color-bg
-  ); /* Creamy parchment — same family as the page background */
+  color: var(--color-bg);
   transition: background-color var(--transition-fast);
 }
 
@@ -504,7 +650,7 @@ p {
 
 .site-footer .container {
   display: flex;
-  flex-direction: column; /* Stack vertically on mobile */
+  flex-direction: column;
   gap: var(--space-2);
   align-items: center;
   text-align: center;
@@ -552,7 +698,6 @@ p {
    7. BUTTONS & LINKS
    ============================================================= */
 
-/* Shared base styles for both button variants */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -562,7 +707,7 @@ p {
   font-size: var(--text-base);
   font-weight: var(--weight-medium);
   line-height: 1;
-  min-height: 44px; /* or whatever height looks right */
+  min-height: 44px;
   padding: var(--space-3) var(--space-5);
   border-radius: var(--border-radius);
   border: 2px solid transparent;
@@ -575,13 +720,11 @@ p {
     border-color var(--transition-fast);
 }
 
-/* Focus ring: important for keyboard and accessibility navigation */
 .btn:focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
 }
 
-/* Primary button: filled green */
 .btn-primary {
   background-color: var(--color-accent);
   color: #ffffff;
@@ -593,7 +736,6 @@ p {
   border-color: var(--color-accent-hover);
 }
 
-/* Secondary button: wood-tone outline, fills on hover */
 .btn-secondary {
   background-color: transparent;
   color: var(--color-wood);
@@ -645,13 +787,92 @@ p {
   );
 }
 
-/* Small button variant — used in compact contexts */
 .btn--sm {
   font-size: var(--text-sm);
   padding: var(--space-2) var(--space-4);
 }
 
-/* icon inside button */
+/* FAQ deep-link button (next to Airbnb / Booking under the intro).
+   Uses the accent green so it reads as "site help", not a booking brand. */
+.btn-secondary--faq {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  font-family: var(--font-heading);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-base);
+  min-height: 40px;
+}
+@media (max-width: 767px) {
+  .btn-secondary--faq {
+    padding: var(--space-2) var(--space-3); /* tighter than default btn padding */
+    min-height: 40px;
+    font-size: var(--text-base);
+    font-weight: var(--weight-bold);
+  }
+}
+.btn-secondary--faq:hover {
+  background-color: rgba(74, 124, 89, 0.15);
+  color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+/* --- Look: wood image FAQ button --- */
+.btn-secondary--faq-img {
+  padding: 0;
+  min-height: 0;
+  line-height: 0;
+  overflow: hidden;
+  background: transparent;
+  border: 2px solid var(--color-accent);
+  border-radius: var(--border-radius);
+  flex: 0 0 auto;
+}
+
+.btn-secondary--faq-img:hover {
+  border-color: var(--color-accent-hover);
+  background-color: rgba(74, 124, 89, 0.12);
+}
+
+.btn__faq-img {
+  display: block;
+  height: 44px;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+}
+
+/* Responsive label + image swap: full phrase + wood image on desktop,
+   short "FAQ" text only on phones.
+   Used inside the FAQ deep-link button on property pages. */
+.btn__label--short {
+  display: none;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+.btn__label--full {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+@media (max-width: 767px) {
+  .btn__label--full {
+    display: none;
+  }
+  .btn__label--short {
+    display: inline;
+  }
+  .btn__faq-img {
+    display: none;
+  }
+  .btn-secondary--faq-img {
+    padding: var(--space-2) var(--space-3);
+    min-height: 40px;
+    line-height: normal;
+  }
+}
+
+/* Shared icon sizing (Airbnb / Booking / small icons) */
 .btn__icon {
   object-fit: contain;
   height: 1em;
@@ -659,16 +880,11 @@ p {
   flex-shrink: 0;
 }
 
-/* Airbnb's logo has more internal padding baked into its SVG viewBox
-   than the Booking.com one, so it renders visually smaller at the
-   same font-relative height. Bump it up slightly to match. */
+/* Airbnb logo has more internal SVG padding — bump size to match Booking */
 .btn__icon--airbnb {
-  height: 1.26em; /* tweak this number until it visually matches Booking.com */
+  height: 1.26em;
 }
 
-/* This Google Maps pin SVG has more empty space baked into its
-   viewBox than the other icons, so it renders visually smaller
-   at the same font-relative height. Bump it up to match. */
 .btn__icon--googlemaps {
   transform: scale(3) translateY(-1px);
 }
@@ -677,7 +893,6 @@ p {
   transform: scale(1.55);
 }
 
-/* Inline text link */
 .link {
   color: var(--color-accent);
   text-decoration: underline;
@@ -690,108 +905,49 @@ p {
   text-decoration-color: var(--color-accent);
 }
 
-/* FAQ categories — collapsible sections, one per property + General */
-.faq-category {
-  margin-bottom: var(--space-4);
-}
-
 /* =============================================================
-   FAQ CATEGORIES — collapsible sections (General / Bälinge / Södra Rörum)
-   Same <details>/<summary> mechanism as .faq-item, just one level
-   up, so whole categories can be shown/hidden the same way.
-   ============================================================= */
+   8. PROPERTY CARDS (obsolete — not currently in use)
 
-.faq-category {
-  margin-bottom: var(--space-4);
-}
+   Reserved for a possible future homepage / multi-property
+   listing layout (card grid linking to each cottage).
 
-.faq-category__label {
-  cursor: pointer;
-  font-family: var(--font-heading);
-  font-size: var(--text-lg);
-  font-weight: var(--weight-bold);
-  color: var(--color-text);
-  padding: var(--space-2) 0;
-  list-style: none; /* removes the native disclosure triangle so our own can replace it */
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-/* Custom triangle marker — hollow while closed */
-.faq-category__label::before {
-  content: "▷"; /* hollow/outline triangle, closed state */
-  display: inline-block;
-  font-size: 0.8em;
-  color: var(--color-accent);
-  transition: color var(--transition-fast);
-}
-
-/* Filled triangle once the category is expanded.
-   [open] is set natively by the browser on <details> — no JS needed. */
-.faq-category[open] > .faq-category__label::before {
-  content: "▶"; /* filled triangle, open state */
-}
-
-
-.faq-category__items {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  margin-top: var(--space-3);
-}
-
-/* =============================================================
-   END OF FAQ CATEGORIES
+   No active rules here on purpose. When you need cards again,
+   add styles under this heading so the section number stays
+   stable and the file structure stays easy to scan.
    ============================================================= */
 
 /* =============================================================
    9. HERO SLIDESHOW
 
-   A full-width image banner at the top of the homepage.
-   JavaScript (gallery.js) cycles through multiple photos
-   automatically every few seconds.
+   Full-width banner at the top of property pages.
+   gallery.js advances slides; CSS handles the slide animation.
 
-
-   How the transition works:
-   All slides sit side-by-side in a flex row (.hero-slideshow__track).
-   JavaScript moves the whole track with transform: translateX().
-   CSS handles the smooth sliding animation.
+   All slides sit side-by-side in .hero-slideshow__track.
+   JS moves the track with transform: translateX().
    ============================================================= */
 
 .hero-slideshow {
-  position: relative; /* Needed so children can be positioned inside it */
+  position: relative;
   width: 100%;
-  height: 420px; /* Height of the hero on mobile */
+  height: 420px;
   overflow: hidden;
-  background-color: var(
-    --color-surface
-  ); /* Placeholder color while images load */
+  background-color: var(--color-surface);
 }
 
-/* The track holds all slides side by side in a row — not stacked.
-   Moving between slides is just sliding this whole row left/right
-   with one CSS transform; the browser handles the rest. Much
-   simpler than animating each slide individually (compare to the
-   review slideshow's older approach in gallery.css). */
 .hero-slideshow__track {
   display: flex;
   height: 100%;
   transition: transform 0.5s ease;
-  cursor: pointer; /* Signals the slideshow itself is clickable (opens gallery) */
-  touch-action: pan-y; /* Allows vertical page scroll but lets our JS handle
-                           horizontal swipes for slide navigation */
+  cursor: pointer;
+  touch-action: pan-y;
 }
 
-/* Each slide takes up exactly one "frame" width and sits side by side
-   with the others — the track's total width is (number of slides × 100%) */
 .hero-slideshow__slide {
   flex: 0 0 100%;
   width: 100%;
   height: 100%;
 }
 
-/* The slide image fills its frame */
 .hero-slideshow__slide img {
   width: 100%;
   height: 100%;
@@ -800,7 +956,6 @@ p {
   display: block;
 }
 
-/* Small "view all photos" hint, a corner of the slideshow. */
 .hero-slideshow__hint {
   position: absolute;
   bottom: var(--space-3);
@@ -808,18 +963,15 @@ p {
   background-color: rgba(42, 33, 24, 0.65);
   color: #ffffff;
   font-family: var(--font-body);
-  font-size: 0.75rem; /* smaller than --text-sm, which read too large here */
+  font-size: 0.75rem;
   font-weight: var(--weight-medium);
-  padding: 4px 10px; /* tighter than the standard space scale allows */
+  padding: 4px 10px;
   border-radius: var(--border-radius);
-  pointer-events: none; /* The hint itself shouldn't block clicks/swipes */
+  pointer-events: none;
   letter-spacing: 0.03em;
-  z-index: 5; /* Sit above the slides */
+  z-index: 5;
 }
 
-/* Dark gradient overlay — fades from transparent at the top to semi-dark
-   at the bottom. This ensures the text above it is always readable,
-   regardless of how bright or busy the photo is. */
 .hero-slideshow__overlay {
   position: absolute;
   inset: 0;
@@ -831,13 +983,12 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end; /* Text sits at the bottom of the hero */
+  justify-content: flex-end;
   padding: var(--space-10) var(--space-6);
   text-align: center;
-  pointer-events: none; /* Let clicks/swipes pass through to the track underneath */
+  pointer-events: none;
 }
 
-/* Hero text — white so it reads against the dark overlay */
 .hero__eyebrow {
   font-family: var(--font-body);
   font-size: var(--text-sm);
@@ -856,7 +1007,7 @@ p {
   color: #ffffff;
   max-width: 22ch;
   margin: 0 auto var(--space-4);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); /* Subtle shadow for legibility */
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero__subtitle {
@@ -867,22 +1018,20 @@ p {
   line-height: var(--leading-normal);
 }
 
-/* Dot navigation — small circles at the bottom of the slideshow.
-   Clicking a dot jumps to that slide. JavaScript manages the logic. */
 .hero-slideshow__dots {
   position: absolute;
   bottom: var(--space-4);
   left: 50%;
-  transform: translateX(-50%); /* Center the dot row horizontally */
+  transform: translateX(-50%);
   display: flex;
   gap: var(--space-2);
-  z-index: 10; /* Sits above the overlay and slides */
+  z-index: 10;
 }
 
 .hero-slideshow__dot {
   width: 8px;
   height: 8px;
-  border-radius: 50%; /* Circle shape */
+  border-radius: 50%;
   border: none;
   background-color: rgba(255, 255, 255, 0.45);
   cursor: pointer;
@@ -892,7 +1041,6 @@ p {
     transform var(--transition-fast);
 }
 
-/* Active dot: filled white and slightly larger */
 .hero-slideshow__dot.is-active {
   background-color: #ffffff;
   transform: scale(1.3);
@@ -902,8 +1050,7 @@ p {
   background-color: rgba(255, 255, 255, 0.75);
 }
 
-/* Simple hero variant for property pages — no slideshow, no overlay text.
-   Just a full-width photo with a text block below it. */
+/* Legacy simple hero (no slideshow) — kept for reference / fallback */
 .hero {
   padding: var(--space-16) 0;
   text-align: center;
@@ -911,17 +1058,11 @@ p {
 
 /* =============================================================
    10. AMENITIES LIST
-
-   Used on property pages to display features like "WiFi",
-   "Parking", "Pet-friendly" in a compact grid.
-
-   ".amenity-non-item" is used for amenities that are not available or need to be booked, 
-   e.g. "Carbon monoxide detector".
    ============================================================= */
 
 .amenities-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-3) var(--space-6);
   margin-top: var(--space-6);
 }
@@ -943,12 +1084,11 @@ p {
   color: #d10000;
 }
 
-/* Wood-tone checkmark before each amenity item */
 .amenity-item::before {
   content: "✓";
   color: var(--color-wood);
   font-weight: var(--weight-bold);
-  flex-shrink: 0; /* Prevent the checkmark from being squeezed */
+  flex-shrink: 0;
 }
 
 .amenity-non-item::before {
@@ -956,17 +1096,14 @@ p {
   color: #d10000;
   font-weight: var(--weight-bold);
   text-decoration: none;
-  flex-shrink: 0; /* Prevent the cross from being squeezed */
+  flex-shrink: 0;
 }
 
 /* =============================================================
    11. PHOTO GRID (property pages)
 
-   Property pages are photo-rich. This grid displays multiple
-   photos in a structured layout. The first photo spans the full
-   width as a featured/hero image; the rest are thumbnails.
-
-   2 columns on mobile, 3 on desktop.
+   First item can be featured (full width). 2 columns on mobile,
+   3 on desktop (see section 12).
    ============================================================= */
 
 .photo-grid {
@@ -980,8 +1117,6 @@ p {
   overflow: hidden;
   border-radius: var(--border-radius);
   background-color: var(--color-surface);
-
-  /* Consistent aspect ratio for all thumbnails */
   aspect-ratio: 4 / 3;
 }
 
@@ -992,18 +1127,16 @@ p {
   transition: transform var(--transition-normal);
 }
 
-/* Subtle zoom on hover — signals the image is clickable (for lightbox) */
 .photo-grid__item:hover img {
   transform: scale(1.04);
 }
 
-/* Featured first photo: spans full width, wider aspect ratio */
 .photo-grid__item--featured {
   grid-column: span 2;
   aspect-ratio: 16 / 9;
 }
 
-/* Hide last item on Mobile & tablet portrait if the width is only enough for 2 columns */
+/* Hide last grid item on narrow screens so a 2-column row stays even */
 @media (max-width: 767px) {
   .photo-grid__item:last-child {
     display: none;
@@ -1013,47 +1146,35 @@ p {
 /* =============================================================
    12. RESPONSIVE OVERRIDES — DESKTOP
 
-   Everything above is written mobile-first (single column,
-   compact spacing). These rules kick in at 768px and wider,
-   expanding the layout to take advantage of the available space.
-
-   Why 768px? That is roughly the width of a tablet in landscape
-   mode — a standard breakpoint where two-column layouts start
-   to feel natural rather than cramped.
+   Mobile-first base styles above. From 768px (tablet landscape
+   and up) the layout opens into multi-column where it helps.
    ============================================================= */
 
 @media (min-width: 768px) {
-  /* More horizontal breathing room on wider screens */
   :root {
     --page-padding: var(--space-8);
   }
 
-  /* Taller hero slideshow on desktop */
   .hero-slideshow {
     height: 560px;
   }
 
-  /* Larger hero headline on desktop */
   .hero__title {
     font-size: clamp(var(--text-2xl), 4vw, var(--text-3xl));
   }
 
-  /* Three amenity columns on desktop */
   .amenities-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  /* Three-column photo grid on property pages */
   .photo-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  /* Featured photo spans all three columns */
   .photo-grid__item--featured {
     grid-column: span 3;
   }
 
-  /* Footer becomes a horizontal row on desktop */
   .site-footer .container {
     flex-direction: row;
     justify-content: space-between;
@@ -1073,24 +1194,20 @@ p {
 }
 
 /* =============================================================
-   PROPERTY HERO IMAGE (property pages only)
+   13. PROPERTY HERO IMAGE (legacy single-image hero)
 
-   A full-width photo at the very top of each property page.
-   The image is wrapped in a link — clicking it opens the gallery
-   lightbox (handled by gallery.js).
-
-   A small "View all photos" hint appears in the bottom-left corner
-   so visitors understand the image is interactive.
+   Older single-photo hero with optional “View all photos” hint.
+   Current property pages use the multi-slide .hero-slideshow above;
+   these rules remain for any page still using .property-hero.
    ============================================================= */
 
 .property-hero {
   width: 100%;
   overflow: hidden;
   position: relative;
-  background-color: var(--color-surface); /* Placeholder while image loads */
+  background-color: var(--color-surface);
 }
 
-/* The link wraps the entire hero image — the whole area is clickable */
 .property-hero a.hero-image-link {
   display: block;
   position: relative;
@@ -1098,7 +1215,7 @@ p {
 
 .property-hero__image {
   width: 100%;
-  height: 320px; /* Hero height on mobile */
+  height: 320px;
   object-fit: cover;
   object-position: center;
   display: block;
@@ -1106,12 +1223,11 @@ p {
 }
 
 .property-hero a.hero-image-link:hover .property-hero__image {
-  transform: scale(1.02); /* Subtle zoom hints that the image is interactive */
+  transform: scale(1.02);
 }
 
-/* "View all photos" text hint — overlaid bottom-left on the hero image */
 .property-hero__hint {
-  display: none; /* Hidden by default; JS enables it */
+  display: none;
   position: absolute;
   bottom: var(--space-4);
   left: var(--space-4);
@@ -1122,11 +1238,10 @@ p {
   font-weight: var(--weight-medium);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--border-radius);
-  pointer-events: none; /* The hint doesn't block clicks to the link */
+  pointer-events: none;
   letter-spacing: 0.03em;
 }
 
-/* Map wrapper: ensures the iframe is fully responsive */
 .map-wrapper {
   width: 100%;
   border-radius: var(--border-radius-lg);
@@ -1141,53 +1256,34 @@ p {
 
 @media (min-width: 768px) {
   .property-hero__image {
-    height: 480px; /* Taller hero on desktop */
+    height: 480px;
   }
 }
 
 /* =============================================================
-   END OF PROPERTY HERO ADDITIONS
+   14. PROPERTY INTRO — two-column grid + YouTube placeholder
+
+   Left: title, description, facts, booking (+ FAQ) buttons
+   Right: live camera (placeholder until embed is ready)
+
+   TEMPORARY: .intro-grid__media is hidden and the desktop
+   two-column grid is commented out so the intro stays a clean
+   single column until the live YouTube embed is ready.
    ============================================================= */
 
-/* =============================================================
-   PROPERTY INTRO — two-column grid (property pages)
-
-   Left column:  title, description, quick facts, booking buttons
-   Right column: YouTube live camera (placeholder until live)
-
-   On mobile: single column, text on top, media below.
-   On desktop: side by side, roughly 55% / 45% split.
-
-   TEMPORARY SINGLE-COLUMN (until live YouTube embed is ready):
-   The right-hand media column is currently hidden on all screen
-   sizes so there is no empty space. The intro appears as a clean
-   single column of text + booking buttons.
-
-   When the live embed is ready:
-     1. Remove the temporary rules marked below (display:none on
-        .intro-grid__media and the commented-out desktop grid).
-     2. In index.html, replace the .youtube-placeholder with the
-        real <iframe class="youtube-embed" …> (see the comment
-        already present in the HTML).
-     3. The original two-column layout will return automatically.
-   ============================================================= */
-
-/* Outer grid wrapper — single column on mobile */
 .intro-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-8);
-  align-items: start; /* Both columns align to the top, not stretched */
+  align-items: start;
 }
 
-/* Left column: no special sizing needed, fills available space */
 .intro-grid__text {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
 }
 
-/* Quick facts line (guests, bedrooms, etc.) */
 .intro-grid__facts {
   color: var(--color-text-muted);
   font-size: var(--text-vsm);
@@ -1201,7 +1297,6 @@ p {
   margin: 0 0.04em;
 }
 
-/* Booking buttons row */
 .intro-grid__buttons {
   display: flex;
   flex-wrap: wrap;
@@ -1209,20 +1304,11 @@ p {
   margin-top: var(--space-2);
 }
 
-/* Right column: holds the placeholder or the live iframe.
-   Sized to roughly match the combined width of the two booking
-   buttons — the CSS handles this automatically on desktop via the grid.
-
-   TEMPORARY: hidden on all screen sizes so the empty column
-   does not leave blank space while the live camera is not yet ready.
-   Remove the display:none rule when the YouTube embed is added. */
 .intro-grid__media {
   width: 100%;
-  display: none; /* temporary — remove this line when embed goes live */
+  display: none; /* temporary — remove when embed goes live */
 }
 
-/* The YouTube iframe itself — applied when the placeholder is replaced.
-   Maintains a 16:9 aspect ratio at any width. */
 .youtube-embed {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -1231,24 +1317,9 @@ p {
   display: block;
 }
 
-/* =============================================================
-   YOUTUBE PLACEHOLDER
-
-   A styled box shown in the right column until the live camera
-   is ready. Replaced by an <iframe> when the stream goes live.
-   The .intro-grid__media wrapper handles sizing — this box just
-   needs to fill it and look intentional.
-
-   NOTE: While the live camera is not yet available the whole
-   .intro-grid__media column is temporarily hidden (see the
-   display:none rule above). The styles below remain so that
-   when you later remove the temporary hide and drop in the
-   real embed, everything is already correct.
-   ============================================================= */
-
 .youtube-placeholder {
   width: 100%;
-  aspect-ratio: 16 / 9; /* Same ratio as a real YouTube embed */
+  aspect-ratio: 16 / 9;
   background-color: var(--color-surface);
   border: 2px dashed var(--color-border-strong);
   border-radius: var(--border-radius-lg);
@@ -1262,14 +1333,12 @@ p {
   color: var(--color-text-muted);
 }
 
-/* The camera emoji icon */
 .youtube-placeholder__icon {
-  font-size: 2rem; /* Large enough to read clearly */
+  font-size: 2rem;
   line-height: 1;
   opacity: 0.6;
 }
 
-/* "Live duck pond camera" text */
 .youtube-placeholder__text {
   font-family: var(--font-body);
   font-size: var(--text-base);
@@ -1278,7 +1347,6 @@ p {
   margin: 0;
 }
 
-/* "Coming soon" sub-label */
 .youtube-placeholder__sub {
   font-size: var(--text-sm);
   color: var(--color-wood-light);
@@ -1286,66 +1354,45 @@ p {
   margin: 0;
 }
 
-/* Responsive: two-column intro grid on desktop
-   TEMPORARY: the two-column rule is commented out while the
-   live YouTube embed is not yet ready. The intro stays single-
-   column on all screen sizes. When the embed goes live, restore
-   the grid-template-columns line below (and remove the
-   display:none on .intro-grid__media). */
 @media (min-width: 768px) {
   .intro-grid {
-    /* Left column takes ~58%, right column ~42%.
-       This gives the text room to breathe while keeping the
-       placeholder proportional to the booking buttons below it. */
-    /* grid-template-columns: 58fr 42fr; */ /* temporary — restore when embed goes live */
+    /* grid-template-columns: 58fr 42fr; */ /* restore when embed goes live */
     gap: var(--space-10);
   }
 }
 
 /* =============================================================
-   END OF INTRO GRID AND YOUTUBE PLACEHOLDER
+   15. TEMPORARY: HIDE REVIEWS SECTION
+
+   Remove or comment out this rule when review screenshots are ready.
    ============================================================= */
 
-/* =============================================================
-   TEMPORARY: HIDE REVIEWS SECTION
-
-   The Reviews section is hidden on all property pages until the
-   screenshots / layout are finalised.
-
-   To restore the Reviews section later:
-     → Delete or comment out the rule below.
-   No HTML changes needed on either page.
-   ============================================================= */
 section[aria-labelledby="reviews-heading"] {
   display: none;
 }
 
 /* =============================================================
-   READ MORE — collapsible text block
+   16. READ MORE — collapsible intro text
 
-   Wrap any block of text like this:
-
-     <div class="read-more" data-read-more>
-       <p class="text-lead">...</p>
-     </div>
+   HTML pattern:
+     <div class="read-more" data-read-more>…</div>
      <button class="read-more__toggle" data-read-more-toggle>Read more</button>
 
-   gallery.js handles the expand/collapse behavior automatically.
-   If the text is already short enough to fit, the button hides itself.
+   gallery.js toggles .is-expanded. Spacing between paragraphs only
+   applies while expanded so the collapsed fade stays clean.
    ============================================================= */
 
 .read-more {
   position: relative;
   overflow: hidden;
-  max-height: 8em; /* roughly 4-5 lines at this font size — adjust to taste */
+  max-height: 8em;
   transition: max-height 0.4s ease;
 }
 
 .read-more.is-expanded {
-  max-height: 2000px; /* effectively "no limit" once expanded */
+  max-height: 2000px;
 }
 
-/* Soft fade at the bottom while collapsed, hinting there's more text */
 .read-more::after {
   content: "";
   position: absolute;
@@ -1394,13 +1441,12 @@ section[aria-labelledby="reviews-heading"] {
 }
 
 /* =============================================================
-   END OF READ MORE TOGGLE BUTTON
-   ============================================================= */
+   17. FAQ PAGE — categories + items
 
-/* =============================================================
-   FAQ CATEGORIES — collapsible sections (General / Bälinge / Södra Rörum)
-   Same <details>/<summary> mechanism as .faq-item, just one level
-   up, so whole categories can be shown/hidden the same way.
+   Category = property group (General / Bälinge / Södra Rörum).
+   Item = one question inside a category.
+   Both use <details>/<summary>; custom ▷/▶ markers replace the
+   native disclosure triangle.
    ============================================================= */
 
 .faq-category {
@@ -1414,13 +1460,12 @@ section[aria-labelledby="reviews-heading"] {
   font-weight: var(--weight-bold);
   color: var(--color-text);
   padding: var(--space-2) 0;
-  list-style: none; /* removes the native disclosure triangle so our own can replace it */
+  list-style: none;
   display: flex;
   align-items: center;
   gap: var(--space-2);
 }
 
-/* Custom triangle marker — hollow while closed, points right */
 .faq-category__label::before {
   content: "▷";
   display: inline-block;
@@ -1429,13 +1474,10 @@ section[aria-labelledby="reviews-heading"] {
   transition: transform var(--transition-fast);
 }
 
-/* Filled + rotated to point down once the category is expanded.
-   [open] is set natively by the browser on <details> — no JS needed. */
 .faq-category[open] > .faq-category__label::before {
   content: "▶";
   transform: rotate(90deg);
 }
-
 
 .faq-category__items {
   display: flex;
@@ -1444,22 +1486,20 @@ section[aria-labelledby="reviews-heading"] {
   margin-top: var(--space-3);
 }
 
-/* =============================================================
-   END OF FAQ CATEGORIES
-   ============================================================= */
-
-/* =============================================================
-   FAQ ITEM — individual question triangle marker
-   Same hollow-to-filled, rotate-on-open pattern as .faq-category,
-   just smaller since a question is a lower-level element than
-   a whole category.
-   ============================================================= */
+.faq-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-4) var(--space-5);
+}
 
 .faq-item summary {
-  list-style: none; /* removes native triangle so our own can replace it */
+  list-style: none;
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  cursor: pointer;
+  font-weight: var(--weight-medium);
 }
 
 .faq-item summary::before {
@@ -1470,24 +1510,21 @@ section[aria-labelledby="reviews-heading"] {
   transition: transform var(--transition-fast);
 }
 
-.faq-item {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius);
-  padding: var(--space-4) var(--space-5);
-}
-
 .faq-item[open] > summary::before {
   content: "▶";
   transform: rotate(90deg);
 }
 
-/* =============================================================
-   END OF FAQ ITEM TRIANGLE MARKER
-   ============================================================= */
+.faq-item p {
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+}
 
 /* =============================================================
-   BUG REPORT DIALOG
+   18. BUG REPORT DIALOG
+
+   Opened from footer “Report a bug”. Panel clips; .bug-dialog__scroll
+   is the scrolling region (soft scrollbar). Web3Forms handles send.
    ============================================================= */
 
 .bug-dialog[hidden] {
@@ -1628,5 +1665,5 @@ section[aria-labelledby="reviews-heading"] {
 }
 
 /* =============================================================
-   END OF BUG REPORT DIALOG
+   END OF style.css
    ============================================================= */

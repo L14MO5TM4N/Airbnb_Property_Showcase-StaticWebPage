@@ -12,7 +12,10 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Scania Cottages" />
-    <meta property="og:title" content="FAQ — Scania Cottages | Bälinge &amp; Södra Rörum" />
+    <meta
+      property="og:title"
+      content="FAQ — Scania Cottages | Bälinge &amp; Södra Rörum"
+    />
     <meta
       property="og:description"
       content="Frequently asked questions about Scania Cottages — Bälinge Lakehouse and Little Pinecone Lodge in Skåne, Sweden."
@@ -31,11 +34,17 @@
       property="og:image"
       content="https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/media/sodra-rorum/gallery/ext-01.webp"
     />
-    <meta property="og:image:alt" content="Exterior of Little Pinecone Lodge, Södra Rörum" />
+    <meta
+      property="og:image:alt"
+      content="Exterior of Little Pinecone Lodge, Södra Rörum"
+    />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="FAQ — Scania Cottages | Bälinge &amp; Södra Rörum" />
+    <meta
+      name="twitter:title"
+      content="FAQ — Scania Cottages | Bälinge &amp; Södra Rörum"
+    />
     <meta
       name="twitter:description"
       content="Frequently asked questions about Scania Cottages — Bälinge Lakehouse and Little Pinecone Lodge in Skåne, Sweden."
@@ -91,7 +100,6 @@
     </header>
 
     <main>
-
       <!-- Page title — plain background, no alternation here -->
       <section class="section">
         <div class="container">
@@ -104,51 +112,28 @@
            background can alternate — same pattern as the property
            pages (amenities / reviews / about sections) -->
 
-      <section class="section section--light">
-        <div class="container">
-          <details class="faq-category" open>
-            <summary class="faq-category__label">General</summary>
-            <div class="faq-category__items">
-              <details class="faq-item">
-                <summary>Q:Are bed linen and towels included?</summary>
-                <p>
-                  A: No. Bed linen and towels are not included at either property.
-                  You can rent a set in advance — see the property page for
-                  prices and how to order.
-                </p>
-              </details>
-
-              <details class="faq-item">
-                <summary>Q: Is parking available?</summary>
-                <p>A: Yes. Both properties have free parking on the grounds.</p>
-              </details>
-
-              <!-- Add more general <details> blocks as needed -->
-            </div>
-          </details>
-        </div>
-      </section>
-
       <section class="section section--warm">
         <div class="container">
-          <details class="faq-category">
+          <details class="faq-category" id="faq-balinge">
             <summary class="faq-category__label">
               Lakehouse with private pier (Bälinge)
             </summary>
-            
 
             <div class="faq-category__items">
               <!-- Add Bälinge-specific <details class="faq-item"> blocks here -->
-                <details class="faq-item">
-                <summary>Q: Are life jackets available?</summary>
+              <details class="faq-item">
+                <summary>Are life jackets available?</summary>
                 <p>
-                  A: Yes. and by law you must wear a life jacket when using the rowboat
+                  Yes, and by law you must wear a life jacket when using the
+                  rowboat
                 </p>
               </details>
-
-              <!--<details class="faq-item">
-                <summary>Q: ? </summary>
-                <p>A: </p>
+              <!--
+              <details class="faq-item">
+                <summary> QUESTION_HERE? </summary>
+                <p>
+                  ANSWER_HERE.
+                </p>
               </details>
               -->
             </div>
@@ -158,24 +143,77 @@
 
       <section class="section section--light">
         <div class="container">
-          <details class="faq-category">
+          <details class="faq-category" id="faq-sodra-rorum">
             <summary class="faq-category__label">
               Little Pinecone Lodge (Södra Rörum)
             </summary>
             <div class="faq-category__items">
-              <!-- Add Södra Rörum-specific <details class="faq-item"> blocks here 
-                  <details class="faq-item">
-                  <summary>Are life jackets available?</summary>
-                  <p>
-                    Yes. and by law you must wear a life jacket when using the rowboat
-                  </p>
-            </div> -->
+              <!--
+              <details class="faq-item">
+                <summary> QUESTION_HERE? </summary>
+                <p>
+                  ANSWER_HERE.
+                </p>
+              </details>
+              -->
+            </div>
           </details>
         </div>
       </section>
-
     </main>
 
+    <section class="section section--warm">
+      <div class="container">
+        <details class="faq-category">
+          <summary class="faq-category__label">General (all properties)</summary>
+          <div class="faq-category__items">
+            <details class="faq-item">
+              <summary>Q: Are bed linen and towels included?</summary>
+              <p>
+                A: No. Bed linen and towels are not included at either property.
+                You can rent a set in advance — see the property page for prices
+                and how to order.
+              </p>
+            </details>
+
+            <details class="faq-item">
+              <summary>Q: Is parking available?</summary>
+              <p>A: Yes. Both properties have free parking on the grounds.</p>
+            </details>
+            <!--
+              <details class="faq-item">
+                <summary> QUESTION_HERE? </summary>
+                <p>
+                  ANSWER_HERE.
+                </p>
+              </details>
+              -->
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section section--light">
+      <div class="container">
+        <details class="faq-category">
+          <summary class="faq-category__label">Contact us</summary>
+          <div class="faq-category__items">
+            <details class="faq-item">
+              <summary> How do we contact you? </summary>
+              <p>You can contact us via the respective booking platforms.</p>
+            </details>
+            <!--
+              <details class="faq-item">
+                <summary> QUESTION_HERE? </summary>
+                <p>
+                  ANSWER_HERE.
+                </p>
+              </details>
+              -->
+          </div>
+        </details>
+      </div>
+    </section>
     <!-- ============================================================
        FOOTER
        Minimal by design — the site's job is to send visitors to
@@ -206,31 +244,28 @@
             >Booking.com</a
           >
         </p>
-        <p>
 
-
-          <a href="#" class="footer-action" data-open-bug-report>
-            <span class="footer-action__icon" aria-hidden="true">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="8" y="6" width="8" height="14" rx="4"></rect>
-                <path d="M19 10h-2M7 10H5M19 14h-2M7 14H5"></path>
-                <path d="M9 6 7.5 3.5"></path>
-                <path d="M15 6 16.5 3.5"></path>
-                <path d="M10 20v2M14 20v2"></path>
-              </svg>
-            </span>
-            Report bug
-          </a>
-        </p>
+        <a href="#" class="footer-action" data-open-bug-report>
+          <span class="footer-action__icon" aria-hidden="true">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="8" y="6" width="8" height="14" rx="4"></rect>
+              <path d="M19 10h-2M7 10H5M19 14h-2M7 14H5"></path>
+              <path d="M9 6 7.5 3.5"></path>
+              <path d="M15 6 16.5 3.5"></path>
+              <path d="M10 20v2M14 20v2"></path>
+            </svg>
+          </span>
+          Report bug
+        </a>
       </div>
     </footer>
 

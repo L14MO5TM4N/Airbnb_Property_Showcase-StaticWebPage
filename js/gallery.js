@@ -11,7 +11,11 @@
      3. Read More toggle — expands/collapses long intro text
      4. Hero slideshow — auto-advance, dots, touch swipe, and
         clicking through to the matching lightbox photo
-     5. "Other Locations" nav dropdown
+     5. "Other Locations" nav dropdown                                                                       
+     6.Bug report dialog — opens from footer,
+       submits via Web3Forms
+     7. dynamic FAQ button script
+
 
    Dependencies:
      - gallery.css must be loaded on the same page
@@ -570,6 +574,35 @@
   });
 })();
 
+/* =============================================================
+   SECTION 7 — FAQ deep-link (open category + scroll)
+
+   Used when someone arrives at the FAQ page with a hash, e.g.
+     faq/#faq-balinge
+     faq/#faq-sodra-rorum
+
+   Those links come from the FAQ buttons under the intro on each
+   property page. This script:
+     1. Finds the matching <details class="faq-category">
+     2. Opens it
+     3. Smooth-scrolls it into view
+
+   Safe on every page: if there is no hash, or no matching
+   category, it exits immediately.
+   ============================================================= */
+(function () {
+  var hash = window.location.hash; // e.g. "#faq-balinge"
+  if (!hash) return;
+
+  var target = document.querySelector(hash);
+  if (!target || !target.matches("details.faq-category")) return;
+
+  target.open = true;
+
+  window.setTimeout(function () {
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 50);
+})();
 /* =============================================================
    END OF gallery.js
 

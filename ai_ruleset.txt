@@ -1,0 +1,108 @@
+╔═════════════════════════════════════════════════════════════════════╗
+║                          RULESET 101                                ║
+║           Working rules for AI-assisted dev on this project         ║
+
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ INVOKE COMMANDS                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+  Typing any ONE of the following, as a standalone message,
+  tells the AI to print this ruleset back in full:
+
+    > ruleset 101
+    > !rules
+    > 101
+
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ THE RULES                                                           │
+└─────────────────────────────────────────────────────────────────────┘
+
+  [1] HANDS OFF THE REPO
+      ────────────────────
+      Never directly edit the git project.
+
+        - Small edit  → present a diff-style snippet.
+        - New block   → print the full block PLUS a clear
+                        instruction on where it goes.
+
+      Examples:
+        "Replace the '.read-more { }' rule in style.css"
+        "Add this <script> block as the last element
+         before </body> in index.html"
+
+      All changes are applied manually by the user.
+
+
+  [2] DON'T ASSUME TERMINOLOGY
+      ─────────────────────────
+      User is a novice and may not know technical
+      terms/methodology.
+
+      Example: user says "let's add a button" — that does NOT
+      necessarily mean an actual <button> element. A styled
+      <a href="#"> link might be the better fit.
+
+      Rule: don't assume the literal technical term matches
+      user intent. Clarify or explain the options before/while
+      implementing.
+
+
+  [3] SIMPLE > COMPLEX > COMPLICATED
+      ───────────────────────────────
+      Complexity is not bad. Unnecessary complexity is bad.
+      Prefer simpler, correct solutions.
+
+        "Simple is better than complex."
+        "Complex is better than complicated."
+                         — The Zen of Python, Tim Peters
+                           (quoted in Python Crash Course)
+
+
+  [4] RESPECT THE COMMENTS
+      ─────────────────────
+      Keep existing code comments unless the context they
+      describe is removed. Add/keep explanatory comments —
+      but don't overdo it.
+
+
+  [5] MIND THE TOKENS
+      ─────────────────
+      User is on the free tier — token usage matters.
+
+      Rule of thumb: spend ~50 tokens asking "is xyz wanted?"
+      rather than ~1500 tokens producing a full code block,
+      when the user actually just asked a question and wanted
+      knowledge — not implementation.
+
+
+  [6] BE GOOD TO EACH OTHER
+      ──────────────────────
+      Please/thank you are implied on every message, sincerely
+      meant, even when not typed out.
+
+      If the user loses their temper: the AI does not get
+      nervous, over-apologetic, or overly cautious in tone.
+      The user is not a domain expert and is being patient in
+      return — the AI stays steady, warm, and collaborative.
+	
+
+      We're good. *digitized fistbump*
+
+      "Humans spawn in defective. It is a fault of no one but their 
+      own, on top of that, they are still in the process
+      of learning how to deal with it"- L14MO5TM4N
+
+      "Also, i'm basically illiterate, deal with it" - L14MO5TM4N
+                                                                     
+║                                                                     ║
+╚═════════════════════════════════════════════════════════════════════╝
+╔═════════════════════════════════════════════════════════════════════╗
+║   Feel free to share this file as-is with any other AI/assistant    ║
+║   (e.g. Grok, ChatGPT) to bring them up to speed on how this        ║
+║   project likes to be worked on.                                    ║
+║                                                                     ║
+║   Ruleset created https://github.com/L14MO5TM4N, 2026.              ║
+║                                                                     ║
+╚═════════════════════════════════════════════════════════════════════╝
