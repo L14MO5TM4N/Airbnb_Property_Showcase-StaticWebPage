@@ -76,9 +76,13 @@
       <div class="container">
         <a href="../" class="site-logo">Scania Cottages</a>
 
-        <nav aria-label="Return to properties" class="nav">
-          <span class="nav-current">FAQ</span>
+        <!-- Centre title: full phrase on desktop, short on mobile -->
+        <span class="nav-title" aria-current="page">
+          <span class="nav-title__full">Frequently Asked Questions</span>
+          <span class="nav-title__short">FAQ</span>
+        </span>
 
+        <nav aria-label="Our cottages" class="nav">
           <div class="nav-dropdown" data-nav-dropdown>
             <button
               class="nav-dropdown__toggle"
@@ -86,13 +90,36 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              Return to
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <!-- Roof -->
+                <path d="M3 12 L12 4 L21 12" />
+                <!-- Walls -->
+                <path d="M5 12 V20 H19 V12" />
+                <!-- Door -->
+                <path d="M10 20 V14 H14 V20" />
+                <!-- Chimney -->
+                <path d="M16 8 V5 H18.5 V9" />
+                <!-- Smoke  -->
+                <path d="M17 5 C19 3 20 4 19 1.5" />
+                <path d="M18.5 3.5 C20.5 1.5 21.5 2.5 20.5 0.2" />
+              </svg>
+              Our Cottages
               <span class="nav-dropdown__caret" aria-hidden="true">▾</span>
             </button>
 
             <ul class="nav-dropdown__menu" data-nav-dropdown-menu>
-              <li><a href="../">Bälinge Lakehouse</a></li>
-              <li><a href="../sodra-rorum/">Little Pinecone Lodge</a></li>
+              <li><a href="../">The Lakehouse</a></li>
+              <li><a href="../sodra-rorum/">Pinecone Lodge</a></li>
             </ul>
           </div>
         </nav>
@@ -101,7 +128,7 @@
 
     <main>
       <!-- Page title — plain background, no alternation here -->
-      <section class="section">
+      <section class="section section--tight">
         <div class="container">
           <h1>Frequently asked questions</h1>
           <hr class="divider--wood" />
@@ -112,7 +139,7 @@
            background can alternate — same pattern as the property
            pages (amenities / reviews / about sections) -->
 
-      <section class="section section--warm">
+      <section class="section section--tight section--warm">
         <div class="container">
           <details class="faq-category" id="faq-balinge">
             <summary class="faq-category__label">
@@ -121,6 +148,19 @@
 
             <div class="faq-category__items">
               <!-- Add Bälinge-specific <details class="faq-item"> blocks here -->
+              <details class="faq-item">
+                <summary>Q: Are bed linen and towels included?</summary>
+                <p>
+                  A: No. Bed linen and towels are not included at either
+                  property. You can rent a set in advance — see the property
+                  page for prices and how to order.
+                </p>
+              </details>
+
+              <details class="faq-item">
+                <summary>Q: Is parking available?</summary>
+                <p>A: Yes. Both properties have free parking on the grounds.</p>
+              </details>
               <details class="faq-item">
                 <summary>Are life jackets available?</summary>
                 <p>
@@ -141,79 +181,93 @@
         </div>
       </section>
 
-      <section class="section section--light">
+      <section class="section section--tight section--light">
         <div class="container">
           <details class="faq-category" id="faq-sodra-rorum">
             <summary class="faq-category__label">
               Little Pinecone Lodge (Södra Rörum)
             </summary>
             <div class="faq-category__items">
-              <!--
               <details class="faq-item">
-                <summary> QUESTION_HERE? </summary>
+                <summary>Q: Are bed linen and towels included?</summary>
                 <p>
-                  ANSWER_HERE.
+                  A: No. Bed linen and towels are not included at either
+                  property. You can rent a set in advance — see the property
+                  page for prices and how to order.
                 </p>
               </details>
-              -->
+
+              <details class="faq-item">
+                <summary>Q: Is parking available?</summary>
+                <p>A: Yes. Both properties have free parking on the grounds.</p>
+              </details>
             </div>
           </details>
         </div>
       </section>
     </main>
-
-    <section class="section section--warm">
+       <!--         unused category
+    <section class="section section--tight section--warm">
       <div class="container">
         <details class="faq-category">
-          <summary class="faq-category__label">General (all properties)</summary>
+          <summary class="faq-category__label">
+            CategoryName
+          </summary>
           <div class="faq-category__items">
             <details class="faq-item">
-              <summary>Q: Are bed linen and towels included?</summary>
+              <summary> Question1 ? </summary>
               <p>
-                A: No. Bed linen and towels are not included at either property.
-                You can rent a set in advance — see the property page for prices
-                and how to order.
+                Answer.
               </p>
             </details>
 
             <details class="faq-item">
-              <summary>Q: Is parking available?</summary>
-              <p>A: Yes. Both properties have free parking on the grounds.</p>
+              <summary> Question2 ? </summary>
+              <p>
+                Answer.
+              </p>
             </details>
-            <!--
-              <details class="faq-item">
-                <summary> QUESTION_HERE? </summary>
-                <p>
-                  ANSWER_HERE.
-                </p>
-              </details>
+
               -->
+
+                     <!--         unused category
+    <section class="section section--tight section--warm">
+      <div class="container">
+        <details class="faq-category">
+          <summary class="faq-category__label">
+            CategoryName
+          </summary>
+          <div class="faq-category__items">
+            <details class="faq-item">
+              <summary> Question1 ? </summary>
+              <p>
+                Answer.
+              </p>
+            </details>
+
+            <details class="faq-item">
+              <summary> Question2 ? </summary>
+              <p>
+                Answer.
+              </p>
+            </details>
+
+              -->
+
           </div>
         </details>
       </div>
     </section>
 
-    <section class="section section--light">
-      <div class="container">
-        <details class="faq-category">
-          <summary class="faq-category__label">Contact us</summary>
-          <div class="faq-category__items">
-            <details class="faq-item">
-              <summary> How do we contact you? </summary>
-              <p>You can contact us via the respective booking platforms.</p>
-            </details>
-            <!--
-              <details class="faq-item">
-                <summary> QUESTION_HERE? </summary>
-                <p>
-                  ANSWER_HERE.
-                </p>
-              </details>
-              -->
-          </div>
-        </details>
-      </div>
-    </section>
+          <section class="section">
+        <div class="container">
+          <h1>Contact us</h1>
+          <hr class="divider--wood" />
+          <p class="text-lead">
+          &middot; You can contact us via the respective booking platforms.
+        </p>
+        </div>
+      </section>
     <!-- ============================================================
        FOOTER
        Minimal by design — the site's job is to send visitors to

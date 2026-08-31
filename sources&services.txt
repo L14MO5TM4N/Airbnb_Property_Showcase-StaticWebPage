@@ -32,6 +32,10 @@
     https://favicon.io/favicon-generator/
     Experience: 4/5  ·  Free
 
+  ── Textures ─────────────────────────────────────────────
+
+  https://polyhaven.com/
+    
 
   ── LLMs // "AI" ─────────────────────────────────────────────────
 

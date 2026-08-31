@@ -272,6 +272,8 @@
     0.15
   ); /* Darken solid buttons on hover */
 
+  --color-black: #000000;
+
   /* Borders and dividers */
   --color-border: #d4c9b5; /* Warm sand: standard dividers */
   --color-border-strong: #b8a898; /* Slightly stronger: card outlines */
@@ -286,6 +288,8 @@
   --text-vsm: 0.7rem;
   --text-sm: 0.85rem; /* ~13.6px — captions, labels */
   --text-base: 1rem; /* 16px    — body text */
+  --text-baseplus: 1.1rem;
+  --text-lgminus: 1.15rem;
   --text-lg: 1.25rem; /* ~20px   — lead paragraphs */
   --text-xl: 1.563rem; /* ~25px   — section headings */
   --text-2xl: 1.953rem; /* ~31px   — page titles */
@@ -471,6 +475,11 @@ p {
   background-color: var(--color-surface);
 }
 
+.section.section--tight {
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-4);
+}
+
 .divider {
   border: none;
   border-top: 1px solid var(--color-border);
@@ -515,16 +524,35 @@ p {
   align-items: center;
   justify-content: space-between;
   height: 64px;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
 }
 
 .site-logo {
   font-family: var(--font-heading);
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-weight: var(--weight-bold);
   color: var(--color-text);
   text-decoration: none;
   letter-spacing: 0.002em;
   transition: color var(--transition-fast);
+}
+
+@media (max-width: 767px) {
+  .site-header .container {
+    height: auto;
+    min-height: 64px;
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  .site-logo {
+    font-size: 1.3rem;
+    line-height: 1.15;
+    white-space: normal;
+    max-width: 5.2rem;
+    text-align: left;
+  }
 }
 
 .site-logo:hover {
@@ -559,10 +587,26 @@ p {
   background-color: var(--color-wood-dark);
 }
 
-/* --- "Other Locations" / "Return to" dropdown --- */
-
 .nav-dropdown {
   position: relative;
+}
+
+/* Dropdown label: full on desktop, short on mobile */
+.nav-dropdown__label--short {
+  display: none;
+}
+
+.nav-dropdown__label--full {
+  display: inline;
+}
+
+@media (max-width: 767px) {
+  .nav-dropdown__label--full {
+    display: none;
+  }
+  .nav-dropdown__label--short {
+    display: inline;
+  }
 }
 
 .nav-dropdown__toggle {
@@ -584,6 +628,13 @@ p {
   transition:
     background-color var(--transition-fast),
     border-radius var(--transition-fast);
+}
+
+.nav-dropdown__toggle svg {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  display: inline-flex;
 }
 
 .nav-dropdown__toggle:hover,
@@ -816,7 +867,7 @@ p {
   border-color: var(--color-accent-hover);
 }
 
-/* --- Look: wood image FAQ button --- */
+/* --- Look: wood image FAQ button /Obsolete, keeping as option/--- */
 .btn-secondary--faq-img {
   padding: 0;
   min-height: 0;
@@ -846,13 +897,13 @@ p {
    Used inside the FAQ deep-link button on property pages. */
 .btn__label--short {
   display: none;
-  font-size: var(--text-lg);
-  font-weight: var(--weight-semibold);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
 }
 
 .btn__label--full {
-  font-size: var(--text-lg);
-  font-weight: var(--weight-semibold);
+  font-size: var(--text-lgminus);
+  font-weight: var(--weight-bold);
 }
 
 @media (max-width: 767px) {
@@ -869,6 +920,46 @@ p {
     padding: var(--space-2) var(--space-3);
     min-height: 40px;
     line-height: normal;
+  }
+}
+
+/* --- FAQ page: centred title in the header --- */
+
+.nav-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-wood);
+  letter-spacing: 0.03em;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+  /* very slight light-wood shadow */
+  text-shadow: 0 1px 3px var(--color-wood-dark);
+  pointer-events: none; /* title itself is not clickable */
+}
+
+.nav-title__short {
+  display: none;
+}
+
+.nav-title__full {
+  display: inline;
+}
+
+/* Mobile: short label only (same breakpoint as the FAQ button) */
+@media (max-width: 767px) {
+  .nav-title {
+    font-size: var(--text-lg);
+  }
+  .nav-title__full {
+    display: none;
+  }
+  .nav-title__short {
+    display: inline;
   }
 }
 
@@ -1453,6 +1544,9 @@ section[aria-labelledby="reviews-heading"] {
   margin-bottom: var(--space-4);
 }
 
+#faq-balinge {
+  scroll-margin-top: 5rem; /* clears the ~64px sticky header + a little breathing room */
+}
 .faq-category__label {
   cursor: pointer;
   font-family: var(--font-heading);
@@ -1467,15 +1561,22 @@ section[aria-labelledby="reviews-heading"] {
 }
 
 .faq-category__label::before {
-  content: "▷";
-  display: inline-block;
-  font-size: 0.8em;
-  color: var(--color-accent);
+  content: "▸";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  line-height: 1;  
+  font-size:.85em;             /* chevron size inside the circle */
+  color: #ffffff;
+  background-color: var(--color-wood);
+  border-radius: 50%;
   transition: transform var(--transition-fast);
 }
 
 .faq-category[open] > .faq-category__label::before {
-  content: "▶";
   transform: rotate(90deg);
 }
 
@@ -1503,15 +1604,22 @@ section[aria-labelledby="reviews-heading"] {
 }
 
 .faq-item summary::before {
-  content: "▷";
-  display: inline-block;
-  font-size: 0.7em;
-  color: var(--color-accent);
+  content: "▸";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  line-height: 1;  
+  font-size: .85em;
+  color: #ffffff;
+  background-color: var(--color-accent);
+  border-radius: 50%;
   transition: transform var(--transition-fast);
 }
 
 .faq-item[open] > summary::before {
-  content: "▶";
   transform: rotate(90deg);
 }
 
