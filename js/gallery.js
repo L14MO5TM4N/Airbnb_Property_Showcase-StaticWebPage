@@ -15,6 +15,8 @@
      6.Bug report dialog — opens from footer,
        submits via Web3Forms
      7. dynamic FAQ button script
+     8. Share button — opens the native share dialog on mobile, copies url
+       to clipboard on desktop
 
 
    Dependencies:
@@ -603,6 +605,41 @@
     target.scrollIntoView({ behavior: "smooth", block: "start" });
   }, 50);
 })();
+
+/* =============================================================
+   SECTION 8 — Share button
+   Opens the native share dialog on mobile, copies the URL to
+   clipboard on desktop. Used on both property pages.
+   ============================================================= */
+   
+document.querySelectorAll("[data-share-button]").forEach((btn) => {
+  btn.addEventListener("click", async () => {
+    const shareData = {
+      title: document.title,
+      text: "Check out this cottage in Skåne!",
+      url: window.location.href,
+    };
+
+    // Native share sheet (best on mobile, also works on many desktops)
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        // User cancelled the share sheet — do nothing
+      }
+      return;
+    }
+
+    // Fallback: copy link to clipboard
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      alert("Link copied to clipboard");
+    } catch (err) {
+      alert("Could not share or copy the link");
+    }
+  });
+});
+
 /* =============================================================
    END OF gallery.js
 

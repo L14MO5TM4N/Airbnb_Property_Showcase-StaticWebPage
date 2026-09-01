@@ -22,7 +22,7 @@
     Experience: 5/5  ·  Free tier
 
 
-  ── Image conversion ─────────────────────────────────────────────
+  ── Images, Icons and conversion ─────────────────────────────────────────────
 
     ToWebP
     https://towebp.net/
@@ -31,6 +31,9 @@
     Favicon.io (favicon creation)
     https://favicon.io/favicon-generator/
     Experience: 4/5  ·  Free
+
+    .SVG images and code snippets:
+    https://www.svgrepo.com/
 
   ── Textures ─────────────────────────────────────────────
 

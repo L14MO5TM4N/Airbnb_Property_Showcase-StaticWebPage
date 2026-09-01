@@ -557,6 +557,7 @@ p {
 
 .site-logo:hover {
   color: var(--color-wood);
+  text-shadow: 0 1px 4px var(--color-wood-dark);
 }
 
 .nav {
@@ -565,7 +566,7 @@ p {
   gap: var(--space-3);
 }
 
-/* "You are here" badge */
+/* "You are here" badge |aritfact, not used, saving for eventuall regrets| */
 .nav-current {
   display: inline-block;
   background-color: var(--color-wood);
@@ -589,6 +590,7 @@ p {
 
 .nav-dropdown {
   position: relative;
+  transform: scale(1.3);
 }
 
 /* Dropdown label: full on desktop, short on mobile */
@@ -607,6 +609,9 @@ p {
   .nav-dropdown__label--short {
     display: inline;
   }
+  .nav-dropdown {
+  transform: scale(1.05)
+}
 }
 
 .nav-dropdown__toggle {
@@ -842,31 +847,115 @@ p {
   font-size: var(--text-sm);
   padding: var(--space-2) var(--space-4);
 }
-
-/* FAQ deep-link button (next to Airbnb / Booking under the intro).
-   Uses the accent green so it reads as "site help", not a booking brand. */
-.btn-secondary--faq {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
+.btn-secondary--share {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-google-maps);
+  color: var(--color-surface);
+  border: 2px solid var(--color-google-maps);
   font-family: var(--font-heading);
   font-weight: var(--weight-bold);
   font-size: var(--text-base);
   min-height: 40px;
+  line-height: 1;
+  border-radius: var(--border-radius);
+  white-space: nowrap;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+
+.section--light .btn-secondary--share {
+  color: var(--color-surface-alt);
+}
+
+
+.btn-secondary--share:hover {
+  background-color: var(--color-google-maps);
+  background-image: linear-gradient(
+    var(--color-hover-tint-black),
+    var(--color-hover-tint-black)
+  );
+  border-color: var(--color-google-maps);
+  color: var(--color-surface);
+}
+
+.section--light .btn-secondary--share:hover {
+  color: var(--color-surface-alt);
+}
+.share-icon {
+  flex-shrink: 0;
+
+}
+
+@media (min-width: 768px) {
+  .share-icon {
+    flex-shrink: 0;
+    transform: scale(1.1) translateX(3px) translateY(0px);
+  }
+}
+@media (max-width: 767px) {
+  .share-icon {
+    flex-shrink: 0;
+    transform: scale(1.25) translateX(0px) translateY(-1px);
+  }
+  .btn-secondary--share {
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+}
+
+/* FAQ deep-link button (next to Airbnb / Booking under the intro).
+   Uses the accent green so it reads as "site help", not a booking brand. */
+/* Shared outline style for FAQ + Share buttons */
+.btn-secondary--faq {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: transparent;
+  color: var(--color-accent);
+  border: 2px solid var(--color-accent);
+  font-family: var(--font-heading);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-base);
+  min-height: 40px;
+  line-height: 1;
+  border-radius: var(--border-radius);
+  white-space: nowrap;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+/* Hover = solid fill + cutout text */
+.btn-secondary--faq:hover{
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-surface); /* cutout colour on warm sections */
+}
+
+/* When the button sits on a light section, use the lighter cutout colour */
+.section--light .btn-secondary--faq:hover{
+  color: var(--color-surface-alt);
 }
 @media (max-width: 767px) {
   .btn-secondary--faq {
-    padding: var(--space-2) var(--space-3); /* tighter than default btn padding */
+    
     min-height: 40px;
     font-size: var(--text-base);
     font-weight: var(--weight-bold);
   }
 }
-.btn-secondary--faq:hover {
-  background-color: rgba(74, 124, 89, 0.15);
-  color: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
+.faq-icon {
+  flex-shrink: 0;
+  /*filter: drop-shadow(0 1px 1px var(--color-accent)); */
+  transform: scale(1.3) translateX(2px) translateY(1px);
 }
-
 /* --- Look: wood image FAQ button /Obsolete, keeping as option/--- */
 .btn-secondary--faq-img {
   padding: 0;
@@ -897,13 +986,15 @@ p {
    Used inside the FAQ deep-link button on property pages. */
 .btn__label--short {
   display: none;
-  font-size: var(--text-base);
-  font-weight: var(--weight-bold);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  text-shadow: 0 1px 2px var(--color-accent-hover);
 }
 
 .btn__label--full {
-  font-size: var(--text-lgminus);
-  font-weight: var(--weight-bold);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  text-shadow: 0 1px 2px var(--color-accent);
 }
 
 @media (max-width: 767px) {
@@ -982,6 +1073,10 @@ p {
 
 .btn__icon--applmaps {
   transform: scale(1.55);
+}
+
+.btn__icon--share {
+  height: 1.26em;
 }
 
 .link {
@@ -1568,8 +1663,8 @@ section[aria-labelledby="reviews-heading"] {
   flex-shrink: 0;
   width: 1em;
   height: 1em;
-  line-height: 1;  
-  font-size:.85em;             /* chevron size inside the circle */
+  line-height: 1;
+  font-size: 0.85em; /* chevron size inside the circle */
   color: #ffffff;
   background-color: var(--color-wood);
   border-radius: 50%;
@@ -1611,8 +1706,8 @@ section[aria-labelledby="reviews-heading"] {
   flex-shrink: 0;
   width: 1em;
   height: 1em;
-  line-height: 1;  
-  font-size: .85em;
+  line-height: 1;
+  font-size: 0.85em;
   color: #ffffff;
   background-color: var(--color-accent);
   border-radius: 50%;
