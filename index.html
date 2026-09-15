@@ -10,7 +10,7 @@
     3. <main>
          a. Hero image      — full-width, clicking opens the gallery lightbox
          b. Intro           — property title, description, quick facts
-         c. Reviews         — two side-by-side image slideshows (Airbnb + Booking.com)
+         c. Reviews         - artefact..
                               each with a static overall-rating image on top
          d. Map             — embedded Google Maps + Get Directions button
          e. Gallery         — photo grid (thumbnails open lightbox when clicked)
@@ -31,7 +31,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Charming lake cottage by Bälingesjön in Perstorp, Skåne with private pier, rowing boat and large garden. Up to 4 guests. Book on Airbnb or Booking.com."
+      content="Charming lake cottage by Bälingesjön in Perstorp, Skåne with private pier, rowing boat and large garden. Up to 5 guests. Book on Airbnb or Booking.com."
     />
 
     <title>Bälinge Lakehouse — Lake Cottage with Private Pier | Skåne</title>
@@ -53,7 +53,7 @@
     />
     <meta
       property="og:description"
-      content="Charming lake cottage by Bälingesjön in Perstorp, Skåne with private pier, rowing boat and large garden. Up to 4 guests. Book on Airbnb or Booking.com."
+      content="Charming lake cottage by Bälingesjön in Perstorp, Skåne with private pier, rowing boat and large garden. Up to 5 guests. Book on Airbnb or Booking.com."
     />
     <meta
       property="og:url"
@@ -74,7 +74,7 @@
     />
     <meta
       name="twitter:description"
-      content="Charming lake cottage by Bälingesjön in Perstorp, Skåne with private pier, rowing boat and large garden. Up to 4 guests. Book on Airbnb or Booking.com."
+      content="Charming lake cottage by Bälingesjön in Perstorp, Skåne with private pier, rowing boat and large garden. Up to 5 guests. Book on Airbnb or Booking.com."
     />
     <meta
       name="twitter:image"
@@ -102,7 +102,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@700;900&display=swap"
       rel="stylesheet"
     />
 
@@ -110,7 +110,7 @@
        STYLESHEETS
        ============================================================ -->
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/gallery.css" />
+    <link rel="stylesheet" href="css/scripts.css" />
 
     <!-- ============================================================
                             FAVICON
@@ -135,14 +135,14 @@
         "@type": "VacationRental",
         "name": "Bälinge Lakehouse",
         "identifier": "balinge-lakehouse-perstorp",
-        "description": "Charming lake cottage by Bälingesjön in Perstorp, Skåne with private pier, rowing boat and large garden. Up to 4 guests. Book on Airbnb or Booking.com.",
+        "description": "Charming lake cottage by Bälingesjön in Perstorp, Skåne with private pier, rowing boat and large garden. Up to 5 guests. Book on Airbnb or Booking.com.",
         "url": "https://l14mo5tm4n.github.io/Airbnb_Property_Showcase-StaticWebPage/",
         "petsAllowed": true,
         "containsPlace": {
           "@type": "Accommodation",
           "occupancy": {
             "@type": "QuantitativeValue",
-            "value": 4
+            "value": 5
           }
         },
         "image": [
@@ -255,7 +255,7 @@
      HERO SLIDESHOW
 
      A full-width image banner that automatically cycles through
-     multiple photos. JavaScript (gallery.js) handles the timing,
+     multiple photos. JavaScript (scripts.js) handles the timing,
      dots, swipe and click-through to the lightbox.
      CSS handles the sliding animation.
 
@@ -281,7 +281,7 @@
 
         <!-- Slide track: all slides live here, stacked via CSS.
            Clicking anywhere on the track (not the dots) opens the lightbox
-           at whichever photo is currently showing — handled in gallery.js -->
+           at whichever photo is currently showing — handled in scripts.js -->
         <div class="hero-slideshow__track">
           <!-- Slide 1: visible on load (is-active) -->
           <div class="hero-slideshow__slide is-active">
@@ -381,7 +381,7 @@
          The placeholder width matches the booking buttons naturally because
          both columns share equal space in the grid.
          ========================================================= -->
-      <section class="section property-intro" aria-labelledby="property-title">
+      <section class="section section--warm" aria-labelledby="property-title">
         <div class="container">
           <div class="intro-grid">
             <!-- -----------------------------------------------
@@ -391,32 +391,28 @@
               <span class="eyebrow"
                 >Bälinge &middot; Perstorp Municipality</span
               >
-              <h2 id="property-title">Welcome to Bälinge Lakehouse.</h2>
+              <h2 id="property-title">Bälinge Lakehouse.</h2>
               <hr class="divider--wood" />
               <div class="read-more" data-read-more>
                 <p class="text-lead">
                   A charming 100-year-old cottage nestled by the serene waters
-                  of Bälinge lake. With its very own private pier, rowing boat
-                  and direct lake access, this is the perfect place for morning
-                  swims, peaceful fishing sessions or simply watching the sun
-                  rise over the water.
-                </p>
-
-                <p class="text-lead">
-                  The house measures 86 m² and offers a warm blend of rustic
-                  charm and modern comforts. Inside you’ll find a fully equipped
-                  kitchen with a large dining table that seats up to 10 people,
-                  a cozy living area with fireplace, fast Wi-Fi (1 Gbit),
-                  air-conditioning and a TV. Outside, a spacious 1 400 m² garden
-                  invites you to relax in the hammock, play badminton or enjoy a
-                  barbecue.
+                  of Bälinge lake.
                 </p>
 
                 <p class="text-lead">
                   <strong>Sleeping arrangements</strong><br />
-                  • Main bedroom – one double bed + one bunk bed (ideal for two
-                  children or extra guests)<br />
-                  • Second bedroom – two single beds
+                  • Main bedroom – One double bed & bunk bed (ideal for children
+                  or extra guests)<br />
+                  • Second bedroom – Two singles
+                </p>
+
+                <p class="text-lead">
+                  <strong>Cottage details</strong><br />
+                  86 m² with a warm blend of rustic charm and modern comforts.
+                  Inside you’ll find a fully equipped kitchen with a large
+                  dining table that seats up to 10 people, a cozy living area
+                  with fireplace, a Tv, fast Wi-Fi (500 Mbps) and
+                  air-conditioning.
                 </p>
 
                 <p class="text-lead">
@@ -435,54 +431,10 @@
                 </p>
 
                 <p class="text-lead">
-                  Feel free to use the indoor fireplace — some wood is available
-                  in the house, but for longer stays please bring or buy
-                  additional firewood. The outdoor grill is also at your
-                  disposal; simply bring your own charcoal.
-                </p>
-
-                <p class="text-lead">
-                  <strong>Outdoor life &amp; location</strong><br />
-                  The private pier is perfect for swimming, sunbathing or
-                  enjoying a ride in the rowing boat (life jackets provided).
-                  The garden includes a children’s swing, hammock and badminton
-                  set. Indoor games are available for rainy days.
-                </p>
-
-                <p class="text-lead">
-                  Nearby attractions include
-                  <a
-                    href="https://www.sverigesnationalparker.se/en/parks/soderasen-national-park"
-                    class="link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    ><strong>Söderåsen National Park ↗</strong></a
-                  >
-                  (29 km),
-                  <a
-                    href="https://www.kungsbygget.com/eng"
-                    class="link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    ><strong>Kungsbygget Adventure Park ↗</strong></a
-                  >
-                  (22 km) and
-                  <a
-                    href="https://www.naturkartan.se/en/skane-lan/herrevadskloster-2"
-                    class="link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    ><strong>Herrevadskloster ↗</strong></a
-                  >(27 km). Ängelholm-Helsingborg Airport is 45 km away. Across
-                  the lake you’ll find a small summer campground with a sandy
-                  beach, playground and kiosk.
-                </p>
-
-                <p class="text-lead">
-                  The house sits about 100 metres from the lake, with trees in
-                  between, so there is no direct lake view from the windows. The
-                  three small red buildings you see in the photos all belong to
-                  the property (main house, storage and garage).
+                  Feel free to use the indoor fireplace as much as you like —
+                  Note: please bring your own firewood (logs, kindling, etc.). The
+                  outdoor grill is also yours to enjoy! Note: please bring your own
+                  charcoal (and matches or lighter fluid if needed).
                 </p>
 
                 <p class="text-lead">
@@ -498,7 +450,7 @@
 
               <p class="intro-grid__facts">
                 <strong>
-                  Up to 4 Guests
+                  Up to 5 Guests
                   <span class="dot">&middot;</span>
                   2 Bedrooms
                   <span class="dot">&middot;</span>
@@ -513,14 +465,14 @@
               <!-- Booking buttons -->
               <div class="intro-grid__buttons">
                 <a
-                  href="https://www.airbnb.co.uk/rooms/1323315106283045184"
+                  href="https://www.airbnb.com/rooms/1323315106283045184"
                   class="btn btn-secondary btn-secondary--airbnb"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <img
                     src="media/shared/icons/airbnb.0.svg"
-                    alt="View on Airbnb.co.uk"
+                    alt="View on Airbnb.com"
                     class="btn__icon btn__icon--airbnb"
                   />
                 </a>
@@ -539,30 +491,31 @@
                 </a>
 
                 <!-- Share button -->
-                <button
-                  type="button"
-                  class="btn btn-secondary btn-secondary--share"
-                  data-share-button
-                  aria-label="Share this page"
-                >
-                
-                  <span class="btn__label btn__label--full">Share</span>
-                  <!-- Desktop icon -->
-                  <svg
-                    class="share-icon"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    stroke="currentColor"
-                    stroke-width="0.7"
-                    aria-hidden="true"
+
+                <div class="intro-grid__buttons-secondary">
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-secondary--share"
+                    data-share-button
+                    aria-label="Share this page"
                   >
-                    <!-- Share arrow -->
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M19.6495 0.799565C18.4834 -0.72981 16.0093 0.081426 
+                    <span class="btn__label btn__label--full">Share</span>
+                    <!-- Desktop icon -->
+                    <svg
+                      class="share-icon"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-width="0.7"
+                      aria-hidden="true"
+                    >
+                      <!-- Share arrow -->
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M19.6495 0.799565C18.4834 -0.72981 16.0093 0.081426 
          16.0093 1.99313V3.91272C12.2371 3.86807 9.65665 5.16473 
          7.9378 6.97554C6.10034 8.9113 5.34458 11.3314 5.02788 12.9862
          C4.86954 13.8135 5.41223 14.4138 5.98257 14.6211
@@ -578,10 +531,10 @@
          17.579 5.90201 17.0205 5.90201H16.0093C11.4593 5.90201 
          9.41596 8.33314 9.41596 8.33314C8.47524 9.32418 
          7.86984 10.502 7.48201 11.6095Z"
-                    />
-                    <!-- Box -->
-                    <path
-                      d="M7 1.00391H4C2.34315 1.00391 1 2.34705 1 4.00391V20.0039
+                      />
+                      <!-- Box -->
+                      <path
+                        d="M7 1.00391H4C2.34315 1.00391 1 2.34705 1 4.00391V20.0039
          C1 21.6608 2.34315 23.0039 4 23.0039H20C21.6569 23.0039 
          23 21.6608 23 20.0039V17.0039C23 16.4516 22.5523 16.0039 
          22 16.0039C21.4477 16.0039 21 16.4516 21 17.0039V20.0039
@@ -589,18 +542,17 @@
          3 20.5562 3 20.0039V4.00391C3 3.45162 3.44772 3.00391 
          4 3.00391H7C7.55228 3.00391 8 2.55619 8 2.00391
          C8 1.45162 7.55228 1.00391 7 1.00391Z"
-                    />
-                  </svg>
-
-                </button>
-                <!-- FAQ button -->
-                <a
-                  href="faq/#faq-balinge"
-                  class="btn btn-secondary btn-secondary--faq"
-                  aria-label="Frequently Asked Questions"
-                >
-                  <!-- btn-secondary--faq-img" /add to class above/ -->
-                  <!-- Image version — client may prefer this later, kept for reference
+                      />
+                    </svg>
+                  </button>
+                  <!-- FAQ button -->
+                  <a
+                    href="faq/#faq-balinge"
+                    class="btn btn-secondary btn-secondary--faq"
+                    aria-label="Frequently Asked Questions"
+                  >
+                    <!-- btn-secondary--faq-img" /add to class above/ -->
+                    <!-- Image version — client may prefer this later, kept for reference
                 <img
                   src="media/shared/icons/faq-full.0.png"
                   alt=""
@@ -608,30 +560,29 @@
                 />
                   -->
 
-                  <span class="btn__label btn__label--full"
-                    >Frequently Asked Questions</span
-                  >
-                  
-                  <span class="btn__label btn__label--short"
-                    >Frequently Asked Questions</span
-                  >
-                  <svg
-                    class="faq-icon"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.75"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                    <line x1="12" y1="17" x2="12.01" y2="17" />
-                  </svg>
-                </a>
+                    <span class="btn__label btn__label--full"
+                      >Frequently Asked Questions</span
+                    >
+
+                    <span class="btn__label btn__label--short">FAQ</span>
+                    <svg
+                      class="faq-icon"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.75"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                      <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
             <!-- end .intro-grid__text -->
@@ -681,165 +632,6 @@
         <!-- end .container -->
       </section>
 
-      <!-- =========================================================
-         AMENITIES
-         ========================================================= -->
-      <section
-        class="section section--light"
-        aria-labelledby="amenities-heading"
-      >
-        <div class="container">
-          <h2 id="amenities-heading">What's included</h2>
-          <hr class="divider--wood" />
-
-          <ul class="amenities-grid">
-            <li class="amenity-item">WiFi</li>
-            <li class="amenity-item">Free parking on premises</li>
-            <li class="amenity-item">Fully equipped kitchen</li>
-            <li class="amenity-item">Washing machine and Tumble dryer</li>
-            <li class="amenity-item">1 400 m² Garden</li>
-            <li class="amenity-item">Hammock & Outdoor furniture</li>
-            <li class="amenity-item">BBQ grill & Outdoor dining area</li>
-            <li class="amenity-item">Pets allowed</li>
-            <li class="amenity-item">Self check-in</li>
-            <li class="amenity-item">Tv & Board games</li>
-            <li class="amenity-item">Air-conditioning</li>
-            <li class="amenity-item">Indoor Fireplace</li>
-            <li class="amenity-item">Smoke & Carbon monoxide alarms</li>
-            <li class="amenity-item">Private Pier</li>
-            <li class="amenity-item">Lake & Beach access</li>
-            <li class="amenity-item">Long-term stays allowed</li>
-            <li class="amenity-non-item">Free Bed linen (see info above)</li>
-            <li class="amenity-non-item">Free Towels (see info above)</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- =========================================================
-         REVIEWS
-         ========================================================= -->
-      <section class="section section--warm" aria-labelledby="reviews-heading">
-        <div class="container">
-          <h2 id="reviews-heading">What guests say</h2>
-          <hr class="divider--wood" />
-
-          <div class="reviews-grid">
-            <div class="review-column">
-              <p class="review-column__label">Airbnb</p>
-
-              <div class="review-column__platform">
-                <img
-                  src="media/balinge/reviews/airbnb-overall-review-07-26.jpg"
-                  alt="Bälinge overall rating on Airbnb"
-                />
-              </div>
-
-              <div class="review-slideshow" data-review-slideshow>
-                <div class="review-slide is-active">
-                  <img
-                    src="media/balinge/reviews/airbnb-r1.jpg"
-                    alt="Airbnb guest review screenshot 1"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div class="review-slide">
-                  <img
-                    src="media/balinge/reviews/airbnb-r2.jpg"
-                    alt="Airbnb guest review screenshot 2"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div class="review-slide">
-                  <img
-                    src="media/balinge/reviews/airbnb-r3.jpg"
-                    alt="Airbnb guest review screenshot 3"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div class="review-slide">
-                  <img
-                    src="media/balinge/reviews/airbnb-r4.jpg"
-                    alt="Airbnb guest review screenshot 4"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div class="review-slide">
-                  <img
-                    src="media/balinge/reviews/airbnb-r5.jpg"
-                    alt="Airbnb guest review screenshot 5"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-              <!-- end .review-slideshow (Airbnb) -->
-            </div>
-            <!-- end .review-column (Airbnb) -->
-
-            <div class="review-column">
-              <p class="review-column__label">Booking.com</p>
-
-              <div class="review-column__platform">
-                <img
-                  src="media/balinge/reviews/2booking-overall-review-07-26.jpg"
-                  alt="Bälinge overall rating on Booking.com"
-                />
-              </div>
-
-              <div class="review-slideshow" data-review-slideshow>
-                <div class="review-slide is-active">
-                  <img
-                    src="media/balinge/reviews/booking-r1.jpg"
-                    alt="Booking.com guest review screenshot 1"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div class="review-slide">
-                  <img
-                    src="media/balinge/reviews/booking-r2.jpg"
-                    alt="Booking.com guest review screenshot 2"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div class="review-slide">
-                  <img
-                    src="media/balinge/reviews/booking-r3.jpg"
-                    alt="Booking.com guest review screenshot 3"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div class="review-slide">
-                  <img
-                    src="media/balinge/reviews/booking-r4.jpg"
-                    alt="Booking.com guest review screenshot 4"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div class="review-slide">
-                  <img
-                    src="media/balinge/reviews/booking-r5.jpg"
-                    alt="Booking.com guest review screenshot 5"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-              <!-- end .review-slideshow (Booking.com) -->
-            </div>
-            <!-- end .review-column (Booking.com) -->
-          </div>
-          <!-- end .reviews-grid -->
-        </div>
-        <!-- end .container -->
-      </section>
-      <!-- end reviews section -->
-
       <!--=========================================================
          MAP SECTION
 
@@ -848,7 +640,7 @@
          so visitors can open it on their phone for navigation.
 
         =========================================================-->
-      <section class="section" aria-labelledby="map-heading">
+      <section class="section section--light" aria-labelledby="map-heading">
         <div class="container">
           <h2 id="map-heading">Location</h2>
           <hr class="divider--wood" />
@@ -913,6 +705,265 @@
       </section>
 
       <!-- =========================================================
+     Getting Here Section 
+     ========================================================= -->
+      <section
+        class="section section--warm"
+        aria-labelledby="getting-here-heading"
+      >
+        <div class="container">
+          <h2 id="getting-here-heading">Getting here</h2>
+          <hr class="divider--wood" />
+
+          <p class="text-lead">
+            A car-ride is required to reach the cottage. <br /><br />
+
+            <strong>Approximate drive times:</strong><br />
+          </p>
+
+          <ul class="text-lead" style="margin-bottom: var(--space-5)">
+            <li>
+              Malmö ≈ 70 min(112 km)
+              <a
+                href="https://maps.app.goo.gl/9poBz6H7yqp5wM6fA"
+                class="link"
+                target="_blank"
+                rel="noopener noreferrer"
+                >(Directions ↗)</a
+              >
+            </li>
+            <li>
+              Copenhagen ≈ 90 min(145 km)
+              <a
+                href="https://maps.app.goo.gl/mzrTwhd5RMXqSy1GA"
+                class="link"
+                target="_blank"
+                rel="noopener noreferrer"
+                >(Directions ↗)</a
+              >
+            </li>
+            <li>
+              Helsingborg-Ängelholm Airport ≈ 38 min(46km)
+              <a
+                href="https://maps.app.goo.gl/PXk3wRwxWxPXYAcdA"
+                class="link"
+                target="_blank"
+                rel="noopener noreferrer"
+                >(Directions ↗)</a
+              >
+            </li>
+          </ul>
+
+          <p class="text-lead">
+            <strong>Local necessities</strong><br />
+            <a
+              href="https://www.ica.se/butiker/supermarket/perstorp/ica-supermarket-perstorp-1003966/"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><strong>ICA Supermarket Perstorp ↗</strong></a
+            >
+            ≈19 min (16 km) —
+            <a
+              href="https://maps.app.goo.gl/f9SjGS1FQhv3puu96"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >(Directions ↗)</a
+            ><br />
+            <a
+              href="https://www.okq8.se/hitta-station/perstorp/perstorp-banvallsvagen/"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><strong>OKQ8 gas station Perstorp ↗</strong></a
+            >
+            ≈20 min (17 km) —
+            <a
+              href="https://maps.app.goo.gl/2en6u1DuXxidMyjG7"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >(Directions ↗)</a
+            ><br /><br />
+
+            <strong>Property address:</strong> Bälinge 326, 284 92 Perstorp
+          </p>
+
+          <!-- Direction buttons -->
+          <div style="margin-top: var(--space-5)">
+            <a
+              href="https://www.google.com/maps/place/B%C3%A4linge+326,+284+92+Perstorp/@56.2523307,13.3655008,17z/data=!4m6!3m5!1s0x46516105625f5273:0x8450819961f90cd2!8m2!3d56.2523307!4d13.3680811!16s%2Fg%2F11c4slxkd1?entry=ttu&g_ep=EgoyMDI2MDcwOC4wIKXMDSoASAFQAw%3D%3D"
+              class="btn btn-directions--google"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="./media/shared/icons/googlepin-svgrepo.0.svg"
+                alt=""
+                class="btn__icon btn__icon--googlemaps"
+              />
+              Directions ↗
+            </a>
+
+            <a
+              href="https://maps.apple.com/place?address=B%C3%A4linge+326%2C+284+92+Perstorp%2C+Sweden&coordinate=56.252282%2C13.368065&name=B%C3%A4linge+326"
+              class="btn btn-directions--apple"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="./media/shared/icons/apple-svgrepo.0.svg"
+                alt=""
+                class="btn__icon btn__icon--applmaps"
+              />
+              Directions ↗
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+     Family Activities Section
+     ========================================================= -->
+      <section
+        class="section section--light"
+        aria-labelledby="family-activities-heading"
+      >
+        <div class="container">
+          <h2 id="family-activities-heading">Family activities</h2>
+          <hr class="divider--wood" />
+
+          <p class="text-lead">
+            <strong>Activities at the property</strong><br />
+            The garden has a children’s swing, hammock and badminton set. Board
+            games are available indoors for rainy days.<br /><br />
+            The private pier is about 100 metres from the house and is perfect
+            for swimming, sunbathing or a ride in the rowing boat. Life jackets
+            are kept in the wardrobe (it is required by law to wear them on the
+            water).<br /><br />
+            Fishing is possible from the pier or boat. Adults need a fishing
+            licence (fiskekort). Children under 16 fish for free.
+          </p>
+
+          <p class="text-lead">
+            <strong>Nearby attractions</strong><br />
+            <a
+              href="https://kungsbygget.com/eng"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><strong>Kungsbygget Adventure Park ↗</strong></a
+            >
+            (22 km) — zipline and high ropes.
+            <a
+              href="https://maps.app.goo.gl/18RAjW1A8JkiCDah8"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >(Directions ↗)</a
+            ><br /><br />
+
+            <a
+              href="https://www.ugglebadet.se/"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><strong>Ugglebadet ↗</strong></a
+            >
+            (16 km) in Perstorp — indoor &amp; outdoor pools, good option on
+            rainy days.
+            <a
+              href="https://maps.app.goo.gl/eAy4xg9yVJHCVjrg9"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >(Directions ↗)</a
+            ><br /><br />
+
+            <a
+              href="https://www.sverigesnationalparker.se/en/parks/soderasen-national-park"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><strong>Söderåsen National Park ↗</strong></a
+            >
+            (29 km) — hiking, biking, nature trails and scenic viewpoints.
+            <a
+              href="https://maps.app.goo.gl/9T8QNjJ8TuqZoump8"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >(Directions ↗)</a
+            ><br /><br />
+
+            <a
+              href="https://www.naturkartan.se/en/skane-lan/herrevadskloster-2"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><strong>Herrevadskloster ↗</strong></a
+            >
+            (27 km) Nature reserve.
+            <a
+              href="https://maps.app.goo.gl/adv4Xhsw3HtmCowj9"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >(Directions ↗)</a
+            ><br /><br />
+
+          </p>
+
+          <p class="text-lead">
+          
+            Across the lake you’ll find a small summer campground with a sandy
+            beach, playground and kiosk. <br /><br />
+            The house sits about 100 metres from the lake, with trees in
+            between, so there is no direct lake view from the windows.<br />
+             The three
+            small red buildings you see in the photos all belong to the property
+            (main house, storage and garage).
+          </p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+         AMENITIES
+         ========================================================= -->
+      <section
+        class="section section--warm"
+        aria-labelledby="amenities-heading"
+      >
+        <div class="container">
+          <h2 id="amenities-heading">What's included</h2>
+          <hr class="divider--wood" />
+
+          <ul class="amenities-grid">
+            <li class="amenity-item">WiFi (500 Mbps)</li>
+            <li class="amenity-item">Free parking on premises</li>
+            <li class="amenity-item">Fully equipped kitchen</li>
+            <li class="amenity-item">Washing machine and Tumble dryer</li>
+            <li class="amenity-item">1 400 m² Garden</li>
+            <li class="amenity-item">Hammock & Outdoor furniture</li>
+            <li class="amenity-item">BBQ grill & Outdoor dining area</li>
+            <li class="amenity-item">Pets allowed</li>
+            <li class="amenity-item">Self check-in</li>
+            <li class="amenity-item">Tv & Board games</li>
+            <li class="amenity-item">Air-conditioning</li>
+            <li class="amenity-item">Indoor Fireplace</li>
+            <li class="amenity-item">Smoke & Carbon monoxide alarms</li>
+            <li class="amenity-item">Private Pier</li>
+            <li class="amenity-item">
+              Lake & Private Pier access ~100m from property
+            </li>
+            <li class="amenity-item">Long-term stays allowed</li>
+            <li class="amenity-item">Tap water is fresh & Safe to drink!</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================
          PHOTO GALLERY
          ========================================================= -->
       <section
@@ -940,32 +991,32 @@
 
             <div class="photo-grid__item">
               <img
-                src="media/balinge/gallery/pier-02.webp"
-                alt="Pier at Bälinge"
+                src="media/balinge/gallery/kitchen-02.webp"
+                alt="Modern kitchen at Bälinge Lakehouse"
                 loading="lazy"
               />
             </div>
 
             <div class="photo-grid__item">
               <img
-                src="media/balinge/gallery/lounge-01.webp"
-                alt="Living room at Bälinge"
+                src="media/balinge/gallery/bedroom-01.webp"
+                alt="King-size bed and bunk bed in the bedroom at Bälinge Lakehouse"
                 loading="lazy"
               />
             </div>
 
             <div class="photo-grid__item">
               <img
-                src="media/balinge/gallery/lounge-02.webp"
-                alt="Big lounge area with comfy sofas"
+                src="media/balinge/gallery/bedroom-04.webp"
+                alt="Bedroom with 2 single beds at Bälinge Lakehouse"
                 loading="lazy"
               />
             </div>
 
             <div class="photo-grid__item">
               <img
-                src="media/balinge/gallery/ext-03.webp"
-                alt="Outdoor seating area"
+                src="media/balinge/gallery/bathroom-01.webp"
+                alt="Modern Shower and washing machine at Bälinge Lakehouse"
                 loading="lazy"
               />
             </div>
@@ -973,15 +1024,15 @@
             <div class="photo-grid__item">
               <img
                 src="media/balinge/gallery/ext-01.webp"
-                alt="Scenic view of Bälinge"
+                alt="Scenic view of hammock at Bälinge"
                 loading="lazy"
               />
             </div>
 
             <div class="photo-grid__item">
               <img
-                src="media/balinge/gallery/ext-02.webp"
-                alt="Open green by the lake at Bälinge"
+                src="media/balinge/gallery/pier-02.webp"
+                alt="Pier at Bälinge"
                 loading="lazy"
               />
             </div>
@@ -996,8 +1047,16 @@
 
             <div class="photo-grid__item">
               <img
-                src="media/balinge/gallery/winter-03.webp"
-                alt="View of Bälinge lake through snowy trees on a sunny winter day"
+                src="media/balinge/gallery/lounge-01.webp"
+                alt="Living room at Bälinge Lakehouse"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="photo-grid__item">
+              <img
+                src="media/balinge/gallery/activities-01.webp"
+                alt="Harvest after peaceful chanterelle picking near Lakehouse"
                 loading="lazy"
               />
             </div>
@@ -1262,16 +1321,15 @@
     </script>
 
     <!-- The hero slideshow's logic (auto-advance, dots, swipe, and
-       clicking through to the gallery) now lives in gallery.js
+       clicking through to the gallery) now lives in scripts.js
        (Section 4) instead of an inline script here — it needs to
-       share code with the lightbox, which also lives in gallery.js. -->
+       share code with the lightbox, which also lives in scripts.js. -->
 
-    <!-- gallery.js handles:
+    <!-- scripts.js handles:
        - Lightbox (open/close/navigate/keyboard/swipe)
-       - Review slideshow auto-advance
        - Read More toggle
        - Hero slideshow (auto-advance, dots, swipe, gallery click-through)
-       This page lives at the site root, so the path is js/gallery.js
+       This page lives at the site root, so the path is js/scripts.js
        (no ../ needed, unlike the sodra-rorum/ subpage). -->
 
     <!-- ============================================================
@@ -1378,6 +1436,6 @@
     <!-- ============================================================
        END OF BUG REPORT DIALOG
        ============================================================ -->
-    <script src="js/gallery.js"></script>
+    <script src="js/scripts.js"></script>
   </body>
 </html>

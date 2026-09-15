@@ -1,13 +1,11 @@
 /* =============================================================
-   gallery.js — Photo gallery lightbox + review slideshow logic
+   gallery.js — Photo gallery lightbox 
    Used on: index.html (Bälinge) and sodra-rorum/index.html
 
    This file handles five things:
      1. Lightbox — opens when any gallery thumbnail, the single-image
         hero, or the hero slideshow is clicked; supports prev/next,
         keyboard nav, and touch swipe
-     2. Review slideshows — two independent auto-advancing
-        slideshows (one for Airbnb reviews, one for Booking.com)
      3. Read More toggle — expands/collapses long intro text
      4. Hero slideshow — auto-advance, dots, touch swipe, and
         clicking through to the matching lightbox photo
@@ -20,8 +18,8 @@
 
 
    Dependencies:
-     - gallery.css must be loaded on the same page
-     - The HTML structure must match what is described in gallery.css
+     - scripts.css must be loaded on the same page
+     - The HTML structure must match what is described in scripts.css
 
    Single source of truth for the lightbox:
      All images that should appear in the lightbox live inside a
@@ -95,8 +93,16 @@
   function closeLightbox() {
     lightbox.classList.remove("is-open");
     document.body.style.overflow = ""; /* Restore page scrolling */
-  }
 
+    /* Remove the #gallery-N hash now that the lightbox is closed */
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(
+        null,
+        "",
+        window.location.pathname + window.location.search,
+      );
+    }
+  }
   /* --- Show the image at a given index ---
      Updates the <img> src and the counter text */
   function showImage(index) {
@@ -116,9 +122,16 @@
       lightboxImg.classList.remove("is-loading");
     };
 
-    /* Update the counter e.g. "3 / 20" */
+    /* Update the counter e.g. "3 / 12" */
     if (counter) {
       counter.textContent = currentIndex + 1 + " / " + galleryImages.length;
+    }
+
+    /* Reflect the current photo in the URL as #gallery-N.
+       Uses replaceState (not pushState) so browsing through photos
+       doesn't fill up the back-button history with every click. */
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, "", "#gallery-" + (currentIndex + 1));
     }
   }
 
@@ -211,80 +224,20 @@
   /* --- Expose to Section 4 (hero slideshow) --- */
   window.openGalleryLightbox = openLightbox;
   window.galleryImages = galleryImages;
+
+  /* --- Deep-link: open the lightbox on page load if the URL already
+     has a #gallery or #gallery-N hash, e.g. someone following a
+     shared link straight to yoursite.com/balinge/#gallery-4 */
+  var hashMatch = window.location.hash.match(/^#gallery-(\d+)$/);
+  if (hashMatch) {
+    openLightbox(parseInt(hashMatch[1], 10) - 1);
+  } else if (window.location.hash === "#gallery") {
+    openLightbox(0);
+  }
 })();
 /* End of lightbox IIFE */
 
-/* =============================================================
-   SECTION 2 — REVIEW SLIDESHOWS
 
-   Each property page has two review slideshows side by side —
-   one for Airbnb reviews, one for Booking.com reviews.
-
-   Both slideshows are initialised by the same function below.
-   We look for all elements with [data-review-slideshow] and
-   set up an independent timer for each one.
-   ============================================================= */
-
-(function () {
-  var REVIEW_INTERVAL = 6000; /* 6 seconds */
-
-  var slideshows = document.querySelectorAll("[data-review-slideshow]");
-
-  slideshows.forEach(function (slideshow) {
-    var slides = slideshow.querySelectorAll(".review-slide");
-    var dots = slideshow.querySelectorAll(".review-dot");
-    var current = 0;
-    var timer;
-
-    if (slides.length < 2) return;
-
-    function goToSlide(index) {
-      var previous = current;
-      current = (index + slides.length) % slides.length;
-
-      if (previous === current) return;
-
-      var outgoing = slides[previous];
-      var incoming = slides[current];
-
-      outgoing.classList.remove("is-active");
-      incoming.classList.add("is-active");
-
-      incoming.style.transform = "translateX(0)";
-      outgoing.style.transform = "translateX(-100%)";
-
-      outgoing.addEventListener("transitionend", function resetPosition() {
-        outgoing.style.transition = "none";
-        outgoing.style.transform = "translateX(100%)";
-        void outgoing.offsetWidth;
-        outgoing.style.transition = "";
-        outgoing.removeEventListener("transitionend", resetPosition);
-      });
-    }
-
-    function startTimer() {
-      timer = setInterval(function () {
-        goToSlide(current + 1);
-      }, REVIEW_INTERVAL);
-    }
-
-    function resetTimer() {
-      clearInterval(timer);
-      startTimer();
-    }
-
-    dots.forEach(function (dot) {
-      dot.addEventListener("click", function () {
-        var index = parseInt(dot.getAttribute("data-index"), 10);
-        goToSlide(index);
-        resetTimer();
-      });
-    });
-
-    startTimer();
-  });
-})();
-/* End of review slideshow IIFE */
 
 /* =============================================================
    SECTION 3 — READ MORE TOGGLE
@@ -611,7 +564,7 @@
    Opens the native share dialog on mobile, copies the URL to
    clipboard on desktop. Used on both property pages.
    ============================================================= */
-   
+
 document.querySelectorAll("[data-share-button]").forEach((btn) => {
   btn.addEventListener("click", async () => {
     const shareData = {
@@ -644,7 +597,7 @@ document.querySelectorAll("[data-share-button]").forEach((btn) => {
    END OF gallery.js
 
    Checklist for using this file on a property page:
-     [ ] gallery.css is linked in the <head>
+     [ ] scripts.css is linked in the <head>
      [ ] gallery.js is linked at the bottom of <body>
      [ ] .lightbox HTML is present
      [ ] A hidden <div class="gallery-full"> contains ALL images

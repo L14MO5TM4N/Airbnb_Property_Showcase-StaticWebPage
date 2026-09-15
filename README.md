@@ -2,7 +2,7 @@
 
 
 This is a static website built for a client with two Airbnb rental properties 
-in Sweden — Södra Rörum (Hörby municipality) and Bälinge (Uppsala municipality).
+in Sweden — Södra Rörum (Hörby municipality) and Bälinge (Perstorp municipality).
 
 
 The purpose of the site is to complement the existing Airbnb/booking.com listings with a 

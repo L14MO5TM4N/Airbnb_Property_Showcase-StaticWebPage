@@ -13,15 +13,14 @@
      7. Buttons & links (incl. FAQ deep-link button labels)
      8. Property cards (obsolete — not in use; kept for possible later use)
      9. Hero slideshow
-    10. Amenities list
-    11. Photo grid (property pages)
-    12. Responsive overrides (desktop)
-    13. Property hero image (legacy single-image hero)
-    14. Property intro grid + YouTube placeholder
-    15. Temporary: hide reviews section
-    16. Read more (collapsible intro text)
-    17. FAQ page (categories + items)
-    18. Bug report dialog
+     10. Amenities list
+     11. Responsive overrides (desktop)
+     12. Property hero image (legacy single-image hero)
+     13. Property intro grid + YouTube placeholder
+     14. 
+     15. Read more (collapsible intro text)
+     16. FAQ page (categories + items)
+     17. Bug report dialog
 
    All visual decisions (colors, fonts, spacing) are controlled
    via the custom properties in section 1. To retheme the site,
@@ -304,7 +303,7 @@
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
-  --weight-boldbold: 850; /* Extra-bold for hero headline */
+  --weight-boldbold: 900; /* Extra-bold for hero headline */
 
   /* --- Spacing scale (4px base unit) --- */
   --space-1: 0.25rem; /* 4px  */
@@ -417,7 +416,7 @@ h4 {
 /* #property-title is an <h2> (the page's single <h1> is the hero
    title) but should still read as a large page title. */
 #property-title {
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
 }
 
 p {
@@ -534,24 +533,24 @@ p {
   font-weight: var(--weight-bold);
   color: var(--color-text);
   text-decoration: none;
-  letter-spacing: 0.002em;
+  letter-spacing: 0.03em;
   transition: color var(--transition-fast);
 }
 
 @media (max-width: 767px) {
   .site-header .container {
     height: auto;
-    min-height: 64px;
+    min-height: 52px;
     padding-top: var(--space-2);
     padding-bottom: var(--space-2);
   }
 
   .site-logo {
-    font-size: 1.3rem;
-    line-height: 1.15;
-    white-space: normal;
-    max-width: 5.2rem;
-    text-align: left;
+    font-size: 1rem;
+    line-height: 1.25;
+    white-space: nowrap;
+    font-weight: var(--weight-boldbold);
+    letter-spacing: 0.015em;
   }
 }
 
@@ -610,7 +609,7 @@ p {
     display: inline;
   }
   .nav-dropdown {
-  transform: scale(1.05)
+  transform: scale(1.0)
 }
 }
 
@@ -986,7 +985,7 @@ p {
    Used inside the FAQ deep-link button on property pages. */
 .btn__label--short {
   display: none;
-  font-size: var(--text-lg);
+  font-size: var(--text-baseplus);
   font-weight: var(--weight-semibold);
   text-shadow: 0 1px 2px var(--color-accent-hover);
 }
@@ -1011,6 +1010,10 @@ p {
     padding: var(--space-2) var(--space-3);
     min-height: 40px;
     line-height: normal;
+  }
+
+    .btn-secondary--share .btn__label--full {
+    display: inline;
   }
 }
 
@@ -1044,7 +1047,7 @@ p {
 /* Mobile: short label only (same breakpoint as the FAQ button) */
 @media (max-width: 767px) {
   .nav-title {
-    font-size: var(--text-lg);
+    font-size: var(--text-base);
   }
   .nav-title__full {
     display: none;
@@ -1061,12 +1064,16 @@ p {
   width: auto;
   flex-shrink: 0;
 }
-
 /* Airbnb logo has more internal SVG padding — bump size to match Booking */
 .btn__icon--airbnb {
   height: 1.26em;
 }
-
+/* Airbnb + Booking.com icons: same min-width so both buttons match,
+   regardless of each logo's natural proportions */
+.btn-secondary--airbnb .btn__icon,
+.btn-secondary--booking .btn__icon {
+  min-width: 100px;
+}
 .btn__icon--googlemaps {
   transform: scale(3) translateY(-1px);
 }
@@ -1285,88 +1292,17 @@ p {
   flex-shrink: 0;
 }
 
-/* =============================================================
-   11. PHOTO GRID (property pages)
 
-   First item can be featured (full width). 2 columns on mobile,
-   3 on desktop (see section 12).
-   ============================================================= */
 
-.photo-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-3);
-  margin-top: var(--space-6);
-}
-
-.photo-grid__item {
-  overflow: hidden;
-  border-radius: var(--border-radius);
-  background-color: var(--color-surface);
-  aspect-ratio: 4 / 3;
-}
-
-.photo-grid__item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--transition-normal);
-}
-
-.photo-grid__item:hover img {
-  transform: scale(1.04);
-}
-
-.photo-grid__item--featured {
-  grid-column: span 2;
-  aspect-ratio: 16 / 9;
-}
-
-/* Hide last grid item on narrow screens so a 2-column row stays even */
-@media (max-width: 767px) {
-  .photo-grid__item:last-child {
-    display: none;
-  }
-}
 
 /* =============================================================
-   12. RESPONSIVE OVERRIDES — DESKTOP
+   11. RESPONSIVE OVERRIDES — DESKTOP
 
    Mobile-first base styles above. From 768px (tablet landscape
    and up) the layout opens into multi-column where it helps.
    ============================================================= */
 
-@media (min-width: 768px) {
-  :root {
-    --page-padding: var(--space-8);
-  }
 
-  .hero-slideshow {
-    height: 560px;
-  }
-
-  .hero__title {
-    font-size: clamp(var(--text-2xl), 4vw, var(--text-3xl));
-  }
-
-  .amenities-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .photo-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .photo-grid__item--featured {
-    grid-column: span 3;
-  }
-
-  .site-footer .container {
-    flex-direction: row;
-    justify-content: space-between;
-    text-align: left;
-  }
-}
 
 @media (min-width: 1024px) {
   :root {
@@ -1380,7 +1316,7 @@ p {
 }
 
 /* =============================================================
-   13. PROPERTY HERO IMAGE (legacy single-image hero)
+      12. PROPERTY HERO IMAGE (legacy single-image hero)
 
    Older single-photo hero with optional “View all photos” hint.
    Current property pages use the multi-slide .hero-slideshow above;
@@ -1447,7 +1383,7 @@ p {
 }
 
 /* =============================================================
-   14. PROPERTY INTRO — two-column grid + YouTube placeholder
+   13. PROPERTY INTRO — two-column grid + YouTube placeholder
 
    Left: title, description, facts, booking (+ FAQ) buttons
    Right: live camera (placeholder until embed is ready)
@@ -1490,6 +1426,20 @@ p {
   margin-top: var(--space-2);
 }
 
+.intro-grid__buttons-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+@media (max-width: 767px) {
+  .intro-grid__buttons {
+  }
+
+  .intro-grid__buttons-secondary {
+    width: 100%;
+  }
+}
 .intro-grid__media {
   width: 100%;
   display: none; /* temporary — remove when embed goes live */
@@ -1547,15 +1497,6 @@ p {
   }
 }
 
-/* =============================================================
-   15. TEMPORARY: HIDE REVIEWS SECTION
-
-   Remove or comment out this rule when review screenshots are ready.
-   ============================================================= */
-
-section[aria-labelledby="reviews-heading"] {
-  display: none;
-}
 
 /* =============================================================
    16. READ MORE — collapsible intro text
@@ -1571,7 +1512,7 @@ section[aria-labelledby="reviews-heading"] {
 .read-more {
   position: relative;
   overflow: hidden;
-  max-height: 8em;
+  max-height: 25em;
   transition: max-height 0.4s ease;
 }
 
@@ -1585,13 +1526,13 @@ section[aria-labelledby="reviews-heading"] {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 2.5em;
+  height: .5em;
   background: linear-gradient(
     to bottom,
     rgba(245, 240, 232, 0),
-    var(--color-bg)
+    var(--color-surface)
   );
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
 }
 
 .read-more.is-expanded::after {
@@ -1606,7 +1547,7 @@ section[aria-labelledby="reviews-heading"] {
   border: none;
   padding: 0;
   font-family: var(--font-body);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: var(--weight-medium);
   color: var(--color-accent);
   cursor: pointer;
@@ -1625,6 +1566,7 @@ section[aria-labelledby="reviews-heading"] {
 .read-more__toggle:hover {
   color: var(--color-accent-hover);
 }
+
 
 /* =============================================================
    17. FAQ PAGE — categories + items

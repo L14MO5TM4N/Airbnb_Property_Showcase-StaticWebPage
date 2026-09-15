@@ -12,8 +12,7 @@
      2. Lightbox overlay
      3. Lightbox navigation (prev/next arrows, close button)
      4. Lightbox counter (e.g. "3 / 12")
-     5. Review slideshows
-     6. Responsive overrides
+     5. Responsive overrides
    ============================================================= */
 
 
@@ -210,206 +209,36 @@
 }
 
 
-/* =============================================================
-   5. REVIEW SLIDESHOWS
-
-   Two side-by-side columns on the property page — one for
-   Airbnb reviews, one for Booking.com reviews.
-
-   Each column contains:
-     a) A static overall-rating image (e.g. a screenshot of the
-        platform's aggregate score badge)
-     b) An auto-advancing slideshow of individual review screenshots
-
-   Structure used in the HTML:
-
-     <div class="reviews-grid">
-       <div class="review-column">
-         <div class="review-column__platform">
-           <!-- OVERALL RATING IMAGE HERE -->
-           <img src="..." alt="Airbnb overall rating">
-         </div>
-         <div class="review-slideshow" data-review-slideshow>
-           <div class="review-slide is-active">
-             <!-- REVIEW SLIDE IMAGE HERE -->
-             <img src="..." alt="Airbnb review screenshot 1">
-           </div>
-           <div class="review-slide">
-             <!-- REVIEW SLIDE IMAGE HERE -->
-             <img src="..." alt="Airbnb review screenshot 2">
-           </div>
-           ...
-           <div class="review-slideshow__dots">
-             <button class="review-dot is-active" data-index="0"></button>
-             ...
-           </div>
-         </div>
-       </div>
-       <div class="review-column"> ... Booking.com column ... </div>
-     </div>
-   ============================================================= */
-
-/* Outer wrapper: two columns side by side (stacks on mobile) */
-.reviews-grid {
-  display: grid;
-  grid-template-columns: 1fr;   /* Stacked on mobile */
-  gap: var(--space-8);
-  margin-top: var(--space-6);
-}
-
-/* Individual platform column */
-.review-column {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
-/* Platform label above the rating image */
-.review-column__label {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-wood);
-}
-
-/* Static overall-rating image container —
-   place a screenshot of the platform's aggregate score here */
-.review-column__platform {
-  background-color: #FFFFFF;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--color-border);
-  padding: var(--space-3);
-  text-align: center;
-  min-height: 10px;
-  /* OVERALL RATING IMAGE GOES HERE —
-     see HTML TODO comments for what image to place here */
-}
-
-.review-column__platform img {
-  max-width: 100%;
-  height: auto;
-  margin: 0 auto;
-}
-
-/* Slideshow container for individual review screenshots */
-.review-slideshow {
-  position: relative;
-  background-color: #FFFFFF;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--color-border);
-  padding: 0;
-
-  /* Fixed height so the column doesn't jump as slides change */
-  min-height: 50px;
-}
-
-/* Individual review slide — all stacked, positioned by transform.
-   Slides wait off-screen (left or right) until they become active,
-   then slide into view — creating the left-swipe motion. */
-.review-slide {
-  position: absolute;
-  inset: 0;
-  transform: translateX(100%);   /* every slide starts parked off-screen right */
-  transition: transform 1.0s ease-in-out;
-  border-radius: var(--border-radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-.review-slide.is-active {
-  transform: translateX(0);   /* only the currently-shown slide sits centered */
-}
-
-/* REVIEW SLIDE IMAGE GOES HERE —
-   each slide contains one screenshot of an individual review */
-.review-slide img {
-  max-width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: var(--border-radius);
-}
-
-/* Dot navigation for the review slideshow */
-.review-slideshow__dots {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-2);
-  padding: var(--space-3) 0;
-}
-
-.review-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--color-border-strong);
-  cursor: pointer;
-  padding: 0;
-  transition: background-color var(--transition-fast),
-              transform var(--transition-fast);
-}
-
-.review-dot.is-active {
-  background-color: var(--color-wood);
-  transform: scale(1.3);
-}
-
-.review-dot:hover {
-  background-color: var(--color-wood-light);
-}
-
 
 /* =============================================================
-   6. RESPONSIVE OVERRIDES
+   5. RESPONSIVE OVERRIDES
 
    Most layout changes happen here — the base styles above
    are mobile-first (single column, compact spacing).
    ============================================================= */
 
 @media (min-width: 768px) {
-  /* Three-column photo grid on desktop */
-  .photo-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
 
-  /* Featured image spans all three columns */
-  .photo-grid__item--featured {
-    grid-column: span 3;
-  }
-
-  /* Taller review slideshow on desktop */
-  .review-slideshow {
-    min-height: 260px;
-  }
 
   /* Larger lightbox prev/next buttons on desktop — easier to click */
   .lightbox__btn {
-    width: 52px;
-    height: 52px;
+    width: 64px;
+    height: 64px;
   }
 
   /* Push prev/next buttons further from the edge on wide screens */
-  .lightbox__prev { left: var(--space-8); }
-  .lightbox__next { right: var(--space-8); }
+  .lightbox__prev { left: var(--space-16); }
+  .lightbox__next { right: var(--space-16); }
 }
 
 
 /* =============================================================
    END OF gallery.css
 
-   JavaScript counterpart: js/gallery.js
+   JavaScript counterpart: js/scripts.js
    Handles:
      - Lightbox open/close/navigate
      - Keyboard navigation (arrow keys, Escape)
      - Hero slideshow click → open lightbox at the matching image
      - “View all photos” hint → open lightbox at index 0
-     - Review slideshow auto-advance timers
    ============================================================= */

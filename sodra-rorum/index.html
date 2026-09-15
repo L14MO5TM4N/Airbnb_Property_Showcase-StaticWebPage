@@ -9,11 +9,12 @@
     3. <main>
          a. Hero slideshow  — full-width multi-image banner, clicking opens the gallery lightbox
          b. Intro           — property title, description (Read more), quick facts, booking buttons
-         c. Amenities       — feature list
-         d. Reviews         — two side-by-side image slideshows (Airbnb + Booking.com)
-         e. Map             — embedded Google Maps + Get Directions buttons
-         f. Gallery         — photo grid (thumbnails open lightbox when clicked)
-         g. Lightbox        — hidden overlay, activated by JS when photos are clicked
+         c. Map             — embedded Google Maps + Get Directions buttons
+         d. Getting here    — drive times, local necessities, address
+         e. Family Activities
+         f. Amenities       — feature list
+         g. Gallery         — photo grid (thumbnails open lightbox when clicked)
+         h. Lightbox        — hidden overlay, activated by JS when photos are clicked
     4. <footer>
 
   Paths: this page lives inside sodra-rorum/, so CSS/JS/media use ../ to reach the site root.
@@ -92,7 +93,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@700;900&display=swap"
       rel="stylesheet"
     />
 
@@ -100,7 +101,7 @@
        STYLESHEETS
        ============================================================ -->
     <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/gallery.css" />
+    <link rel="stylesheet" href="../css/scripts.css" />
 
     <!-- Favicon -->
     <link rel="icon" href="../favicon.ico" />
@@ -176,7 +177,7 @@
 
         <nav aria-label="Main navigation" class="nav">
           <span class="nav-title" aria-current="page">
-            <span class="nav-title__full">Södra Rörum, Little Pinecone Lodge</span>
+            <span class="nav-title__full">Södra Rörum</span>
             <span class="nav-title__short">Södra Rörum</span>
           </span>
 
@@ -232,25 +233,6 @@
     <main>
       <!-- =========================================================
          HERO SLIDESHOW
-
-         A full-width image banner that automatically cycles through
-         multiple photos. JavaScript (gallery.js) handles the timing,
-         dots, swipe and click-through to the lightbox.
-         CSS handles the sliding animation.
-
-         How it works:
-           - All slides sit side-by-side in a horizontal track
-             (.hero-slideshow__track)
-           - JavaScript moves the whole track with transform: translateX()
-           - The "is-active" class is used for the dots and for matching
-             the current slide when opening the lightbox
-           - The dot buttons at the bottom let users jump to any slide
-           - Clicking the track (or the "View all photos" hint) opens
-             the lightbox
-
-         Add as many .hero-slideshow__slide divs as you have photos.
-         The first one has "is-active" so something is visible immediately
-         before JavaScript runs.
          ========================================================= -->
       <section class="hero-slideshow" aria-label="Property photo slideshow">
         <span class="hero-slideshow__hint" aria-hidden="true"
@@ -336,7 +318,7 @@
       <!-- =========================================================
          INTRO
          ========================================================= -->
-      <section class="section property-intro" aria-labelledby="property-title">
+      <section class="section section--warm" aria-labelledby="property-title">
         <div class="container">
           <div class="intro-grid">
             <div class="intro-grid__text">
@@ -344,96 +326,62 @@
                 >Södra Rörum &middot; Hörby Municipality</span
               >
 
-              <h2 id="property-title">Welcome to Little Pinecone Lodge.</h2>
+              <h2 id="property-title">Little Pinecone Lodge.</h2>
 
               <hr class="divider--wood" />
 
               <div class="read-more" data-read-more>
                 <p class="text-lead">
                   A charming red cottage tucked away in the peaceful forests of
-                  southern Sweden. Surrounded by towering trees, fresh air and
-                  the gentle sounds of nature, this is the perfect place to slow
-                  down and reconnect.
-                </p>
-
-                <p class="text-lead">
-                  Inside the main cottage you’ll find two warm and inviting
-                  rooms across 47 m² — ideal for curling up with a book or
-                  simply relaxing after a day exploring the Swedish countryside.
-                  Outside, a spacious 2 000 m² garden opens directly into the
-                  forest. Two of the guests sleep in the small garden annex, a
-                  cozy space just a few steps from the main house.
+                  southern Sweden.
                 </p>
 
                 <p class="text-lead">
                   <strong>Sleeping arrangements</strong><br />
-                  • Living-room sofa bed – converts into one full-size double
-                  bed (sleeps 2)<br />
-                  • Bunk-bed system – three full-size beds in total (sleeps
-                  3)<br />
-                  • Garden annex – two full-size double beds (90 × 200 cm)
+                  • Main cottage – Living-room sofa bed (double) + bunk-bed
+                  system (3 full-size beds)<br />
+                  • Garden annex – Two singles
                 </p>
 
                 <p class="text-lead">
-                  In total there are five full-size beds in the main house and
-                  two in the annex.
+                  <strong>Cottage details</strong><br />
+                  47 m² main cottage with a warm, rustic feel and modern
+                  comforts. Fully equipped kitchen, cozy living area with
+                  fireplace, air-conditioning, washing machine and streaming
+                  services. Outside is a spacious 2 000 m² garden with an
+                  outdoor fireplace and play area. Two guests sleep in the small
+                  garden annex just a few steps from the main house.
                 </p>
 
                 <p class="text-lead">
                   <strong>Please note</strong><br />
-                  Bed linen (sheets, duvet covers, pillowcases) and towels are
-                  not included. If you would like us to provide a complete set,
-                  please reserve it at least 10 days before arrival. The cost is
-                  €20 per set (one set = linen for one bed + one bath towel).
+                  Bed linen and towels are not included. Pillows and blankets
+                  are provided. If you would like to rent a complete set (towel
+                  + duvet cover + mattress sheet), the cost is 150 SEK per set.
+                  Please let us know a few days in advance. Payment is made in
+                  cash on arrival.
                 </p>
 
                 <p class="text-lead">
-                  The key to the annex is waiting for you in the key box. The
-                  grounds cover 2 000 m² and there is plenty of space to park
-                  several cars.
+                  Final cleaning can be ordered for 1 500 SEK. If you choose not
+                  to order cleaning, we kindly ask that you leave the house in
+                  the same condition as when you arrived.
                 </p>
 
                 <p class="text-lead">
                   Feel free to use the indoor fireplace as much as you like —
-                  just bring your own firewood (logs, kindling, etc.). The
-                  outdoor grill is also yours to enjoy; please bring your own
-                  charcoal (and matches or lighter fluid if needed).
+                  Note: please bring your own firewood (logs, kindling, etc.).
+                  The outdoor grill is also yours to enjoy! Note: please bring
+                  your own charcoal (and matches or lighter fluid if needed).
                 </p>
 
                 <p class="text-lead">
                   We want you to have the most relaxing and enjoyable stay
                   possible. Happy fireside chats and delicious barbecues ahead!
                   Let us know if you have any questions or need tips for the
-                  perfect fire or grill session.
-                </p>
-
-                <p class="text-lead">
-                  <strong>Modern amenities</strong><br />
-                  Guests can enjoy air-conditioning, a fully equipped kitchen,
-                  washing machine and streaming services. There is also an
-                  outdoor fireplace and outdoor play area.
-                </p>
-
-                <p class="text-lead">
-                  <strong>Outdoor activities & Location</strong><br />
-                  The property offers easy access to cycling, Mushroom picking
-                  and outdoor dining areas. Nearby attractions include
-                  <a
-                    href="https://www.sverigesnationalparker.se/en/parks/soderasen-national-park"
-                    class="link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    ><strong>Söderåsen National Park ↗</strong></a
-                  >
-                  (38 km) and
-                  <a
-                    href="https://elisefarm.se/?lang=en"
-                    class="link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    ><strong>Elisefarm Golf Club ↗</strong></a
-                  >
-                  (18 km). Malmö Airport is 60 km away.
+                  perfect fire or grill session Surrounded by towering trees,
+                  fresh air and the gentle sounds of nature, this is the perfect
+                  place to slow down and reconnect.
                 </p>
               </div>
               <button class="read-more__toggle" data-read-more-toggle>
@@ -444,7 +392,7 @@
                 <strong>
                   Up to 5 Guests
                   <span class="dot">&middot;</span>
-                  6 Beds
+                  5 Beds
                   <span class="dot">&middot;</span>
                   1 Bathroom
                   <span class="dot">&middot;</span>
@@ -480,7 +428,7 @@
                     class="btn__icon"
                   />
                 </a>
-                                <!-- Share button -->
+                <!-- Share button -->
                 <button
                   type="button"
                   class="btn btn-secondary btn-secondary--share"
@@ -493,8 +441,8 @@
                     width="18"
                     height="18"
                     viewBox="0 0 24 24"
-                    fill=currentColor
-                    stroke=currentColor
+                    fill="currentColor"
+                    stroke="currentColor"
                     stroke-width="0.7"
                     aria-hidden="true"
                   >
@@ -540,20 +488,11 @@
                   class="btn btn-secondary btn-secondary--faq"
                   aria-label="Frequently Asked Questions"
                 >
-                  <!-- btn-secondary--faq-img" /add to class above/ -->
-                  <!-- Image version — client may prefer this later, kept for reference
-                  <img
-                  src="../media/shared/icons/faq-full.0.png"
-                  alt=""
-                  class="btn__faq-img"
-                  />
-                -->
-
                   <span class="btn__label btn__label--full"
                     >Frequently Asked Questions</span
                   >
-                  <span class="btn__label btn__label--short">Frequently Asked Questions</span>
-                                    <svg
+                  <span class="btn__label btn__label--short">FAQ</span>
+                  <svg
                     class="faq-icon"
                     width="18"
                     height="18"
@@ -594,218 +533,9 @@
       </section>
 
       <!-- =========================================================
-         AMENITIES
-         ========================================================= -->
-      <section
-        class="section section--light"
-        aria-labelledby="amenities-heading"
-      >
-        <div class="container">
-          <h2 id="amenities-heading">What's included</h2>
-          <hr class="divider--wood" />
-
-          <ul class="amenities-grid">
-            <li class="amenity-item">WiFi</li>
-            <li class="amenity-item">Full kitchen</li>
-            <li class="amenity-item">Dishwasher</li>
-            <li class="amenity-item">Washing machine & Dryer</li>
-            <li class="amenity-item">Outdoor seating/dining area</li>
-            <li class="amenity-item">BBQ grill & Firepit</li>
-            <li class="amenity-item">Self check-in</li>
-            <li class="amenity-item">Free parking on premises</li>
-            <li class="amenity-item">2000 m² Garden</li>
-            <li class="amenity-item">Pets allowed</li>
-            <li class="amenity-item">Tv & PS3</li>
-            <li class="amenity-item">Children's books, toys and bikes</li>
-            <li class="amenity-item">Air-conditioning & Heating</li>
-            <li class="amenity-item">Indoor Fireplace</li>
-            <li class="amenity-item">Room-darkening blinds</li>
-            <li class="amenity-item">Forest access</li>
-            <li class="amenity-item">Long-term stays allowed</li>
-            <li class="amenity-item">Smoke alarm & Fire extinguisher</li>
-            <li class="amenity-non-item">Carbon monoxide detector</li>
-            <li class="amenity-non-item">Free Bed linen (see info above)</li>
-            <li class="amenity-non-item">Free Towels (see info above)</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- =========================================================
-         REVIEWS
-         ========================================================= -->
-      <section class="section section--warm" aria-labelledby="reviews-heading">
-        <div class="container">
-          <h2 id="reviews-heading">What guests say</h2>
-          <hr class="divider--wood" />
-
-          <div class="reviews-grid">
-            <div class="review-column">
-              <p class="review-column__label">Airbnb</p>
-
-              <div class="review-column__platform">
-                <img
-                  src="../media/sodra-rorum/reviews/airbnb-overall.png"
-                  alt="Södra Rörum overall rating on Airbnb"
-                />
-              </div>
-
-              <div class="review-slideshow" data-review-slideshow>
-                <div class="review-slide is-active">
-                  <img
-                    src="../media/sodra-rorum/reviews/airbnb-review-1.png"
-                    alt="Airbnb guest review screenshot 1"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="review-slide">
-                  <img
-                    src="../media/sodra-rorum/reviews/airbnb-review-2.png"
-                    alt="Airbnb guest review screenshot 2"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="review-slide">
-                  <img
-                    src="../media/sodra-rorum/reviews/airbnb-review-3.png"
-                    alt="Airbnb guest review screenshot 3"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="review-slide">
-                  <img
-                    src="../media/sodra-rorum/reviews/airbnb-review-4.png"
-                    alt="Airbnb guest review screenshot 4"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="review-slide">
-                  <img
-                    src="../media/sodra-rorum/reviews/airbnb-review-5.png"
-                    alt="Airbnb guest review screenshot 5"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div
-                  class="review-slideshow__dots"
-                  aria-label="Airbnb review navigation"
-                >
-                  <button
-                    class="review-dot is-active"
-                    data-index="0"
-                    aria-label="Review 1"
-                  ></button>
-                  <button
-                    class="review-dot"
-                    data-index="1"
-                    aria-label="Review 2"
-                  ></button>
-                  <button
-                    class="review-dot"
-                    data-index="2"
-                    aria-label="Review 3"
-                  ></button>
-                  <button
-                    class="review-dot"
-                    data-index="3"
-                    aria-label="Review 4"
-                  ></button>
-                  <button
-                    class="review-dot"
-                    data-index="4"
-                    aria-label="Review 5"
-                  ></button>
-                </div>
-              </div>
-            </div>
-
-            <div class="review-column">
-              <p class="review-column__label">Booking.com</p>
-
-              <div class="review-column__platform">
-                <img
-                  src="../media/sodra-rorum/reviews//booking-overall.png"
-                  alt="Södra Rörum overall rating on Booking.com"
-                />
-              </div>
-
-              <div class="review-slideshow" data-review-slideshow>
-                <div class="review-slide is-active">
-                  <img
-                    src="../media/sodra-rorum/reviews//booking-review-1.png"
-                    alt="Booking.com guest review screenshot 1"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="review-slide">
-                  <img
-                    src="../media/sodra-rorum/reviews//booking-review-2.png"
-                    alt="Booking.com guest review screenshot 2"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="review-slide">
-                  <img
-                    src="../media/sodra-rorum/reviews//booking-review-3.png"
-                    alt="Booking.com guest review screenshot 3"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="review-slide">
-                  <img
-                    src="../media/sodra-rorum/reviews//booking-review-4.png"
-                    alt="Booking.com guest review screenshot 4"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="review-slide">
-                  <img
-                    src="../media/sodra-rorum/reviews//booking-review-5.png"
-                    alt="Booking.com guest review screenshot 5"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div
-                  class="review-slideshow__dots"
-                  aria-label="Booking.com review navigation"
-                >
-                  <button
-                    class="review-dot is-active"
-                    data-index="0"
-                    aria-label="Review 1"
-                  ></button>
-                  <button
-                    class="review-dot"
-                    data-index="1"
-                    aria-label="Review 2"
-                  ></button>
-                  <button
-                    class="review-dot"
-                    data-index="2"
-                    aria-label="Review 3"
-                  ></button>
-                  <button
-                    class="review-dot"
-                    data-index="3"
-                    aria-label="Review 4"
-                  ></button>
-                  <button
-                    class="review-dot"
-                    data-index="4"
-                    aria-label="Review 5"
-                  ></button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- =========================================================
          MAP SECTION
          ========================================================= -->
-      <section class="section" aria-labelledby="map-heading">
+      <section class="section section--light" aria-labelledby="map-heading">
         <div class="container">
           <h2 id="map-heading">Location</h2>
           <hr class="divider--wood" />
@@ -862,6 +592,225 @@
               Directions ↗
             </a>
           </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+         Getting Here Section 
+         ========================================================= -->
+      <section
+        class="section section--warm"
+        aria-labelledby="getting-here-heading"
+      >
+        <div class="container">
+          <h2 id="getting-here-heading">Getting here</h2>
+          <hr class="divider--wood" />
+
+          <p class="text-lead">
+            A car-ride is required to reach the cottage. <br /><br />
+
+            <strong>Approximate drive times:</strong><br />
+          </p>
+
+          <ul class="text-lead" style="margin-bottom: var(--space-5)">
+            <li>
+              Malmö ≈ 45 min(62 km)
+              <a
+                href="https://maps.app.goo.gl/MSuxmaAwSb1bdntX6"
+                class="link"
+                target="_blank"
+                rel="noopener noreferrer"
+                >(Directions ↗)</a
+              >
+            </li>
+            <li>
+              Copenhagen ≈ 65 min(95 km)
+              <a
+                href="https://maps.app.goo.gl/ceuLx3rVKDCZqWjE7"
+                class="link"
+                target="_blank"
+                rel="noopener noreferrer"
+                >(Directions ↗)</a
+              >
+            </li>
+            <li>
+              Helsingborg-Ängelholm Airport ≈ 75 min(85km)
+              <a
+                href="https://maps.app.goo.gl/GW7FVVYXqZ3EUML67"
+                class="link"
+                target="_blank"
+                rel="noopener noreferrer"
+                >(Directions ↗)</a
+              >
+            </li>
+          </ul>
+
+          <p class="text-lead">
+            <strong>Local necessities</strong><br />
+            <a
+              href="https://www.ica.se/butiker/kvantum/horby/ica-kvantum-horby-1003793/"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><strong>ICA Kvantum Hörby ↗</strong></a
+            >
+            ≈19 min (16 km) —
+            <a
+              href="https://maps.app.goo.gl/kPDiozqwt7f26LFq6"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >(Directions ↗)</a
+            ><br />
+            <a
+              href="https://www.preem.se/stationer/horby-horby-ringsjovagen-5/"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><strong>Preem gas station Hörby ↗</strong></a
+            >
+            ≈14 min (11 km) —
+            <a
+              href="https://maps.app.goo.gl/w3TvJ43r1UiehMt69"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >(Directions ↗)</a
+            ><br /><br />
+
+            <strong>Property address:</strong> Södra Rörum 4774, 242 94 Hörby
+          </p>
+
+          <!-- Direction buttons -->
+          <div style="margin-top: var(--space-5)">
+            <a
+              href="https://www.google.com/maps/place/S%C3%B6dra+R%C3%B6rum+4774,+242+94+H%C3%B6rby/@55.9301902,13.6939493,17z/data=!3m1!4b1!4m6!3m5!1s0x4653f12bb6d108f5:0x6a1043fbb8a0243f!8m2!3d55.9301902!4d13.6965296!16s%2Fg%2F11c2bzlxcn?hl=en&entry=ttu&g_ep=EgoyMDI2MDcwOC4wIKXMDSoASAFQAw%3D%3D"
+              class="btn btn-directions--google"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="../media/shared/icons/googlepin-svgrepo.0.svg"
+                alt=""
+                class="btn__icon btn__icon--googlemaps"
+              />
+              Directions ↗
+            </a>
+
+            <a
+              href="https://maps.apple.com/place?address=S%C3%B6dra+R%C3%B6rum+4774%2C+242+94+H%C3%B6rby%2C+Sweden&coordinate=55.930305%2C13.696400&name=S%C3%B6dra+R%C3%B6rum+4774"
+              class="btn btn-directions--apple"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="../media/shared/icons/apple-svgrepo.0.svg"
+                alt=""
+                class="btn__icon btn__icon--applmaps"
+              />
+              Directions ↗
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+         Family Activities Section
+         ========================================================= -->
+      <section
+        class="section section--light"
+        aria-labelledby="family-activities-heading"
+      >
+        <div class="container">
+          <h2 id="family-activities-heading">Family Activities</h2>
+          <hr class="divider--wood" />
+
+          <p class="text-lead">
+            <strong>Activities at the property</strong><br />
+            The large 2 000 m² garden opens directly into the forest and
+            includes an outdoor play area, outdoor seating and a firepit.
+            Children’s books, toys and bikes are available.<br />
+          </p>
+          <br />
+
+          <p class="text-lead">
+            <strong>Nearby attractions</strong><br />
+            <a
+              href="https://elisefarm.se/?lang=en"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><strong>Elisefarm ↗</strong></a
+            >
+            ≈20 min(21 km) — Spa, Restaurant & Golfing.
+
+            <a
+              href="https://maps.app.goo.gl/3qXLV9epr9P786TE8"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >(Directions ↗)</a
+            ><br /><br />
+
+            <a
+              href="https://www.sverigesnationalparker.se/en/parks/soderasen-national-park"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><strong>Söderåsen National Park ↗</strong></a
+            >
+            ≈43 min (38 km) — hiking, biking, nature trails and scenic
+            viewpoints.
+            <a
+              href="https://maps.app.goo.gl/XAscJM2aRnQkNTqU9"
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >(Directions ↗)</a
+            >
+          </p>
+          <br /><br />
+
+          <p class="text-lead">
+            The property is surrounded by forest with easy access to nature.
+            Guests can enjoy cycling, mushroom picking and outdoor dining right
+            on the grounds.
+          </p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+         AMENITIES
+         ========================================================= -->
+      <section
+        class="section section--warm"
+        aria-labelledby="amenities-heading"
+      >
+        <div class="container">
+          <h2 id="amenities-heading">What's included</h2>
+          <hr class="divider--wood" />
+
+          <ul class="amenities-grid">
+            <li class="amenity-item">WiFi</li>
+            <li class="amenity-item">Full kitchen</li>
+            <li class="amenity-item">Dishwasher</li>
+            <li class="amenity-item">Washing machine & Dryer</li>
+            <li class="amenity-item">Outdoor seating/dining area</li>
+            <li class="amenity-item">BBQ grill & Firepit</li>
+            <li class="amenity-item">Self check-in</li>
+            <li class="amenity-item">Free parking on premises</li>
+            <li class="amenity-item">2000 m² Garden</li>
+            <li class="amenity-item">Pets allowed</li>
+            <li class="amenity-item">Tv & PS3</li>
+            <li class="amenity-item">Children's books, toys and bikes</li>
+            <li class="amenity-item">Air-conditioning & Heating</li>
+            <li class="amenity-item">Indoor Fireplace</li>
+            <li class="amenity-item">Room-darkening blinds</li>
+            <li class="amenity-item">Forest access</li>
+            <li class="amenity-item">Long-term stays allowed</li>
+            <li class="amenity-item">Smoke alarm & Fire extinguisher</li>
+            <li class="amenity-item">Tap water is fresh & Safe to drink!</li>
+          </ul>
         </div>
       </section>
 
@@ -930,6 +879,14 @@
               <img
                 src="../media/sodra-rorum/gallery/garden-03.webp"
                 alt="Outdoor seating in the garden"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="photo-grid__item">
+              <img
+                src="../media/sodra-rorum/gallery/activities-01.webp"
+                alt="Outdoor activities near Södra Rörum"
                 loading="lazy"
               />
             </div>
@@ -1117,8 +1074,6 @@
 
     <!-- ============================================================
        FOOTER
-       Minimal by design — the site's job is to send visitors to
-       the booking platforms, not to keep them on this page.
        ============================================================ -->
     <footer class="site-footer">
       <div class="container">
@@ -1202,11 +1157,6 @@
 
     <!-- ============================================================
        BUG REPORT DIALOG
-       Opened from the footer "Report a bug" link.
-       Uses Web3Forms so the site can stay fully static.
-
-       TODO: Replace:dbdb617b-0272-4e19-b090-751997177da2
-       with your key from https://web3forms.com
        ============================================================ -->
     <div class="bug-dialog" data-bug-dialog hidden>
       <div class="bug-dialog__backdrop" data-bug-close></div>
@@ -1217,7 +1167,6 @@
         aria-modal="true"
         aria-labelledby="bug-dialog-title"
       >
-        <!-- Close stays on the panel so it doesn’t scroll away -->
         <button
           type="button"
           class="bug-dialog__close"
@@ -1227,7 +1176,6 @@
           &times;
         </button>
 
-        <!-- Only this inner part scrolls -->
         <div class="bug-dialog__scroll">
           <h2 id="bug-dialog-title">Report a bug</h2>
           <p class="bug-dialog__intro">
@@ -1305,6 +1253,6 @@
     <!-- ============================================================
        END OF BUG REPORT DIALOG
        ============================================================ -->
-    <script src="../js/gallery.js"></script>
+    <script src="../js/scripts.js"></script>
   </body>
 </html>
